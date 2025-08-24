@@ -28,6 +28,9 @@ jobs:
         with:
           enable-cache: true
 
+      - name: Create virtualenv
+        run: uv venv
+
       - name: Install project (dev extras)
         run: uv pip install -e ".[dev] --system"
 
