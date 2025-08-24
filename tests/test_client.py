@@ -6,9 +6,6 @@ from kinexon_handball_api.client import KinexonClient
 from kinexon_handball_api.config import Settings
 from kinexon_handball_api.exceptions import KinexonAPIError
 
-import pytest
-from kinexon_handball_api.config import Settings
-
 
 @pytest.fixture
 def settings(monkeypatch):
@@ -33,7 +30,12 @@ def settings(monkeypatch):
 
 
 @pytest.fixture
-def client(settings):
+def client(settings: Settings) -> KinexonClient:
+    """
+    Authenticated KinexonClient instance for integration tests.
+    """
+    from kinexon_handball_api.client import KinexonClient
+
     with requests_mock.Mocker() as m:
         # Mock session login
         m.get("https://api.test/session", status_code=200, json={"ok": True})
@@ -44,7 +46,12 @@ def client(settings):
         yield KinexonClient(settings)
 
 
-def test_authentication_failure_session(requests_mock, settings):
+def test_authentication_failure_session(
+    requests_mock, settings: Settings
+) -> None:
+    """
+    Test that session authentication fails with 401 Unauthorized.
+    """
     # Settings enthält jetzt alle Dummy-Umgebungsvariablen
     from kinexon_handball_api.client import KinexonClient, KinexonAPIError
 
@@ -57,7 +64,11 @@ def test_authentication_failure_session(requests_mock, settings):
         KinexonClient(settings)
 
 
-def test_authentication_failure_main(settings):
+def test_authentication_failure_main(settings: Settings) -> None:
+    """
+    Test that main login fails with 403 Forbidden.
+    """
+
     with requests_mock.Mocker() as m:
         m.get("https://api.test/session", status_code=200)
         m.post("https://api.test/login", status_code=403, text="Forbidden")
@@ -67,6 +78,10 @@ def test_authentication_failure_main(settings):
 
 
 def test_request_json_response(client, requests_mock):
+    """
+    Test that a JSON response is correctly parsed.
+    """
+
     url = "https://api.test/api/test-json"
     requests_mock.get(url, json={"hello": "world"})
     result = client._request("GET", url)
