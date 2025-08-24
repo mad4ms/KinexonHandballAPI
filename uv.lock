@@ -142,6 +142,7 @@ dependencies = [
     { name = "pytest-cov" },
     { name = "python-dotenv" },
     { name = "requests" },
+    { name = "requests-mock" },
 ]
 
 [package.optional-dependencies]
@@ -161,6 +162,7 @@ requires-dist = [
     { name = "pytest-cov", marker = "extra == 'dev'", specifier = ">=5.0" },
     { name = "python-dotenv", specifier = ">=1.1.1" },
     { name = "requests", specifier = ">=2.32.4" },
+    { name = "requests-mock", specifier = ">=1.12.1" },
     { name = "requests-mock", marker = "extra == 'dev'", specifier = ">=1.12" },
 ]
 provides-extras = ["dev"]
