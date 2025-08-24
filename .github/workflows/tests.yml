@@ -6,6 +6,46 @@ on:
   pull_request:
 
 jobs:
+  lint:
+    name: Lint and Format Check
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.13"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+
+      - name: Create virtualenv
+        run: uv venv
+
+      - name: Install project (dev extras)
+        run: uv pip install -e ".[dev,lint]"
+
+      - name: Check code formatting with black
+        run: uv run black --check --diff src/ tests/
+
+      - name: Check import sorting with isort
+        run: uv run isort --check-only --diff src/ tests/
+
+      - name: Lint with flake8
+        run: uv run flake8 src/ tests/
+
+      - name: Type check with mypy
+        run: uv run mypy src/
+
   unit:
     name: Unit (no integration)
     runs-on: ubuntu-latest   # or: ubuntu-24.04
