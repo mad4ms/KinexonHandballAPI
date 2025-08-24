@@ -1,0 +1,49 @@
+[project]
+name = "kinexon-handball-api"
+version = "0.1.0"
+description = "A Python wrapper for accessing and processing Kinexon Handball data."
+authors = [
+    { name = "Michael Adams", email = "m@ad4ms.de" }
+]
+license = "MIT"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "requests>=2.32.4",
+    "pandas>=2.3.1",
+    "python-dotenv>=1.1.1",
+    "pydantic>=2.11.7",
+    "pydantic-settings>=2.10.1",
+    "pytest-cov>=6.2.1",
+    "requests-mock>=1.12.1",
+]
+keywords = ["handball", "kinexon", "api", "data", "wrapper"]
+classifiers = [
+    "Programming Language :: Python :: 3"
+]
+
+[project.urls]
+Homepage = "https://github.com/mad4ms/KinexonHandballAPI"
+Repository = "https://github.com/mad4ms/KinexonHandballAPI"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.flake8]
+max-line-length = 88
+
+[tool.pytest.ini_options]
+markers = [
+    "integration: mark test as integration test (requires live API access)",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.4.1",
+    "pytest-cov>=5.0",
+    "requests-mock>=1.12",
+]
