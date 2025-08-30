@@ -16,7 +16,8 @@ A Python wrapper for accessing and processing Kinexon Handball data. This librar
 
 ### Prerequisites
 
-- Python 3.13 or higher
+- Python 3.12 or higher
+- `uv` as package manager
 - Valid Kinexon API credentials
 
 
@@ -25,7 +26,7 @@ A Python wrapper for accessing and processing Kinexon Handball data. This librar
 ```bash
 git clone https://github.com/mad4ms/KinexonHandballAPI.git
 cd KinexonHandballAPI
-pip install -e .
+uv pip install -e .
 ```
 
 ## Quick Start
@@ -43,6 +44,7 @@ settings = Settings()
 client = KinexonClient(settings)
 
 # Get available teams
+# Fetches a hardcoded DEFAULT_TEAM_IDS specified in fetchers.py
 teams = client.get_team_ids()
 print(f"Available teams: {len(teams)}")
 
@@ -53,8 +55,8 @@ sessions = client.get_session_ids(
     end="2025-01-31"
 )
 
-# Export position data
-position_data = client.export_positions("session_123")
+# Get position data
+position_data = client.get_position_data_by_session_id("session_123")
 ```
 
 ### Environment Configuration
@@ -77,6 +79,27 @@ ENDPOINT_KINEXON_API=https://api.kinexon.com/api
 API_KEY_KINEXON=your_api_key
 ```
 
+## Team Configuration
+
+Team IDs are stored in `config/teams.yaml` and organized by season. To update team IDs for a new season:
+
+1. Go to Kinexon Cloud web app
+2. Click "Team" selection dropdown
+3. Click user → profile
+4. Switch to "Teams" tab
+5. Copy IDs next to team names
+6. Update `config/teams.yaml` with new season data
+
+The current season is automatically used, or you can specify a season:
+```python
+# Get current season teams
+teams = client.get_team_ids()
+
+# Get specific season teams
+teams_2024 = client.get_team_ids("2024-25")
+```
+```
+
 ## Development
 
 ### Setup Development Environment
@@ -90,48 +113,9 @@ cd KinexonHandballAPI
 uv pip install -e ".[dev]"
 
 # Install pre-commit hooks (optional but recommended)
-pip install pre-commit
+uv pip install pre-commit
 pre-commit install
 ```
-
-### Code Quality Tools
-
-This project uses several professional code quality tools to maintain high standards:
-
-#### Available Commands
-
-```bash
-# Using Makefile (recommended)
-make help          # Show all available commands
-make lint          # Run all linting checks
-make format        # Format code with black and isort
-make check         # Run all checks (lint + test)
-make test          # Run unit tests
-make test-cov      # Run tests with coverage
-make clean         # Clean build artifacts
-
-# Using uv directly
-uv run black --check --diff src/ tests/     # Check code formatting
-uv run isort --check-only --diff src/ tests/ # Check import sorting
-uv run flake8 src/ tests/                   # Run linting
-uv run mypy src/                            # Run type checking
-```
-
-#### Tools Used
-
-- **Black**: Code formatter for consistent Python code style
-- **isort**: Import sorting and organization
-- **flake8**: Linting for style guide enforcement and error detection
-- **mypy**: Static type checking
-- **pre-commit**: Git hooks for automatic code quality checks
-
-#### Configuration
-
-All tools are configured in `pyproject.toml`:
-- Black: 88 character line length, Python 3.13 target
-- isort: Black-compatible profile, 88 character line length
-- flake8: 88 character line length, ignores E203 and W503
-- mypy: Strict type checking enabled
 
 ### Running Tests
 
@@ -148,7 +132,7 @@ pytest
 
 ## Examples
 
-### Complete Workflow
+###  Workflow
 
 ```python
 import os
@@ -164,15 +148,22 @@ load_dotenv()
 settings = Settings()
 client = KinexonClient(settings)
 
-# Get all teams
+# Get all teams (current season)
 teams = client.get_team_ids()
 print(f"Found {len(teams)} teams")
 
+# Get teams for specific season
+teams_2024 = client.get_team_ids("2024-25")
+print(f"Found {len(teams_2024)} teams in 2024-25 season")
+
 # Get sessions for a specific team
 team_id = 13  # Füchse Berlin
+
+# Fetch any games of the last 30 days
 end_date = datetime.now()
 start_date = end_date - timedelta(days=30)
 
+# Fetch session ids of the last 30 days
 sessions = client.get_session_ids(
     team_id=team_id,
     start=start_date.strftime("%Y-%m-%d"),
@@ -181,15 +172,20 @@ sessions = client.get_session_ids(
 
 print(f"Found {len(sessions)} sessions for team {team_id}")
 
-# Export position data for each session
+# Get position data for each session
 for session in sessions:
     session_id = session["session_id"]
     description = session["description"]
     
-    print(f"Exporting session: {description} ({session_id})")
+    print(f"Getting position data for session: {description} ({session_id})")
     
+    # Mind that the download can take ages, as a file is usually around 150 MB.
+    # @Kinexon: 160MB in 7min = terrible
+    # Probably using RDBMS for time-series data?
+    # Time-series DB (or even PG timescaledb) + compression + proper indexes + streaming
+    # Kinda using a screwdriver to hammer nails
     try:
-        position_data = client.export_positions(
+        position_data = client.get_position_data_by_session_id(
             session_id=session_id,
         )
         
@@ -201,7 +197,7 @@ for session in sessions:
         print(f"Saved {filename}")
         
     except Exception as e:
-        print(f"Failed to export session {session_id}: {e}")
+        print(f"Failed to get position data for session {session_id}: {e}")
 ```
 
 
@@ -222,7 +218,6 @@ for session in sessions:
 - Write tests for new functionality
 - Update documentation for API changes
 - Use conventional commit messages
-- Run `make check` before submitting PRs
 
 ### Pre-commit Hooks
 
@@ -230,7 +225,7 @@ The project includes pre-commit hooks that automatically run code quality checks
 
 ```bash
 # Install pre-commit hooks
-pip install pre-commit
+uv pip install pre-commit
 pre-commit install
 
 # Run manually (optional)
@@ -256,9 +251,10 @@ For support and questions:
 - Initial release
 - Basic API client functionality
 - Authentication system
-- Position data export
+- Position data retrieval with progress tracking
 - Team and session management
 - Comprehensive test suite
+- Improved error handling for large CSV downloads
 
 ## Acknowledgments
 

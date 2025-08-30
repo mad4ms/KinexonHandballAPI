@@ -140,11 +140,15 @@ def test_get_available_metrics_and_events(client, requests_mock):
     assert "events" in result
 
 
-def test_export_positions(client, requests_mock):
+def test_get_position_data_by_session_id(client, requests_mock):
     url = "https://api.test/api/export/positions/session/s123"
     requests_mock.get(
         url, content=b"id,x,y\n1,0,0", headers={"Content-Type": "text/csv"}
     )
-    result = client.export_positions("s123")
+    result = client.get_position_data_by_session_id("s123")
     assert isinstance(result, (bytes, bytearray))
     assert b"id,x,y" in result
+
+
+if __name__ == "__main__":
+    pytest.main(["-v", __file__])
