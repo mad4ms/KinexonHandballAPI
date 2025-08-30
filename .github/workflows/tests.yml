@@ -8,11 +8,7 @@ on:
 jobs:
   unit:
     name: Unit (no integration)
-    runs-on: ubuntu-latest   # or: ubuntu-24.04
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: ["3.12", "3.13"]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
@@ -21,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python-version }}
+          python-version: "3.12"
 
       - name: Set up uv
         uses: astral-sh/setup-uv@v3

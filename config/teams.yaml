@@ -1,0 +1,128 @@
+# Kinexon Handball Team IDs Configuration
+# ======================================
+# 
+# How to get Team IDs:
+# 1. Go to Kinexon Cloud web app
+# 2. Click "Team" selection dropdown
+# 3. Click user -> profile
+# 4. Switch to "Teams" tab
+# 5. Copy IDs next to team names
+# 6. Update this file for new seasons
+
+# Current season (2025/26)
+current_season: "2025-26"
+
+seasons:
+  "2023-24":
+    - id: 32
+      name: "VfL Gummersbach"
+    - id: null
+      name: "TV Bittenfeld"
+    - id: 8
+      name: "TSV Hannover-Burgdorf"
+    - id: 18
+      name: "THW Kiel"
+    - id: 33
+      name: "ThSV Eisenach"
+    - id: 5
+      name: "TBV Lemgo Lippe"
+    - id: 12
+      name: "SG Flensburg-Handewitt"
+    - id: 16
+      name: "SC Magdeburg"
+    - id: 9
+      name: "SC DHfK Leipzig"
+    - id: 7
+      name: "Rhein-Neckar Löwen"
+    - id: 6
+      name: "MT Melsungen"
+    - id: 23
+      name: "HSV Hamburg"
+    - id: 3
+      name: "HSG Wetzlar"
+    - id: null
+      name: "HC Erlangen"
+    - id: 10
+      name: "HBW Balingen-Weilstetten"
+    - id: 13
+      name: "Füchse Berlin"
+    - id: 11
+      name: "Frisch Auf Göppingen"
+    - id: 14
+      name: "Bergischer HC"
+
+  "2024-25":
+    - id: 2
+      name: "HC Erlangen"
+    - id: 3
+      name: "HSG Wetzlar"
+    - id: 5
+      name: "TBV Lemgo Lippe"
+    - id: 6
+      name: "MT Melsungen"
+    - id: 7
+      name: "Rhein-Neckar Löwen"
+    - id: 8
+      name: "TSV Hannover-Burgdorf"
+    - id: 9
+      name: "SC DHFK Leipzig"
+    - id: 11
+      name: "Frisch Auf! Göppingen"
+    - id: 12
+      name: "SG Flensburg-Handewitt"
+    - id: 13
+      name: "Füchse Berlin"
+    - id: 16
+      name: "SC Magdeburg"
+    - id: 17
+      name: "TVB Stuttgart"
+    - id: 18
+      name: "THW Kiel"
+    - id: 23
+      name: "HSV Hamburg"
+    - id: 32
+      name: "VfL Gummersbach"
+    - id: 33
+      name: "ThSV Eisenach"
+    - id: 35
+      name: "SG BBM Bietigheim"
+    - id: 36
+      name: "1. VfL Potsdam"
+
+  "2025-26":
+    - id: 13
+      name: "Füchse Berlin"
+    - id: 16
+      name: "SC Magdeburg"
+    - id: 6
+      name: "MT Melsungen"
+    - id: 18
+      name: "THW Kiel"
+    - id: 5
+      name: "TBV Lemgo Lippe"
+    - id: 8
+      name: "TSV Hannover-Burgdorf"
+    - id: 7
+      name: "Rhein-Neckar Löwen"
+    - id: 9
+      name: "SC DHFK Leipzig"
+    - id: 3
+      name: "HSG Wetzlar"
+    - id: 23
+      name: "HSV Hamburg"
+    - id: 33
+      name: "ThSV Eisenach"
+    - id: 12
+      name: "SG Flensburg-Handewitt"
+    - id: 11
+      name: "Frisch Auf! Göppingen"
+    - id: 2
+      name: "HC Erlangen"
+    - id: 17
+      name: "TVB Stuttgart"
+    - id: 32
+      name: "VfL Gummersbach"
+    - id: 14
+      name: "Bergischer HC"
+    - id: 19
+      name: "GWD Minden"

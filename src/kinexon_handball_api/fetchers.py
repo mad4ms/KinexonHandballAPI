@@ -1,73 +1,30 @@
-from typing import List, Dict
+from pathlib import Path
+from typing import Dict, List, Optional
 
-DEFAULT_TEAM_IDS_2324: List[Dict[str, int]] = [
-    {"id": 32, "name": "VfL Gummersbach"},
-    {"id": None, "name": "TV Bittenfeld"},
-    {"id": 8, "name": "TSV Hannover-Burgdorf"},
-    {"id": 18, "name": "THW Kiel"},
-    {"id": 33, "name": "ThSV Eisenach"},
-    {"id": 5, "name": "TBV Lemgo Lippe"},
-    {"id": 12, "name": "SG Flensburg-Handewitt"},
-    {"id": 16, "name": "SC Magdeburg"},
-    {"id": 9, "name": "SC DHfK Leipzig"},
-    {"id": 7, "name": "Rhein-Neckar Löwen"},
-    {"id": 6, "name": "MT Melsungen"},
-    {"id": 23, "name": "HSV Hamburg"},
-    {"id": 3, "name": "HSG Wetzlar"},
-    {"id": None, "name": "HC Erlangen"},
-    {"id": 10, "name": "HBW Balingen-Weilstetten"},
-    {"id": 13, "name": "Füchse Berlin"},
-    {"id": 11, "name": "Frisch Auf Göppingen"},
-    {"id": 14, "name": "Bergischer HC"},
-]
-
-DEFAULT_TEAM_IDS_2425: List[Dict[str, int]] = [
-    {"id": 2, "name": "HC Erlangen"},
-    {"id": 3, "name": "HSG Wetzlar"},
-    {"id": 5, "name": "TBV Lemgo Lippe"},
-    {"id": 6, "name": "MT Melsungen"},
-    {"id": 7, "name": "Rhein-Neckar Löwen"},
-    {"id": 8, "name": "TSV Hannover-Burgdorf"},
-    {"id": 9, "name": "SC DHFK Leipzig"},
-    {"id": 11, "name": "Frisch Auf! Göppingen"},
-    {"id": 12, "name": "SG Flensburg-Handewitt"},
-    {"id": 13, "name": "Füchse Berlin"},
-    {"id": 16, "name": "SC Magdeburg"},
-    {"id": 17, "name": "TVB Stuttgart"},
-    {"id": 18, "name": "THW Kiel"},
-    {"id": 23, "name": "HSV Hamburg"},
-    {"id": 32, "name": "VfL Gummersbach"},
-    {"id": 33, "name": "ThSV Eisenach"},
-    {"id": 35, "name": "SG BBM Bietigheim"},
-    {"id": 36, "name": "1. VfL Potsdam"},
-]
-
-# Season 25/26
-DEFAULT_TEAM_IDS = [
-    {"id": 13, "name": "Füchse Berlin"},
-    {"id": 16, "name": "SC Magdeburg"},
-    {"id": 6, "name": "MT Melsungen"},
-    {"id": 18, "name": "THW Kiel"},
-    {"id": 5, "name": "TBV Lemgo Lippe"},
-    {"id": 8, "name": "TSV Hannover-Burgdorf"},
-    {"id": 7, "name": "Rhein-Neckar Löwen"},
-    {"id": 9, "name": "SC DHFK Leipzig"},
-    {"id": 3, "name": "HSG Wetzlar"},
-    {"id": 23, "name": "HSV Hamburg"},
-    {"id": 33, "name": "ThSV Eisenach"},
-    {"id": 12, "name": "SG Flensburg-Handewitt"},
-    {"id": 11, "name": "Frisch Auf! Göppingen"},
-    {"id": 2, "name": "HC Erlangen"},
-    {"id": 17, "name": "TVB Stuttgart"},
-    {"id": 32, "name": "VfL Gummersbach"},
-    {"id": 14, "name": "Bergischer HC"},
-    {"id": 19, "name": "GWD Minden"},
-]
+import yaml
 
 
-def fetch_team_ids() -> List[Dict[str, int]]:
+def _load_teams_config() -> Dict:
+    """Load teams configuration from YAML file."""
+    config_path = Path(__file__).parent.parent.parent / "config" / "teams.yaml"
+
+    if not config_path.exists():
+        raise FileNotFoundError(f"Teams config file not found: {config_path}")
+
+    with open(config_path, "r", encoding="utf-8") as f:
+        return yaml.safe_load(f)
+
+
+def fetch_team_ids(season: Optional[str] = None) -> List[Dict[str, int]]:
     """
-    Return the static list of Kinexon team IDs.
+    Return the list of Kinexon team IDs for a specific season.
+
+    Args:
+        season: Season in format "YYYY-YY" (e.g., "2025-26").
+                If None, uses current season from config.
+
+    Returns:
+        List of team dictionaries with 'id' and 'name' keys.
 
     How to get the Team IDs, as they are not available via the API:
     - Go to the Kinexon Cloud web app.
@@ -75,7 +32,30 @@ def fetch_team_ids() -> List[Dict[str, int]]:
     - Click user -> profile
     - Switch to "Teams" tab.
     - The IDs next to the name are the team IDs.
-    - Copy the IDs and names into this function for a new season.
-    - If the IDs change, update this function accordingly.
+    - Copy the IDs and names into config/teams.yaml for a new season.
     """
-    return DEFAULT_TEAM_IDS
+    config = _load_teams_config()
+
+    if season is None:
+        season = config.get("current_season", "2025-26")
+
+    teams = config.get("seasons", {}).get(season)
+    if teams is None:
+        available_seasons = list(config.get("seasons", {}).keys())
+        raise ValueError(
+            f"Season '{season}' not found. Available seasons: {available_seasons}"
+        )
+
+    return teams
+
+
+def get_available_seasons() -> List[str]:
+    """Get list of available seasons."""
+    config = _load_teams_config()
+    return list(config.get("seasons", {}).keys())
+
+
+def get_current_season() -> str:
+    """Get the current season from config."""
+    config = _load_teams_config()
+    return config.get("current_season", "2025-26")

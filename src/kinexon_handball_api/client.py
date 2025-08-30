@@ -1,9 +1,11 @@
+"""Client class for interacting with the Kinexon API."""
+
 import logging
-from typing import Any, Dict, List, Union
+from typing import Any, Dict, List, Optional, Union
+
 import requests
-from requests.adapters import HTTPAdapter
 from requests.auth import HTTPBasicAuth
-from urllib3.util.retry import Retry
+from tqdm import tqdm
 
 from kinexon_handball_api.config import Settings
 from kinexon_handball_api.exceptions import KinexonAPIError
@@ -25,16 +27,7 @@ class KinexonClient:
 
     def _init_session(self) -> requests.Session:
         session = requests.Session()
-        retries = Retry(
-            total=3,
-            backoff_factor=0.3,
-            status_forcelist=[500, 502, 503, 504],
-            allowed_methods=frozenset(["GET", "POST", "PUT", "DELETE"]),
-        )
-        adapter = HTTPAdapter(max_retries=retries)
-        session.mount("https://", adapter)
-        session.mount("http://", adapter)
-        session.verify = getattr(self.settings, "verify_ssl", True)
+        session.verify = getattr(self.settings, "verify_ssl", False)
         return session
 
     def _authenticate(self) -> None:
@@ -66,22 +59,15 @@ class KinexonClient:
 
         # funny nginx: it does not like trailing slashes
         # so we try both with and without trailing slash
-        endpoints_to_try = [
-            self.settings.endpoint_main,
-            self.settings.endpoint_main.rstrip("/") + "/",
-        ]
-        last_resp = None
-        for ep in endpoints_to_try:
-            last_resp = self.session.post(ep, json=payload, timeout=10)
-            if not last_resp or not last_resp.ok:
-                raise KinexonAPIError(
-                    f"Main login failed after trying {endpoints_to_try}: "
-                    f"{last_resp.status_code if last_resp else 'N/A'} {last_resp.text if last_resp else ''}",
-                    status_code=last_resp.status_code if last_resp else None,
-                )
-            if last_resp.ok:
-                logger.info("Main authentication successful.")
-                break
+        ep = self.settings.endpoint_main
+        resp = self.session.post(ep, json=payload, timeout=10)
+        if not resp or not resp.ok:
+            raise KinexonAPIError(
+                f"Main login failed at {ep}: "
+                f"{resp.status_code if resp else 'N/A'} {resp.text if resp else ''}",
+                status_code=resp.status_code if resp else None,
+            )
+        logger.info("Main authentication successful.")
 
     def _request(
         self,
@@ -118,7 +104,6 @@ class KinexonClient:
                 params=params,
                 json=json_payload,
                 stream=stream,
-                timeout=30,
             )
             resp.raise_for_status()
 
@@ -126,26 +111,28 @@ class KinexonClient:
                 return resp.json()
             except ValueError:
                 content_type = resp.headers.get("Content-Type", "")
-                if content_type.startswith(
-                    "text/"
-                ) and not content_type.endswith("csv"):
+                if content_type.startswith("text/") and not content_type.endswith(
+                    "csv"
+                ):
                     return resp.text
                 return resp.content
 
         except requests.HTTPError as e:
-            msg = f"API request failed [{method} {url}]: {e.response.status_code} {e.response.text}"
+            msg = (
+                "API request failed ["
+                f"{method} {url}"
+                f"]: {e.response.status_code} {e.response.text}"
+            )
             logger.error(msg)
-            raise KinexonAPIError(
-                msg, status_code=e.response.status_code
-            ) from e
+            raise KinexonAPIError(msg, status_code=e.response.status_code) from e
 
-    def get_team_ids(self) -> List[Dict[str, int]]:
+    def get_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
             List[Dict[str, int]]: List of team IDs and names.
         """
-        return fetch_team_ids()
+        return fetch_team_ids(season)
 
     def get_session_ids(self, team_id: int, start: str, end: str) -> Any:
         """
@@ -158,9 +145,7 @@ class KinexonClient:
         Returns:
             Any: JSON response containing event IDs.
         """
-        url = (
-            f"{self.settings.endpoint_api}/teams/{team_id}/sessions-and-phases"
-        )
+        url = f"{self.settings.endpoint_api}/teams/{team_id}/sessions-and-phases"
         headers = {"Accept": "application/json"}
         params = {"min": start, "max": end}
         return self._request("GET", url, headers=headers, params=params)
@@ -175,7 +160,7 @@ class KinexonClient:
         headers = {"Accept": "application/json"}
         return self._request("GET", url, headers=headers)
 
-    def export_positions(
+    def get_position_data_by_session_id(
         self,
         session_id: str,
         update_rate: int = 20,
@@ -186,9 +171,9 @@ class KinexonClient:
         players: Union[str, None] = None,
     ) -> bytes:
         """
-        Export positions for a specific session.
+        Get position data for a specific session.
         Args:
-            session_id (str): The ID of the session to export.
+            session_id (str): The ID of the session to get data for.
             update_rate (int): Update rate in Hz (default: 20).
             compress (bool): Whether to compress the output (default: False).
             imu_local (bool): Use local IMU frame (default: False).
@@ -196,7 +181,7 @@ class KinexonClient:
             group_by_ts (bool): Group by timestamp (default: False).
             players (Union[str, None]): Comma-separated player IDs to filter by.
         Returns:
-            bytes: CSV content of the exported positions.
+            bytes: CSV content of the position data.
         """
         url = f"{self.settings.endpoint_api}/export/positions/session/{session_id}"
         params = {
@@ -209,10 +194,39 @@ class KinexonClient:
         if players:
             params["players"] = players
 
-        return self._request(
-            "GET",
-            url,
-            headers={"Accept": "text/csv"},
-            params=params,
-            stream=False,
+        headers = {"Accept": "text/csv"}
+
+        logger.info(f"Fetching CSV data for session ID: {session_id} ...")
+
+        response = self.session.request(
+            "GET", url, headers=headers, params=params, stream=True
         )
+
+        if response.status_code == 200:
+            total_size = int(response.headers.get("content-length", 0))
+            chunk_size = 1048576  # 1 MB
+            csv_data = bytearray()
+
+            # Use tqdm for progress tracking if available
+            try:
+
+                with tqdm(
+                    total=total_size,
+                    unit="B",
+                    unit_scale=True,
+                    desc="Downloading CSV",
+                ) as progress_bar:
+                    for chunk in response.iter_content(chunk_size=chunk_size):
+                        csv_data.extend(chunk)
+                        progress_bar.update(len(chunk))
+            except ImportError:
+                # Fallback without progress bar
+                logger.info("tqdm not available, downloading without progress bar")
+                for chunk in response.iter_content(chunk_size=chunk_size):
+                    csv_data.extend(chunk)
+
+            return bytes(csv_data)
+        else:
+            msg = f"Failed to download CSV data: {response.status_code} {response.text}"
+            logger.error(msg)
+            raise KinexonAPIError(msg, status_code=response.status_code)
