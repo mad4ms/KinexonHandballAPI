@@ -1,9 +1,10 @@
+"""Client class for interacting with the Kinexon API."""
+
 import logging
-from typing import Any, Dict, List, Union, Optional
+from typing import Any, Dict, List, Optional, Union
+
 import requests
-from requests.adapters import HTTPAdapter
 from requests.auth import HTTPBasicAuth
-from urllib3.util.retry import Retry
 from tqdm import tqdm
 
 from kinexon_handball_api.config import Settings
@@ -110,22 +111,22 @@ class KinexonClient:
                 return resp.json()
             except ValueError:
                 content_type = resp.headers.get("Content-Type", "")
-                if content_type.startswith(
-                    "text/"
-                ) and not content_type.endswith("csv"):
+                if content_type.startswith("text/") and not content_type.endswith(
+                    "csv"
+                ):
                     return resp.text
                 return resp.content
 
         except requests.HTTPError as e:
-            msg = f"API request failed [{method} {url}]: {e.response.status_code} {e.response.text}"
+            msg = (
+                "API request failed ["
+                f"{method} {url}"
+                f"]: {e.response.status_code} {e.response.text}"
+            )
             logger.error(msg)
-            raise KinexonAPIError(
-                msg, status_code=e.response.status_code
-            ) from e
+            raise KinexonAPIError(msg, status_code=e.response.status_code) from e
 
-    def get_team_ids(
-        self, season: Optional[str] = None
-    ) -> List[Dict[str, int]]:
+    def get_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
@@ -144,9 +145,7 @@ class KinexonClient:
         Returns:
             Any: JSON response containing event IDs.
         """
-        url = (
-            f"{self.settings.endpoint_api}/teams/{team_id}/sessions-and-phases"
-        )
+        url = f"{self.settings.endpoint_api}/teams/{team_id}/sessions-and-phases"
         headers = {"Accept": "application/json"}
         params = {"min": start, "max": end}
         return self._request("GET", url, headers=headers, params=params)
@@ -222,9 +221,7 @@ class KinexonClient:
                         progress_bar.update(len(chunk))
             except ImportError:
                 # Fallback without progress bar
-                logger.info(
-                    "tqdm not available, downloading without progress bar"
-                )
+                logger.info("tqdm not available, downloading without progress bar")
                 for chunk in response.iter_content(chunk_size=chunk_size):
                     csv_data.extend(chunk)
 

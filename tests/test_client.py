@@ -1,5 +1,6 @@
+"""Tests for the Kinexon API client."""
+
 import pytest
-import requests
 import requests_mock
 
 from kinexon_handball_api.client import KinexonClient
@@ -9,6 +10,9 @@ from kinexon_handball_api.exceptions import KinexonAPIError
 
 @pytest.fixture
 def settings(monkeypatch):
+    """
+    Provide Kinexon API settings from environment.
+    """
     # Session credentials
     monkeypatch.setenv("USERNAME_KINEXON_SESSION", "user_sess")
     monkeypatch.setenv("PASSWORD_KINEXON_SESSION", "pass_sess")
@@ -40,25 +44,19 @@ def client(settings: Settings) -> KinexonClient:
         # Mock session login
         m.get("https://api.test/session", status_code=200, json={"ok": True})
         # Mock main login
-        m.post(
-            "https://api.test/login", status_code=200, json={"token": "abc"}
-        )
+        m.post("https://api.test/login", status_code=200, json={"token": "abc"})
         yield KinexonClient(settings)
 
 
-def test_authentication_failure_session(
-    requests_mock, settings: Settings
-) -> None:
+def test_authentication_failure_session(requests_mock, settings: Settings) -> None:
     """
     Test that session authentication fails with 401 Unauthorized.
     """
     # Settings enthält jetzt alle Dummy-Umgebungsvariablen
-    from kinexon_handball_api.client import KinexonClient, KinexonAPIError
+    from kinexon_handball_api.client import KinexonAPIError, KinexonClient
 
     # Mock Session endpoint mit 401
-    requests_mock.get(
-        "https://api.test/session", status_code=401, text="Unauthorized"
-    )
+    requests_mock.get("https://api.test/session", status_code=401, text="Unauthorized")
 
     with pytest.raises(KinexonAPIError):
         KinexonClient(settings)
@@ -84,15 +82,14 @@ def test_request_json_response(client, requests_mock):
 
     url = "https://api.test/api/test-json"
     requests_mock.get(url, json={"hello": "world"})
+
     result = client._request("GET", url)
     assert result == {"hello": "world"}
 
 
 def test_request_text_response(client, requests_mock):
     url = "https://api.test/api/test-text"
-    requests_mock.get(
-        url, text="plain text", headers={"Content-Type": "text/plain"}
-    )
+    requests_mock.get(url, text="plain text", headers={"Content-Type": "text/plain"})
     result = client._request("GET", url)
     assert result == "plain text"
 
