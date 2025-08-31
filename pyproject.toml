@@ -62,6 +62,9 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 where = ["src"]
 
+[tool.setuptools.package-data]
+"kinexon_handball_api" = ["config/*.yaml", "config/*.yml"]
+
 # =============================================================================
 # Code Quality Tools Configuration
 # =============================================================================

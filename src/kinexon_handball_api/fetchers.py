@@ -6,7 +6,7 @@ import yaml
 
 def _load_teams_config() -> Dict:
     """Load teams configuration from YAML file."""
-    config_path = Path(__file__).parent.parent.parent / "config" / "teams.yaml"
+    config_path = Path(__file__).parent / "config" / "teams.yaml"
 
     if not config_path.exists():
         raise FileNotFoundError(f"Teams config file not found: {config_path}")
