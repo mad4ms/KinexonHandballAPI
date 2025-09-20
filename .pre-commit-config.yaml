@@ -21,7 +21,6 @@ repos:
       - id: isort
         name: isort (python)
         args: ["--profile", "black", "--line-length", "88"]
-        include: src/
         exclude: ^src/_vendor/kinexon_client/
 
   - repo: https://github.com/pycqa/flake8

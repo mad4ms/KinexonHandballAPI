@@ -1,9 +1,9 @@
 # Kinexon Handball API
 
-A Python wrapper for Kinexon Handball (DataCore) that performs session + main authentication, injects an API key, and wraps a generated OpenAPI client. It provides simple helpers for common handball endpoints (metrics/events, sessions, players, position exports).
+A Python wrapper for Kinexon Handball that performs session + main authentication, injects an API key, and wraps a generated OpenAPI client. It provides simple helpers for common handball endpoints (metrics/events, sessions, players, position exports).
 
 ## Requirements
-- Python 3.12+
+- Python 3.13+
 - Package manager uv
 - Valid Kinexon credentials (session and main usernames/passwords, API key, endpoints)
 
