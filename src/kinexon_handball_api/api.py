@@ -1,5 +1,5 @@
 """
-Kinexon DataCore API Client
+Kinexon  API Client
 API-key authenticated wrapper, integrating with generated kinexon_client functions.
 
 Author: Michael Adams, 2025
@@ -18,7 +18,7 @@ class APIRequestError(Exception):
 
 class KinexonAPI:
     """
-    API-key authenticated wrapper for Kinexon DataCore API.
+    API-key authenticated wrapper for Kinexon API.
     Provides low-level setup for generated kinexon_client.* functions.
     """
 
