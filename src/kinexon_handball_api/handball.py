@@ -27,7 +27,7 @@ from kinexon_handball_api.fetchers import fetch_team_ids
 
 class HandballAPI(KinexonAPI):
     """
-    High-level wrapper around Kinexon DataCore handball endpoints.
+    High-level wrapper around Kinexon handball endpoints.
     """
 
     def get_available_metrics_and_events(self) -> Any:
