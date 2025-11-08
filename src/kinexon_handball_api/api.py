@@ -11,6 +11,8 @@ import httpx
 from kinexon_client import Client
 from requests.auth import HTTPBasicAuth
 
+from typing import Any, Dict, Optional, List
+
 
 class APIRequestError(Exception):
     """Exception raised for request errors."""
@@ -97,9 +99,13 @@ class KinexonAPI:
                 "password": self.password_main,
             }
         }
-        resp = self.client.get_httpx_client().post(self.endpoint_main, json=payload)
+        resp = self.client.get_httpx_client().post(
+            self.endpoint_main, json=payload
+        )
         if resp.status_code != 200:
-            raise APIRequestError(f"Main login failed: {resp.status_code} {resp.text}")
+            raise APIRequestError(
+                f"Main login failed: {resp.status_code} {resp.text}"
+            )
         logger.info("Main authentication successful.")
 
         return True
@@ -112,3 +118,43 @@ class KinexonAPI:
 
     def __exit__(self, exc_type, exc, tb) -> None:
         self.close()
+
+    def make_custom_request(
+        self,
+        method: str,
+        url: str,
+        *,
+        params: Optional[Dict[str, Any]] = None,
+        headers: Optional[Dict[str, str]] = None,
+        data: Optional[Dict[str, Any]] = None,
+        json: Optional[Dict[str, Any]] = None,
+        stream: bool = False,
+        timeout: Optional[float] = None,
+    ) -> httpx.Response:
+        """
+        Low-level custom request via the authenticated httpx.Client.
+        If stream=True, returns an open Response with streaming enabled.
+        Caller is responsible for closing the response (resp.close()).
+        """
+        client = self.client.get_httpx_client()
+
+        # Prepend base URL if relative
+        if not (url.startswith("http://") or url.startswith("https://")):
+            url = f"{self.base_url.rstrip('/')}/{url.lstrip('/')}"
+
+        req = client.build_request(
+            method=method,
+            url=url,
+            params=params,
+            headers=headers,
+            data=data,
+            json=json,
+            timeout=timeout or self.timeout,
+        )
+
+        # stream=True -> no context manager here; caller must close resp
+        resp = client.send(req, stream=stream)
+        # For non-streaming, raise immediately so caller gets a ready-to-use object
+        if not stream:
+            resp.raise_for_status()
+        return resp
