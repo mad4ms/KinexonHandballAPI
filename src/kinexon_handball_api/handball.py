@@ -10,8 +10,14 @@ import logging
 import httpx
 from pathlib import Path
 from tqdm import tqdm
+from _vendor.kinexon_client.api import players
 from kinexon_client.api.available_metrics_and_events import (
     get_public_v1_statistics_list,
+)
+
+# events
+from kinexon_client.api.events import (
+    get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier,
 )
 
 # Import generated API functions
@@ -36,6 +42,33 @@ class HandballAPI(KinexonAPI):
     """
     High-level wrapper around Kinexon handball endpoints.
     """
+
+    def fetch_team_ids(
+        self, season: Optional[str] = None
+    ) -> List[Dict[str, int]]:
+        """
+        Fetch the list of team IDs from the Kinexon API.
+        Returns:
+            List[Dict[str, int]]: List of team IDs and names.
+        """
+        return fetch_team_ids(season)
+
+    def get_events_for_session(
+        self,
+        event_type: str = "detected_shot_handball",
+        players: str = "in-entity",
+        session_id: str = "latest",
+    ) -> Any:
+        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(
+            event_type=event_type,
+            players=players,
+            time_entity_type="session",
+            time_entity_identifier=session_id,
+            client=self.client,
+        )
+        if resp.status_code != 200:
+            raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
+        return resp.parsed or {}
 
     def get_available_metrics_and_events(self) -> Any:
         resp = get_public_v1_statistics_list.sync_detailed(
@@ -126,6 +159,9 @@ class HandballAPI(KinexonAPI):
             params["players"] = players
 
         headers = {"Accept": "text/csv"}
+        # optional: add gzip, zip to Accept-Encoding if compress_output
+        if compress_output:
+            headers["Accept-Encoding"] = "gzip, zip"
 
         # NOTE: public path (matches the generated client variant)
         url = f"/public/v1/export/positions/session/{session_id}"
@@ -160,7 +196,7 @@ class HandballAPI(KinexonAPI):
                 unit="B",
                 unit_scale=True,
                 unit_divisor=1024,
-                desc="Downloading CSV",
+                desc=f"Downloading file for session {session_id}",
             ) as bar:
                 for chunk in resp.iter_bytes(chunk_size=chunk_size):
                     if chunk:
