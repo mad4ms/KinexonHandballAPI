@@ -36,6 +36,7 @@ class KinexonAPI:
         api_key: str,
         timeout: float = 10.0,
         verify_ssl: bool = True,
+        connect_on_init: bool = True,
     ) -> None:
         self.base_url = base_url.rstrip("/")
         self.api_key = api_key
@@ -49,17 +50,24 @@ class KinexonAPI:
         self.endpoint_session = endpoint_session
         self.endpoint_main = endpoint_main
 
+        self.client = None
+        if connect_on_init:
+            self.connect()
+
         # Use AuthenticatedClient (generated client requires it)
         # Note: We bypass Authorization headers;
         # API key is injected via query by generated funcs.
 
+    def connect(
+        self,
+    ) -> None:
         self.client = Client(
             base_url=self.base_url,
             # token="",  # not used
             # prefix="",
             # auth_header_name=None,
             headers={"api-key": self.api_key},
-            timeout=httpx.Timeout(timeout),
+            timeout=httpx.Timeout(self.timeout),
             verify_ssl=self.verify_ssl,
             raise_on_unexpected_status=True,
         )
