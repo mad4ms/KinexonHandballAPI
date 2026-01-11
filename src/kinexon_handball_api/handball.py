@@ -42,7 +42,9 @@ class HandballAPI(KinexonAPI):
     High-level wrapper around Kinexon handball endpoints.
     """
 
-    def fetch_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
+    def fetch_team_ids(
+        self, season: Optional[str] = None
+    ) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
@@ -75,7 +77,9 @@ class HandballAPI(KinexonAPI):
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
         return resp.parsed or {}
 
-    def get_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
+    def get_team_ids(
+        self, season: Optional[str] = None
+    ) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
@@ -84,11 +88,13 @@ class HandballAPI(KinexonAPI):
         return fetch_team_ids(season)
 
     def get_sessions_for_team(self, team_id: int, start: str, end: str) -> Any:
-        resp = get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
-            team_id=team_id,
-            min_=start,
-            max_=end,
-            client=self.client,
+        resp = (
+            get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
+                team_id=team_id,
+                min_=start,
+                max_=end,
+                client=self.client,
+            )
         )
         if resp.status_code != 200:
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
@@ -132,7 +138,8 @@ class HandballAPI(KinexonAPI):
         show_progress: bool = True,
     ) -> bytes:
         """
-        Mirrors legacy _fetch_game_csv_data behavior using the base make_custom_request.
+        Thread-safe download of positions CSV via custom request with streaming.
+        This allows downloading large CSV files with streaming (there is no configuration flag for this in the generated client).
 
         Returns the CSV bytes (optionally compressed depending on API settings).
         """
@@ -156,7 +163,6 @@ class HandballAPI(KinexonAPI):
         if compress_output:
             headers["Accept-Encoding"] = "gzip, zip"
 
-        # NOTE: public path (matches the generated client variant)
         url = f"/public/v1/export/positions/session/{session_id}"
 
         # Request with streaming enabled
@@ -217,8 +223,12 @@ if __name__ == "__main__":
             "ENDPOINT_KINEXON_SESSION", "https://hbl-cloud.kinexon.com/api"
         ),
         api_key=os.getenv("API_KEY_KINEXON", "your_api_key_here"),
-        username_basic=os.getenv("USERNAME_KINEXON_SESSION", "your_username_here"),
-        password_basic=os.getenv("PASSWORD_KINEXON_SESSION", "your_password_here"),
+        username_basic=os.getenv(
+            "USERNAME_KINEXON_SESSION", "your_username_here"
+        ),
+        password_basic=os.getenv(
+            "PASSWORD_KINEXON_SESSION", "your_password_here"
+        ),
         username_main=os.getenv("USERNAME_KINEXON_MAIN", "your_username_here"),
         password_main=os.getenv("PASSWORD_KINEXON_MAIN", "your_password_here"),
         endpoint_session=os.getenv(
@@ -256,11 +266,11 @@ if __name__ == "__main__":
             len(sessions),
         )
 
-        # 2) call the custom downloader (mirrors your legacy semantics)
+        # 2) call the custom downloader
         csv_bytes = api.download_positions_csv_via_custom(
             session_id=sessions[0].session_id,
             update_rate=20,
-            compress_output=True,  # True -> often returns gzip-compressed CSV
+            compress_output=True,
             use_local_frame_imu=False,
             center_origin=False,
             group_by_timestamp=False,
