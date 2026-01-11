@@ -106,7 +106,7 @@ ensure_newline_before_comments = true
 # flake8 - Linting
 [tool.flake8]
 max-line-length = 88
-extend-ignore = ["E203", "W503", "D200", "D103"]
+extend-ignore = ["E203", "W503", "D200", "D103", "E501"]
 
 # mypy - Type checking
 [tool.mypy]

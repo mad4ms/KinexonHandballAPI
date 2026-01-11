@@ -6,12 +6,11 @@ Author: Michael Adams, 2025
 """
 
 import logging
+from typing import Any, Dict, Optional
 
 import httpx
 from kinexon_client import Client
 from requests.auth import HTTPBasicAuth
-
-from typing import Any, Dict, Optional, List
 
 
 class APIRequestError(Exception):
@@ -107,13 +106,9 @@ class KinexonAPI:
                 "password": self.password_main,
             }
         }
-        resp = self.client.get_httpx_client().post(
-            self.endpoint_main, json=payload
-        )
+        resp = self.client.get_httpx_client().post(self.endpoint_main, json=payload)
         if resp.status_code != 200:
-            raise APIRequestError(
-                f"Main login failed: {resp.status_code} {resp.text}"
-            )
+            raise APIRequestError(f"Main login failed: {resp.status_code} {resp.text}")
         logger.info("Main authentication successful.")
 
         return True
