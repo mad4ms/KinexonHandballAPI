@@ -132,7 +132,8 @@ class HandballAPI(KinexonAPI):
         show_progress: bool = True,
     ) -> bytes:
         """
-        Mirrors legacy _fetch_game_csv_data behavior using the base make_custom_request.
+        Thread-safe download of positions CSV via custom request with streaming.
+        This allows downloading large CSV files with streaming (there is no configuration flag for this in the generated client).
 
         Returns the CSV bytes (optionally compressed depending on API settings).
         """
@@ -156,7 +157,6 @@ class HandballAPI(KinexonAPI):
         if compress_output:
             headers["Accept-Encoding"] = "gzip, zip"
 
-        # NOTE: public path (matches the generated client variant)
         url = f"/public/v1/export/positions/session/{session_id}"
 
         # Request with streaming enabled
@@ -256,11 +256,11 @@ if __name__ == "__main__":
             len(sessions),
         )
 
-        # 2) call the custom downloader (mirrors your legacy semantics)
+        # 2) call the custom downloader
         csv_bytes = api.download_positions_csv_via_custom(
             session_id=sessions[0].session_id,
             update_rate=20,
-            compress_output=True,  # True -> often returns gzip-compressed CSV
+            compress_output=True,
             use_local_frame_imu=False,
             center_origin=False,
             group_by_timestamp=False,
