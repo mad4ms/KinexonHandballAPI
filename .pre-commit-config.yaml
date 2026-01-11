@@ -27,7 +27,7 @@ repos:
     rev: 7.0.0
     hooks:
       - id: flake8
-        args: ["--max-line-length=88", "--extend-ignore=E203,W503,D200,D103"]
+        args: ["--max-line-length=88", "--extend-ignore=E203,W503,D200,D103,E501"]
         exclude: ^src/_vendor/kinexon_client/
 
   - repo: https://github.com/kynan/nbstripout

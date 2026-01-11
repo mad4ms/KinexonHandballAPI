@@ -6,16 +6,14 @@ Author: Michael Adams, 2025
 """
 
 from typing import Any, Dict, List, Optional
-import logging
+
 import httpx
-from pathlib import Path
-from tqdm import tqdm
-from _vendor.kinexon_client.api import players
 from kinexon_client.api.available_metrics_and_events import (
     get_public_v1_statistics_list,
 )
 
 # events
+# noqa: E501
 from kinexon_client.api.events import (
     get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier,
 )
@@ -29,6 +27,7 @@ from kinexon_client.api.sessions_and_phases import (
     get_public_v1_teams_by_team_id_sessions_and_phases,
 )
 from kinexon_client.types import UNSET
+from tqdm import tqdm
 
 from kinexon_handball_api.api import KinexonAPI
 from kinexon_handball_api.fetchers import fetch_team_ids
@@ -43,9 +42,7 @@ class HandballAPI(KinexonAPI):
     High-level wrapper around Kinexon handball endpoints.
     """
 
-    def fetch_team_ids(
-        self, season: Optional[str] = None
-    ) -> List[Dict[str, int]]:
+    def fetch_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
@@ -59,13 +56,13 @@ class HandballAPI(KinexonAPI):
         players: str = "in-entity",
         session_id: str = "latest",
     ) -> Any:
-        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(
+        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(  # noqa
             event_type=event_type,
             players=players,
             time_entity_type="session",
             time_entity_identifier=session_id,
             client=self.client,
-        )
+        )  # noqa
         if resp.status_code != 200:
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
         return resp.parsed or {}
@@ -78,9 +75,7 @@ class HandballAPI(KinexonAPI):
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
         return resp.parsed or {}
 
-    def get_team_ids(
-        self, season: Optional[str] = None
-    ) -> List[Dict[str, int]]:
+    def get_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
         """
         Fetch the list of team IDs from the Kinexon API.
         Returns:
@@ -89,13 +84,11 @@ class HandballAPI(KinexonAPI):
         return fetch_team_ids(season)
 
     def get_sessions_for_team(self, team_id: int, start: str, end: str) -> Any:
-        resp = (
-            get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
-                team_id=team_id,
-                min_=start,
-                max_=end,
-                client=self.client,
-            )
+        resp = get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
+            team_id=team_id,
+            min_=start,
+            max_=end,
+            client=self.client,
         )
         if resp.status_code != 200:
             raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
@@ -224,12 +217,8 @@ if __name__ == "__main__":
             "ENDPOINT_KINEXON_SESSION", "https://hbl-cloud.kinexon.com/api"
         ),
         api_key=os.getenv("API_KEY_KINEXON", "your_api_key_here"),
-        username_basic=os.getenv(
-            "USERNAME_KINEXON_SESSION", "your_username_here"
-        ),
-        password_basic=os.getenv(
-            "PASSWORD_KINEXON_SESSION", "your_password_here"
-        ),
+        username_basic=os.getenv("USERNAME_KINEXON_SESSION", "your_username_here"),
+        password_basic=os.getenv("PASSWORD_KINEXON_SESSION", "your_password_here"),
         username_main=os.getenv("USERNAME_KINEXON_MAIN", "your_username_here"),
         password_main=os.getenv("PASSWORD_KINEXON_MAIN", "your_password_here"),
         endpoint_session=os.getenv(
