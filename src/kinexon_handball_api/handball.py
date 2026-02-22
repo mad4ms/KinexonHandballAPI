@@ -1,24 +1,18 @@
-"""
-Handball API wrapper for Kinexon API.
+"""Handball API wrapper for Kinexon API.
 Provides convenience methods using generated kinexon_client functions.
-
-Author: Michael Adams, 2025
 """
 
-from typing import Any, Dict, List, Optional
+from __future__ import annotations
+
+import logging
+from datetime import datetime
+from typing import Any
 
 import httpx
-from kinexon_client.api.available_metrics_and_events import (
-    get_public_v1_statistics_list,
-)
-
-# events
-# noqa: E501
+from kinexon_client.api.available_metrics_and_events import get_public_v1_statistics_list
 from kinexon_client.api.events import (
     get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier,
 )
-
-# Import generated API functions
 from kinexon_client.api.exports import (
     get_public_v1_export_positions_session_by_time_entity_identifier,
 )
@@ -32,22 +26,34 @@ from tqdm import tqdm
 from kinexon_handball_api.api import KinexonAPI
 from kinexon_handball_api.fetchers import fetch_team_ids
 
+logger = logging.getLogger(__name__)
+
 
 def _bool_str(v: bool) -> str:
     return "true" if v else "false"
 
 
 class HandballAPI(KinexonAPI):
-    """
-    High-level wrapper around Kinexon handball endpoints.
-    """
+    """High-level wrapper around Kinexon handball endpoints."""
 
-    def fetch_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
-        """
-        Fetch the list of team IDs from the Kinexon API.
-        Returns:
-            List[Dict[str, int]]: List of team IDs and names.
-        """
+    @staticmethod
+    def _require_value(name: str, value: Any) -> None:
+        if value is None or value == "":
+            raise ValueError(f"{name} must be provided.")
+
+    @staticmethod
+    def _ensure_ok(response: Any, context: str) -> None:
+        if response.status_code != 200:
+            raise RuntimeError(
+                f"{context}: HTTP {response.status_code}: {response.content!r}"
+            )
+
+    @staticmethod
+    def _to_iso(value: datetime | str) -> str:
+        return value.isoformat() if isinstance(value, datetime) else value
+
+    def get_team_ids(self, season: str | None = None) -> list[dict[str, Any]]:
+        """Return team IDs for a season (or default season behavior)."""
         return fetch_team_ids(season)
 
     def get_events_for_session(
@@ -56,51 +62,45 @@ class HandballAPI(KinexonAPI):
         players: str = "in-entity",
         session_id: str = "latest",
     ) -> Any:
-        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(  # noqa
+        self._require_value("session_id", session_id)
+        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(  # noqa: E501
             event_type=event_type,
             players=players,
             time_entity_type="session",
             time_entity_identifier=session_id,
             client=self.client,
-        )  # noqa
-        if resp.status_code != 200:
-            raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
+        )
+        self._ensure_ok(resp, "events_for_session")
         return resp.parsed or {}
 
     def get_available_metrics_and_events(self) -> Any:
-        resp = get_public_v1_statistics_list.sync_detailed(
-            client=self.client,
-        )
-        if resp.status_code != 200:
-            raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
+        resp = get_public_v1_statistics_list.sync_detailed(client=self.client)
+        self._ensure_ok(resp, "available_metrics_and_events")
         return resp.parsed or {}
 
-    def get_team_ids(self, season: Optional[str] = None) -> List[Dict[str, int]]:
-        """
-        Fetch the list of team IDs from the Kinexon API.
-        Returns:
-            List[Dict[str, int]]: List of team IDs and names.
-        """
-        return fetch_team_ids(season)
-
-    def get_sessions_for_team(self, team_id: int, start: str, end: str) -> Any:
+    def get_sessions_for_team(
+        self,
+        team_id: int,
+        start: datetime | str,
+        end: datetime | str,
+    ) -> Any:
+        self._require_value("team_id", team_id)
         resp = get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
             team_id=team_id,
-            min_=start,
-            max_=end,
+            min_=self._to_iso(start),
+            max_=self._to_iso(end),
             client=self.client,
         )
-        if resp.status_code != 200:
-            raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
+        self._ensure_ok(resp, "sessions_for_team")
         return resp.parsed or {}
 
     def get_team_players(self, team_id: int) -> Any:
+        self._require_value("team_id", team_id)
         resp = get_public_v1_teams_by_team_id_players.sync_detailed(
             team_id=team_id,
             client=self.client,
         )
-        if resp.status_code != 200:
-            raise RuntimeError(f"HTTP {resp.status_code}: {resp.content!r}")
+        self._ensure_ok(resp, "team_players")
         return resp.parsed or {}
 
     def get_positions_csv(
@@ -108,8 +108,9 @@ class HandballAPI(KinexonAPI):
         session_id: str,
         update_rate: int = 20,
         group_by_ts: bool = True,
-        players: Optional[str] = None,
+        players: str | None = None,
     ) -> str:
+        self._require_value("session_id", session_id)
         return get_public_v1_export_positions_session_by_time_entity_identifier.sync(
             time_entity_identifier=session_id,
             client=self.client,
@@ -127,39 +128,28 @@ class HandballAPI(KinexonAPI):
         use_local_frame_imu: bool = False,
         center_origin: bool = False,
         group_by_timestamp: bool = False,
-        players: Optional[str] = None,
+        players: str | None = None,
         chunk_size: int = 1024 * 1024,
         show_progress: bool = True,
     ) -> bytes:
-        """
-        Thread-safe download of positions CSV via custom request with streaming.
-        This allows downloading large CSV files with streaming (there is no configuration flag for this in the generated client).
+        """Download positions CSV via streaming custom request."""
+        self._require_value("session_id", session_id)
 
-        Returns the CSV bytes (optionally compressed depending on API settings).
-        """
-
-        # Legacy semantics: booleans as lowercase strings
-        def b(x: bool) -> str:
-            return "true" if x else "false"
-
-        params: Dict[str, Any] = {
+        params: dict[str, Any] = {
             "updateRate": update_rate,
-            "compressOutput": b(compress_output),
-            "useLocalFrameIMU": b(use_local_frame_imu),
-            "centerOrigin": b(center_origin),
-            "groupByTimestamp": b(group_by_timestamp),
+            "compressOutput": _bool_str(compress_output),
+            "useLocalFrameIMU": _bool_str(use_local_frame_imu),
+            "centerOrigin": _bool_str(center_origin),
+            "groupByTimestamp": _bool_str(group_by_timestamp),
         }
         if players:
             params["players"] = players
 
         headers = {"Accept": "text/csv"}
-        # optional: add gzip, zip to Accept-Encoding if compress_output
         if compress_output:
             headers["Accept-Encoding"] = "gzip, zip"
 
         url = f"/public/v1/export/positions/session/{session_id}"
-
-        # Request with streaming enabled
         resp = self.make_custom_request(
             "GET",
             url,
@@ -168,22 +158,20 @@ class HandballAPI(KinexonAPI):
             stream=True,
         )
 
-        # Raise early for non-200
         try:
             resp.raise_for_status()
-        except httpx.HTTPStatusError as e:
+        except httpx.HTTPStatusError as exc:
             text = ""
             try:
                 text = resp.text
             except Exception:
                 pass
-            raise RuntimeError(f"HTTP {resp.status_code}: {text}") from e
+            raise RuntimeError(f"HTTP {resp.status_code}: {text}") from exc
 
-        # Progress: use Content-Length when available
         total = int(resp.headers.get("Content-Length", "0")) or None
         buf = bytearray()
 
-        if show_progress and tqdm is not None:
+        if show_progress:
             with tqdm(
                 total=total,
                 unit="B",
@@ -201,76 +189,5 @@ class HandballAPI(KinexonAPI):
                     buf.extend(chunk)
 
         resp.close()
+        logger.debug("Downloaded %d bytes for session %s", len(buf), session_id)
         return bytes(buf)
-
-
-if __name__ == "__main__":
-    import os
-    from datetime import datetime
-
-    from dotenv import load_dotenv
-
-    load_dotenv()
-
-    api = HandballAPI(
-        base_url=os.getenv(
-            "ENDPOINT_KINEXON_SESSION", "https://hbl-cloud.kinexon.com/api"
-        ),
-        api_key=os.getenv("API_KEY_KINEXON", "your_api_key_here"),
-        username_basic=os.getenv("USERNAME_KINEXON_SESSION", "your_username_here"),
-        password_basic=os.getenv("PASSWORD_KINEXON_SESSION", "your_password_here"),
-        username_main=os.getenv("USERNAME_KINEXON_MAIN", "your_username_here"),
-        password_main=os.getenv("PASSWORD_KINEXON_MAIN", "your_password_here"),
-        endpoint_session=os.getenv(
-            "ENDPOINT_KINEXON_SESSION",
-            "https://hbl-cloud.kinexon.com/api/session",
-        ),
-        endpoint_main=os.getenv(
-            "ENDPOINT_KINEXON_MAIN",
-            "https://hbl-cloud.kinexon.com/api",
-        ),
-        timeout=10000,
-    )
-    avail = api.get_available_metrics_and_events()
-    # print("Available metrics and events:", len(avail))
-
-    ids_team = fetch_team_ids()
-
-    print("Team IDs:", len(ids_team))
-
-    print(
-        f"Team Players for team {ids_team[0]['id']}:",
-        api.get_team_players(team_id=ids_team[0]["id"]),
-    )
-
-    if ids_team:
-        team_id = ids_team[0]["id"]
-        sessions = api.get_sessions_for_team(
-            team_id=team_id,
-            start=datetime.fromisoformat("2024-08-01T00:00:00+00:00"),
-            end=datetime.fromisoformat("2025-08-01T00:00:00+00:00"),
-        )
-        # print session ids and names
-        print(
-            f"Sessions for team {team_id}:",
-            len(sessions),
-        )
-
-        # 2) call the custom downloader
-        csv_bytes = api.download_positions_csv_via_custom(
-            session_id=sessions[0].session_id,
-            update_rate=20,
-            compress_output=True,
-            use_local_frame_imu=False,
-            center_origin=False,
-            group_by_timestamp=False,
-            players=None,  # or "123,456,789"
-            chunk_size=512 * 1024,  # 512 KB chunks
-            show_progress=True,  # requires tqdm installed; otherwise ignored
-        )
-
-        # 3) write to disk (name accordingly if compressed)
-        out_path = "positions.csv.gz" if True else "positions.csv"
-        with open(out_path, "wb") as f:
-            f.write(csv_bytes)
-        print(f"Wrote {len(csv_bytes):,} bytes to {out_path}")
