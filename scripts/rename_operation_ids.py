@@ -1,4 +1,5 @@
 import json
+from typing import Any
 
 # Mapping from ugly hashed operationId -> meaningful name
 OPID_MAP = {  # noqa
@@ -25,7 +26,7 @@ OPID_MAP = {  # noqa
 }
 
 
-def replace_operation_ids(data: dict) -> dict:
+def replace_operation_ids(data: Any) -> Any:
     """Recursively traverse OpenAPI spec and replace operationId values."""
     if isinstance(data, dict):
         if "operationId" in data and data["operationId"] in OPID_MAP:
@@ -41,7 +42,7 @@ def replace_operation_ids(data: dict) -> dict:
     return data
 
 
-def main():
+def main() -> None:
     with open("openapi/sport_app.json", "r", encoding="utf-8") as f:
         spec = json.load(f)
 

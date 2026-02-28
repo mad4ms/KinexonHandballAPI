@@ -15,8 +15,7 @@ git push origin vX.Y.Z
 ```
 
 ## 3) What happens automatically
-- GitHub Action `release.yml` builds `sdist` + `wheel`
+- GitHub Action `release.yml` verifies tag matches `pyproject.toml` version
+- Builds `sdist` + `wheel`
+- Publishes to PyPI via trusted publishing
 - Artifacts are attached to a GitHub Release for the tag
-
-## 4) Optional PyPI publish
-If needed, publish from `dist/` manually or add a PyPI publish step in workflow.

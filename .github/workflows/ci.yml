@@ -18,12 +18,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # If uv.lock exists later, switch to: uv sync --locked
       - name: Install deps
-        run: uv pip install -e ".[dev]"
+        run: uv sync --locked
 
-      - name: Black (check)
-        run: uv run black --check .
+      - name: Ruff (check)
+        run: uv run ruff check .
+
+      - name: Ruff format (check)
+        run: uv run ruff format --check .
 
       - name: isort (check)
         run: uv run isort --check-only .

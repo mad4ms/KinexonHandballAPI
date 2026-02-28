@@ -1,16 +1,11 @@
-"""
-Kinexon  API Client
-API-key authenticated wrapper, integrating with generated kinexon_client functions.
-
-Author: Michael Adams, 2025
-"""
+"""Kinexon API client wrapper with two-step authentication."""
 
 import logging
+from types import TracebackType
 from typing import Any, Dict, Optional
 
 import httpx
 from kinexon_client import Client
-from requests.auth import HTTPBasicAuth
 
 
 class APIRequestError(Exception):
@@ -49,7 +44,7 @@ class KinexonAPI:
         self.endpoint_session = endpoint_session
         self.endpoint_main = endpoint_main
 
-        self.client = None
+        self.client: Client | None = None
         if connect_on_init:
             self.connect()
 
@@ -57,9 +52,7 @@ class KinexonAPI:
         # Note: We bypass Authorization headers;
         # API key is injected via query by generated funcs.
 
-    def connect(
-        self,
-    ) -> None:
+    def connect(self) -> None:
         self.client = Client(
             base_url=self.base_url,
             # token="",  # not used
@@ -73,9 +66,12 @@ class KinexonAPI:
 
         self.authenticate()
 
-    def authenticate(
-        self,
-    ) -> bool:
+    def _get_httpx_client(self) -> httpx.Client:
+        if self.client is None:
+            raise APIRequestError("Client not initialized. Call connect() first.")
+        return self.client.get_httpx_client()
+
+    def authenticate(self) -> bool:
         """
         Authenticate with Kinexon API using a two-step login:
         1) Persist Basic Auth on the session and GET the session endpoint.
@@ -84,16 +80,17 @@ class KinexonAPI:
         logger = logging.getLogger(__name__)
 
         # Use a temporary httpx.Client for authentication
-        self.client.get_httpx_client().auth = HTTPBasicAuth(
+        client = self._get_httpx_client()
+        client.auth = httpx.BasicAuth(
             self.username_basic,
             self.password_basic,
         )
         # Step 1: Session-level Basic Auth
-        resp = self.client.get_httpx_client().get(
+        resp = client.get(
             self.endpoint_session,
             # auth=(self.username_basic, self.password_basic),
         )
-        if not resp.is_redirect:
+        if resp.status_code not in {200, 204} and not resp.is_redirect:
             raise APIRequestError(
                 f"Session login failed: {resp.status_code} {resp.text}"
             )
@@ -106,7 +103,7 @@ class KinexonAPI:
                 "password": self.password_main,
             }
         }
-        resp = self.client.get_httpx_client().post(self.endpoint_main, json=payload)
+        resp = client.post(self.endpoint_main, json=payload)
         if resp.status_code != 200:
             raise APIRequestError(f"Main login failed: {resp.status_code} {resp.text}")
         logger.info("Main authentication successful.")
@@ -114,12 +111,19 @@ class KinexonAPI:
         return True
 
     def close(self) -> None:
+        if self.client is None:
+            return
         self.client.get_httpx_client().close()
 
     def __enter__(self) -> "KinexonAPI":
         return self
 
-    def __exit__(self, exc_type, exc, tb) -> None:
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
+    ) -> None:
         self.close()
 
     def make_custom_request(
@@ -139,7 +143,7 @@ class KinexonAPI:
         If stream=True, returns an open Response with streaming enabled.
         Caller is responsible for closing the response (resp.close()).
         """
-        client = self.client.get_httpx_client()
+        client = self._get_httpx_client()
 
         # Prepend base URL if relative
         if not (url.startswith("http://") or url.startswith("https://")):
