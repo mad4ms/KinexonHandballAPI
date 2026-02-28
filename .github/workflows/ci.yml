@@ -12,34 +12,25 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.13"]
+        python-version: ["3.12", "3.13"]
+
     container: astral/uv:python${{ matrix.python-version }}-bookworm-slim
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
+      # If you have uv.lock → prefer: uv sync --locked
       - name: Install deps
-        run: uv sync --locked
+        run: uv pip install --system -e ".[dev]"
 
-      - name: Ruff (check)
-        run: uv run ruff check .
-
-      - name: Ruff format (check)
-        run: uv run ruff format --check .
-
-      - name: isort (check)
-        run: uv run isort --check-only .
+      - name: Ruff
+        run: uv run ruff check src test
 
       - name: Mypy
         run: uv run mypy src/kinexon_handball_api
 
-      - name: Pytest (if tests exist)
-        run: |
-          if [ -d test ] || [ -d tests ]; then
-            uv run pytest
-          else
-            echo "No tests directory found, skipping pytest."
-          fi
+      - name: Pytest
+        run: uv run pytest
 
   build:
     runs-on: ubuntu-latest
@@ -47,13 +38,13 @@ jobs:
     container: astral/uv:python3.13-bookworm-slim
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Build package
         run: uv build
 
       - name: Upload dist artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: kinexon-dist
           path: dist/
