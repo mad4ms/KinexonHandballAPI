@@ -3,6 +3,7 @@ from typing import cast
 
 import pytest
 from dotenv import load_dotenv
+
 from kinexon_handball_api.api import KinexonAPI
 
 load_dotenv()  # Load .env file for integration test credentials
@@ -15,7 +16,7 @@ def _require_env(name: str) -> str:
     return cast(str, value)
 
 
-@pytest.mark.integration  # type: ignore[misc]
+@pytest.mark.integration
 def test_authenticate_live() -> None:
     api = KinexonAPI(
         base_url=_require_env("ENDPOINT_KINEXON_API"),

@@ -4,6 +4,7 @@ Provides convenience methods using generated kinexon_client functions.
 
 from __future__ import annotations
 
+import contextlib
 import logging
 from datetime import datetime
 from typing import Any, TypeVar, cast
@@ -23,9 +24,10 @@ from kinexon_client.api.sessions_and_phases import (
     get_public_v1_teams_by_team_id_sessions_and_phases,
 )
 from kinexon_client.types import UNSET
+from tqdm import tqdm
+
 from kinexon_handball_api.api import KinexonAPI
 from kinexon_handball_api.fetchers import TeamEntry, fetch_team_ids
-from tqdm import tqdm
 
 logger = logging.getLogger(__name__)
 
@@ -67,7 +69,7 @@ class HandballAPI(KinexonAPI):
 
     def get_team_ids(self, season: str | None = None) -> list[TeamEntry]:
         """Return team IDs for a season (or default season behavior)."""
-        return cast(list[TeamEntry], fetch_team_ids(season))
+        return fetch_team_ids(season)
 
     def get_events_for_session(
         self,
@@ -120,7 +122,7 @@ class HandballAPI(KinexonAPI):
         players: str | None = None,
     ) -> str:
         self._require_value("session_id", session_id)
-        resp = get_public_v1_export_positions_session_by_time_entity_identifier.sync_detailed(
+        resp = get_public_v1_export_positions_session_by_time_entity_identifier.sync_detailed(  # noqa: E501
             time_entity_identifier=session_id,
             client=self.client,
             update_rate=update_rate,
@@ -129,7 +131,7 @@ class HandballAPI(KinexonAPI):
         )
         return self._handle_response(resp, "positions_csv", "")
 
-    def download_positions_csv_via_custom(
+    def download_positions_csv_via_custom(  # noqa: PLR0913, PLR0912
         self,
         session_id: str,
         *,
@@ -139,11 +141,18 @@ class HandballAPI(KinexonAPI):
         center_origin: bool = False,
         group_by_timestamp: bool = False,
         players: str | None = None,
+        max_bytes: int | None = None,
         chunk_size: int = 1024 * 1024,
         show_progress: bool = True,
+        timeout: float | None = None,
     ) -> bytes:
-        """Download positions CSV via streaming custom request."""
+        """Download positions CSV via streaming custom request.
+
+        If max_bytes is set, the download stops after that many bytes.
+        """
         self._require_value("session_id", session_id)
+
+        max_bytes_remaining = max_bytes if max_bytes and max_bytes > 0 else None
 
         params: dict[str, Any] = {
             "updateRate": update_rate,
@@ -166,6 +175,7 @@ class HandballAPI(KinexonAPI):
             params=params,
             headers=headers,
             stream=True,
+            timeout=timeout,
         )
 
         try:
@@ -183,18 +193,33 @@ class HandballAPI(KinexonAPI):
                 ) as bar:
                     for chunk in resp.iter_bytes(chunk_size=chunk_size):
                         if chunk:
-                            buf.extend(chunk)
-                            bar.update(len(chunk))
+                            if max_bytes_remaining is None:
+                                buf.extend(chunk)
+                                bar.update(len(chunk))
+                            else:
+                                take = min(len(chunk), max_bytes_remaining)
+                                if take:
+                                    buf.extend(chunk[:take])
+                                    bar.update(take)
+                                    max_bytes_remaining -= take
+                                if max_bytes_remaining == 0:
+                                    break
             else:
                 for chunk in resp.iter_bytes(chunk_size=chunk_size):
                     if chunk:
-                        buf.extend(chunk)
+                        if max_bytes_remaining is None:
+                            buf.extend(chunk)
+                        else:
+                            take = min(len(chunk), max_bytes_remaining)
+                            if take:
+                                buf.extend(chunk[:take])
+                                max_bytes_remaining -= take
+                            if max_bytes_remaining == 0:
+                                break
         except httpx.HTTPStatusError as exc:
             text = ""
-            try:
+            with contextlib.suppress(Exception):
                 text = resp.text
-            except Exception:
-                pass
             raise RuntimeError(f"HTTP {resp.status_code}: {text}") from exc
         finally:
             resp.close()

@@ -11,13 +11,16 @@ jobs:
     permissions:
       contents: write
       id-token: write
+      attestations: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.13"
+
+      - uses: astral-sh/setup-uv@v5
 
       - name: Verify tag matches version
         run: |
@@ -35,20 +38,43 @@ jobs:
               sys.exit(1)
           PY
 
+      - name: Install deps
+        run: uv pip install --system -e ".[dev]"
+
+      - name: Ruff
+        run: uv run ruff check src test
+
+      - name: Mypy
+        run: uv run mypy src/sportradar_datacore_api
+
+      - name: Pytest
+        run: uv run pytest
+
       - name: Build artifacts
         run: |
-          python -m pip install --upgrade pip build
-          python -m build
+          uv build
+
+      - name: Generate SBOM
+        uses: anchore/sbom-action@v0
+        with:
+          path: dist
+          artifact-name: sportradar-sbom
 
       - name: Upload release artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
-          name: kinexon-dist
+          name: sportradar-dist
           path: dist/*
+
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: dist/*
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          generate_release_notes: true
           files: dist/*
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -1,9 +1,9 @@
 import base64
-from typing import List
 
 import httpx
 import pytest
 from kinexon_client import Client
+
 from kinexon_handball_api.api import APIRequestError, KinexonAPI
 
 
@@ -35,12 +35,12 @@ def _make_api(transport: httpx.BaseTransport) -> KinexonAPI:
 
 
 def _basic_auth_header(username: str, password: str) -> str:
-    raw = f"{username}:{password}".encode("utf-8")
+    raw = f"{username}:{password}".encode()
     return "Basic " + base64.b64encode(raw).decode("ascii")
 
 
 def test_authenticate_success_sets_basic_auth() -> None:
-    requests: List[httpx.Request] = []
+    requests: list[httpx.Request] = []
 
     def handler(request: httpx.Request) -> httpx.Response:
         requests.append(request)

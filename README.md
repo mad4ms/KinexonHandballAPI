@@ -1,7 +1,7 @@
 # Kinexon Handball API
 
 
-[![Python](https://img.shields.io/badge/python-3.12+-blue.svg)](https://www.python.org/downloads/)
+[![Python](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Code style: ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
 
@@ -58,11 +58,11 @@ USERNAME_KINEXON_MAIN=your_main_username
 PASSWORD_KINEXON_MAIN=your_main_password
 ENDPOINT_KINEXON_MAIN=https://hbl-cloud.kinexon.com/checklogin
 
-# API Base Configuration
-ENDPOINT_KINEXON_API=https://hbl-cloud.kinexon.com/public/v1/
+# API Base Configuration (no trailing /public/v1)
+ENDPOINT_KINEXON_API=https://hbl-cloud.kinexon.com
 ```
 
-yeah i know it's confusing, but the two-step authentication requires separate credentials for each step. Don't shoot the messenger!
+Note: The two-step authentication requires separate credentials for each step.
 
 ## Usage
 
@@ -81,12 +81,14 @@ load_dotenv()
 
 # 2. Initialize the API
 api = HandballAPI(
-    base_url=os.getenv("ENDPOINT_KINEXON_API"),
-    api_key=os.getenv("API_KEY_KINEXON"),
-    username_basic=os.getenv("USERNAME_KINEXON_SESSION"),
-    password_basic=os.getenv("PASSWORD_KINEXON_SESSION"),
-    username_main=os.getenv("USERNAME_KINEXON_MAIN"),
-    password_main=os.getenv("PASSWORD_KINEXON_MAIN"),
+  base_url=os.getenv("ENDPOINT_KINEXON_API", ""),
+  api_key=os.getenv("API_KEY_KINEXON", ""),
+  username_basic=os.getenv("USERNAME_KINEXON_SESSION", ""),
+  password_basic=os.getenv("PASSWORD_KINEXON_SESSION", ""),
+  username_main=os.getenv("USERNAME_KINEXON_MAIN", ""),
+  password_main=os.getenv("PASSWORD_KINEXON_MAIN", ""),
+  endpoint_session=os.getenv("ENDPOINT_KINEXON_SESSION", ""),
+  endpoint_main=os.getenv("ENDPOINT_KINEXON_MAIN", ""),
 )
 
 # 3. Use high-level helpers
@@ -107,11 +109,11 @@ if teams:
 For endpoints not covered by high-level helpers, accessing the generated client directly is supported and encouraged. The generated client resides in `kinexon_client`.
 
 ```python
-from kinexon_client.api.players import get_team_players
+from kinexon_client.api.players import get_public_v1_teams_by_team_id_players
 from kinexon_client.models import PlayerModel
 
 # You can access the authenticated low-level client via `api.client`
-response = get_team_players.sync_detailed(
+response = get_public_v1_teams_by_team_id_players.sync_detailed(
     client=api.client,
     team_id=12345
 )
@@ -123,7 +125,7 @@ if response.status_code == 200:
 ```
 
 ### Advanced: Adding new teams
-You can add new teams by modifying the `config/teams.json`. Somehow there is no API endpoint to fetch all teams, so this is a manual step for now.
+You can add new teams by modifying `config/teams.yaml`. Somehow there is no API endpoint to fetch all teams, so this is a manual step for now.
 
 ## Architecture
 
@@ -133,6 +135,18 @@ This project uses a **Wrapper Pattern** around a generated OpenAPI client.
 - **`src/_vendor/kinexon_client/`**: The low-level client code generated from the Kinexon OpenAPI specification.
   - *Note*: This directory allows us to ship the generated code without external dependencies or versioning conflicts.
   - **Do not edit files in `_vendor` manually.** They are overwritten during code generation.
+
+## Repository Layout
+
+- **`src/kinexon_handball_api/`**: Hand-written wrapper and helper APIs.
+- **`src/_vendor/kinexon_client/`**: Generated OpenAPI client (do not edit by hand).
+- **`scripts/`**: Code generation helpers for the OpenAPI client.
+- **`test/`**: Test suite executed with `pytest`.
+
+## AI Assistance
+
+If you are using GitHub Copilot in this repo, see the project-specific guidance in
+`.github/copilot-instructions.md`.
 
 ## Development
 
@@ -146,8 +160,10 @@ uv pip install -e ".[dev]"
 ### Running Tests
 
 ```bash
-# Run unit tests
-uv run pytest -m "not integration"
+pytest
+
+Note: The integration tests use live API calls and will be skipped if required
+environment variables are not set.
 ```
 
 ### Code Generation

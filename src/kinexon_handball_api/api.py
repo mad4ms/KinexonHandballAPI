@@ -2,7 +2,7 @@
 
 import logging
 from types import TracebackType
-from typing import Any, Dict, Optional
+from typing import Any
 
 import httpx
 from kinexon_client import Client
@@ -18,7 +18,7 @@ class KinexonAPI:
     Provides low-level setup for generated kinexon_client.* functions.
     """
 
-    def __init__(
+    def __init__(  # noqa: PLR0913
         self,
         base_url: str,
         username_basic: str,
@@ -78,6 +78,7 @@ class KinexonAPI:
         2) POST JSON (nested 'login') to the main endpoint.
         """
         logger = logging.getLogger(__name__)
+        ok_status = 200
 
         # Use a temporary httpx.Client for authentication
         client = self._get_httpx_client()
@@ -104,7 +105,7 @@ class KinexonAPI:
             }
         }
         resp = client.post(self.endpoint_main, json=payload)
-        if resp.status_code != 200:
+        if resp.status_code != ok_status:
             raise APIRequestError(f"Main login failed: {resp.status_code} {resp.text}")
         logger.info("Main authentication successful.")
 
@@ -126,17 +127,17 @@ class KinexonAPI:
     ) -> None:
         self.close()
 
-    def make_custom_request(
+    def make_custom_request(  # noqa: PLR0913
         self,
         method: str,
         url: str,
         *,
-        params: Optional[Dict[str, Any]] = None,
-        headers: Optional[Dict[str, str]] = None,
-        data: Optional[Dict[str, Any]] = None,
-        json: Optional[Dict[str, Any]] = None,
+        params: dict[str, Any] | None = None,
+        headers: dict[str, str] | None = None,
+        data: dict[str, Any] | None = None,
+        json: dict[str, Any] | None = None,
         stream: bool = False,
-        timeout: Optional[float] = None,
+        timeout: float | None = None,
     ) -> httpx.Response:
         """
         Low-level custom request via the authenticated httpx.Client.
