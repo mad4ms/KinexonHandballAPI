@@ -122,6 +122,10 @@ module = "kinexon_client.*"
 follow_imports = "skip"
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = ["yaml", "yaml.*", "tqdm", "tqdm.*"]
+ignore_missing_imports = true
+
 # pytest - Testing
 [tool.pytest.ini_options]
 markers = [
