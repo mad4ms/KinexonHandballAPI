@@ -1,21 +1,63 @@
+from functools import lru_cache
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Any, TypedDict
 
 import yaml
 
+DEFAULT_SEASON = "2025-26"
 
-def _load_teams_config() -> Dict:
+
+class TeamEntry(TypedDict):
+    id: int
+    name: str
+
+
+@lru_cache(maxsize=1)
+def _load_teams_config() -> dict[str, Any]:
     """Load teams configuration from YAML file."""
     config_path = Path(__file__).parent / "config" / "teams.yaml"
 
     if not config_path.exists():
         raise FileNotFoundError(f"Teams config file not found: {config_path}")
 
-    with open(config_path, "r", encoding="utf-8") as f:
-        return yaml.safe_load(f)
+    with open(config_path, encoding="utf-8") as f:
+        data = yaml.safe_load(f)
+
+    if not isinstance(data, dict):
+        raise ValueError("Teams config must be a mapping at the top level.")
+
+    return data
 
 
-def fetch_team_ids(season: Optional[str] = None) -> List[Dict[str, int]]:
+def _get_current_season(config: dict[str, Any]) -> str:
+    """Return configured current season with a stable fallback."""
+    value = config.get("current_season")
+    return value if isinstance(value, str) and value else DEFAULT_SEASON
+
+
+def _validate_teams(season: str, teams: Any) -> list[TeamEntry]:
+    if not isinstance(teams, list):
+        raise ValueError(
+            f"Season '{season}' teams must be a list, got {type(teams).__name__}."
+        )
+    normalized: list[TeamEntry] = []
+    for entry in teams:
+        if not isinstance(entry, dict):
+            raise ValueError(
+                f"Season '{season}' team entries must be mappings, got "
+                f"{type(entry).__name__}."
+            )
+        team_id = entry.get("id")
+        name = entry.get("name")
+        if not isinstance(team_id, int) or not isinstance(name, str):
+            raise ValueError(
+                f"Season '{season}' team entries must include int 'id' and str 'name'."
+            )
+        normalized.append({"id": team_id, "name": name})
+    return normalized
+
+
+def fetch_team_ids(season: str | None = None) -> list[TeamEntry]:
     """
     Return the list of Kinexon team IDs for a specific season.
 
@@ -37,7 +79,7 @@ def fetch_team_ids(season: Optional[str] = None) -> List[Dict[str, int]]:
     config = _load_teams_config()
 
     if season is None:
-        season = config.get("current_season", "2025-26")
+        season = _get_current_season(config)
 
     teams = config.get("seasons", {}).get(season)
     if teams is None:
@@ -45,11 +87,10 @@ def fetch_team_ids(season: Optional[str] = None) -> List[Dict[str, int]]:
         raise ValueError(
             f"Season '{season}' not found. Available seasons: {available_seasons}"
         )
+    return _validate_teams(season, teams)
 
-    return teams
 
-
-def get_available_seasons() -> List[str]:
+def get_available_seasons() -> list[str]:
     """Get list of available seasons."""
     config = _load_teams_config()
     return list(config.get("seasons", {}).keys())
@@ -58,4 +99,4 @@ def get_available_seasons() -> List[str]:
 def get_current_season() -> str:
     """Get the current season from config."""
     config = _load_teams_config()
-    return config.get("current_season", "2025-26")
+    return _get_current_season(config)

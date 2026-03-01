@@ -9,7 +9,7 @@
 # 5. Copy IDs next to team names
 # 6. Update this file for new seasons
 
-# Current season (2025/26)
+# Current season (2025/26). Used when fetchers receive no season input.
 current_season: "2025-26"
 
 seasons:
