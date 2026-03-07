@@ -1,6 +1,6 @@
 [project]
 name = "kinexon-handball-api"
-version = "0.1.0"
+version = "0.1.1"
 description = "A Python wrapper for accessing and processing Kinexon Handball data."
 authors = [
     { name = "Michael Adams", email = "m@ad4ms.de" }

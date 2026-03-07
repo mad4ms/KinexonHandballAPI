@@ -63,10 +63,6 @@ class HandballAPI(KinexonAPI):
             return cast(T, response.parsed)
         return default
 
-    @staticmethod
-    def _to_iso(value: datetime | str) -> str:
-        return value.isoformat() if isinstance(value, datetime) else value
-
     def get_team_ids(self, season: str | None = None) -> list[TeamEntry]:
         """Return team IDs for a season (or default season behavior)."""
         return fetch_team_ids(season)
@@ -98,10 +94,17 @@ class HandballAPI(KinexonAPI):
         end: datetime | str,
     ) -> Any:
         self._require_value("team_id", team_id)
+
+        # Convert strings to datetime objects if necessary
+        if isinstance(start, str):
+            start = datetime.fromisoformat(start)
+        if isinstance(end, str):
+            end = datetime.fromisoformat(end)
+
         resp = get_public_v1_teams_by_team_id_sessions_and_phases.sync_detailed(
             team_id=team_id,
-            min_=self._to_iso(start),
-            max_=self._to_iso(end),
+            min_=start,
+            max_=end,
             client=self.client,
         )
         return self._handle_response(resp, "sessions_for_team", {})
