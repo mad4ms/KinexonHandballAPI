@@ -12,6 +12,7 @@ requires-python = ">=3.12"
 # Core dependencies
 dependencies = [
     "httpx>=0.27.0", # generated client uses httpx
+    "python-socketio[client]>=5.11.0",
     "pydantic>=2.6", # generated models target Pydantic v2
     "typing-extensions>=4.8", # safety on older 3.10
     "pandas>=2.2.2", # your wrapper/processing

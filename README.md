@@ -127,6 +127,53 @@ if response.status_code == 200:
 ### Advanced: Adding new teams
 You can add new teams by modifying `config/teams.yaml`. Somehow there is no API endpoint to fetch all teams, so this is a manual step for now.
 
+### Statistics Center (REST + Websocket)
+
+The package also provides a dedicated wrapper for the Statistics Center API:
+
+```python
+from kinexon_handball_api import StatisticsCenterAPI
+
+sc = StatisticsCenterAPI(
+  username="<USERNAME>",
+  password="<PASSWORD>",
+  interfaces_api_url="https://hbl.kinexon.com/statistics-center/interfaces-api",
+  outputs_push_url="https://hbl.kinexon.com/statistics-center/outputs-push",
+)
+
+# JWT login
+jwt = sc.login()
+
+# REST endpoints (read-only)
+all_endpoints = sc.list_endpoints()
+
+
+def on_message(data):
+  print("message", data)
+
+
+def on_error(error):
+  print("error", error)
+
+
+socket_client = sc.connect_websocket(
+  on_message=on_message,
+  on_error=on_error,
+)
+
+sc.subscribe(socket_client, subscription_type="matches", identifier="2019_2020")
+sc.subscribe(socket_client, subscription_type="stats", identifier="<MATCH_ID>")
+sc.subscribe(
+  socket_client,
+  subscription_type="events",
+  identifier="<MATCH_ID>",
+  filter={"event": "shot"},
+)
+sc.subscribe(socket_client, subscription_type="live_events", identifier="<MATCH_ID>")
+```
+
+Supported websocket subscription types are `matches`, `stats`, `events`, and `live_events`.
+
 ## Architecture
 
 This project uses a **Wrapper Pattern** around a generated OpenAPI client.
@@ -145,8 +192,7 @@ This project uses a **Wrapper Pattern** around a generated OpenAPI client.
 
 ## AI Assistance
 
-If you are using GitHub Copilot in this repo, see the project-specific guidance in
-`.github/copilot-instructions.md`.
+If you are using an AI coding agent (Claude Code, GitHub Copilot, Cursor, etc.) in this repo, see the project-specific guidance in [AGENTS.md](AGENTS.md).
 
 ## Development
 
