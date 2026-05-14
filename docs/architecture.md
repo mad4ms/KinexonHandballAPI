@@ -104,8 +104,7 @@ Standalone client (does not inherit `KinexonAPI`). Uses:
 
 - `httpx.Client` for REST calls.
 - JWT authentication via `/auth/login`. The login response is parsed into a `LoginSuccess` model from `statistics_center_client.models`.
-- `get_games()` and `get_games_via_websocket()` return `list[Games]` (typed attrs model from `statistics_center_client.models`).
-- `get_stats()` and `get_events()` return `list[dict[str, Any]]` — the Statistics Center spec has no field-level schema for these responses.
+- `get_games()`, `get_games_via_websocket()`, `get_stats()`, and `get_events()` all return `list[dict[str, Any]]` — the Statistics Center spec only documents 3 fields for games (`match_id`, `home_team`, `away_team`) while the real API returns many more; a generated model would bury the extra fields in `additional_properties` without `.get()` support, so plain dicts are used.
 - `python-socketio` for WebSocket subscriptions (lazy-imported so the dependency is optional at import time).
 
 ## Generated Clients

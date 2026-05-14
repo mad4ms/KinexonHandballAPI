@@ -5,7 +5,6 @@ from typing import Any
 
 import httpx
 import pytest
-from statistics_center_client.models import Games
 
 from kinexon_handball_api.statistics_center import (
     StatisticsCenterAPI,
@@ -159,7 +158,7 @@ def test_get_games_returns_list() -> None:
 
     api = _make_rest_api(handler)
     games = api.get_games(season="2025_2026")
-    assert games == [Games(match_id="42")]
+    assert games == [{"match_id": "42"}]
     api.close()
 
 

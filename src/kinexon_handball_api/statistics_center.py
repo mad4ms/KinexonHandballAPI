@@ -14,7 +14,6 @@ from typing import Any, Literal
 from urllib.parse import urlsplit
 
 import httpx
-from statistics_center_client.models import Games, LoginSuccess
 
 SubscriptionType = Literal["matches", "stats", "events", "live_events"]
 HTTP_OK = 200
@@ -93,13 +92,7 @@ class StatisticsCenterAPI:
             )
 
         payload = response.json()
-        raw = payload[0] if isinstance(payload, list) and payload else payload
-        if not isinstance(raw, dict):
-            raise StatisticsCenterAPIError(
-                "Statistics Center login response has no jwt."
-            )
-        result = LoginSuccess.from_dict(raw)
-        jwt = result.jwt if isinstance(result.jwt, str) else None
+        jwt = self._extract_jwt(payload)
         if not jwt:
             raise StatisticsCenterAPIError(
                 "Statistics Center login response has no jwt."
@@ -135,13 +128,13 @@ class StatisticsCenterAPI:
             )
         return response
 
-    def get_games(self, season: str = "") -> list[Games]:
+    def get_games(self, season: str = "") -> list[dict[str, Any]]:
         """Return all matches for the given season from /games."""
         params = {"season": season} if season else None
         payload = self._get_with_retry("/games", params=params).json()
         if not isinstance(payload, list):
             raise StatisticsCenterAPIError("Expected list from /games")
-        return [Games.from_dict(g) for g in payload if isinstance(g, dict)]
+        return payload
 
     def get_stats(self, match_id: str | int) -> list[dict[str, Any]]:
         """Return player statistics for a match from /stats/{match_id}."""
@@ -170,7 +163,7 @@ class StatisticsCenterAPI:
         season: str,
         timeout_s: float = 10.0,
         verbose: bool = False,
-    ) -> list[Games]:
+    ) -> list[dict[str, Any]]:
         """Discover matches for a season via the WebSocket matches stream.
 
         Connects, sends a matches subscription, waits up to timeout_s for the
@@ -185,7 +178,7 @@ class StatisticsCenterAPI:
             ) from exc
 
         done = threading.Event()
-        games: list[Games] = []
+        games: list[dict[str, Any]] = []
         token = self._jwt or self.login()
         sio = socketio.Client(
             reconnection=False,
@@ -215,7 +208,7 @@ class StatisticsCenterAPI:
             if isinstance(data, dict) and data.get("type") == "matches":
                 payload = data.get("payload")
                 if isinstance(payload, list):
-                    games = [Games.from_dict(r) for r in payload if isinstance(r, dict)]
+                    games = [r for r in payload if isinstance(r, dict)]
                 done.set()
 
         @sio.on("connect_error")
@@ -262,6 +255,18 @@ class StatisticsCenterAPI:
     def delete_endpoint(self, endpoint_id: str, *, jwt: str | None = None) -> bool:
         del endpoint_id, jwt
         raise StatisticsCenterAPIError("delete_endpoint is disabled in read-only mode.")
+
+    @staticmethod
+    def _extract_jwt(payload: Any) -> str | None:
+        if isinstance(payload, dict):
+            value = payload.get("jwt")
+            return value if isinstance(value, str) else None
+        if isinstance(payload, list) and payload:
+            first = payload[0]
+            if isinstance(first, dict):
+                value = first.get("jwt")
+                return value if isinstance(value, str) else None
+        return None
 
     @staticmethod
     def _auth_headers(jwt: str) -> dict[str, str]:

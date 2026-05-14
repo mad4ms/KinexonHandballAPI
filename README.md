@@ -129,11 +129,10 @@ You can add new teams by modifying `config/teams.yaml`. Somehow there is no API 
 
 ### Statistics Center (REST + Websocket)
 
-The package also provides a dedicated wrapper for the Statistics Center API. REST responses use typed models from the generated `statistics_center_client`:
+The package also provides a dedicated wrapper for the Statistics Center API:
 
 ```python
 from kinexon_handball_api import StatisticsCenterAPI
-from statistics_center_client.models import Games
 
 sc = StatisticsCenterAPI(
   username="<USERNAME>",
@@ -145,10 +144,10 @@ sc = StatisticsCenterAPI(
 # JWT login
 jwt = sc.login()
 
-# Typed REST responses
-games: list[Games] = sc.get_games(season="2025_2026")
-stats = sc.get_stats("<MATCH_ID>")        # list[dict]
-events = sc.get_events("<MATCH_ID>")      # list[dict]
+# REST endpoints — all return list[dict]
+games = sc.get_games(season="2025_2026")
+stats = sc.get_stats("<MATCH_ID>")
+events = sc.get_events("<MATCH_ID>")
 
 # Push endpoints
 all_endpoints = sc.list_endpoints()

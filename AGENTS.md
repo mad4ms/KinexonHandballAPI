@@ -10,7 +10,7 @@ Python wrapper for the Kinexon Handball API. Provides a user-friendly abstractio
   - `api.py`: Two-step authentication and `httpx` client initialization.
   - `handball.py`: Main entry point (`HandballAPI`). Convenience methods for common API operations.
   - `fetchers.py`: Static data loading (e.g., team IDs from `config/teams.yaml`).
-  - `statistics_center.py`: Separate wrapper for the Statistics Center REST + WebSocket API. Uses `Games` and `LoginSuccess` from the generated `statistics_center_client`.
+  - `statistics_center.py`: Separate wrapper for the Statistics Center REST + WebSocket API. All REST methods return plain `list[dict]` — the Statistics Center OpenAPI spec is incomplete (missing fields), so generated models are vendored but not used for response parsing.
 - **Generated Clients (`src/_vendor/`)**: Two auto-generated OpenAPI clients via `openapi-python-client`.
   - `kinexon_client/` — generated from `openapi/sports_app.json` (main Kinexon Cloud REST API).
   - `statistics_center_client/` — generated from `openapi/statistics_center.json` (Statistics Center REST API).
