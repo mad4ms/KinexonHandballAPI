@@ -1,9 +1,11 @@
+import json as _json
 import sys
 from types import SimpleNamespace
 from typing import Any
 
 import httpx
 import pytest
+from statistics_center_client.models import Games
 
 from kinexon_handball_api.statistics_center import (
     StatisticsCenterAPI,
@@ -85,16 +87,147 @@ def test_get_websocket_url_from_https_interface_url() -> None:
         interfaces_api_url="https://hbl.kinexon.com/statistics-center/interfaces-api",
     )
     try:
-        assert api.get_websocket_url() == "wss://hbl.kinexon.com:5002"
+        assert api.get_websocket_url() == "ws://hbl.kinexon.com:5002"
     finally:
         api.close()
+
+
+def test_outputs_rest_url_derived_from_interfaces_url() -> None:
+    api = StatisticsCenterAPI(username="u", password="p")
+    assert api.outputs_rest_url == (
+        "https://hbl.kinexon.com/statistics-center/outputs-rest"
+    )
+    api.close()
+
+
+def test_outputs_rest_url_unchanged_when_no_interfaces_suffix() -> None:
+    api = StatisticsCenterAPI(
+        username="u",
+        password="p",
+        interfaces_api_url="https://example.com/api",
+    )
+    assert api.outputs_rest_url == "https://example.com/api"
+    api.close()
+
+
+def _make_rest_api(
+    handler: Any,
+    jwt: str = "tok",
+) -> StatisticsCenterAPI:
+    api = StatisticsCenterAPI(username="u", password="p")
+    api._http_client.close()
+    api._http_client = httpx.Client(transport=httpx.MockTransport(handler))
+    api._jwt = jwt
+    return api
+
+
+def test_get_with_retry_returns_on_200() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "/games" in request.url.path:
+            return httpx.Response(200, json=[{"match_id": "1"}])
+        return httpx.Response(404)
+
+    api = _make_rest_api(handler)
+    resp = api._get_with_retry("/games")
+    assert resp.json() == [{"match_id": "1"}]
+    api.close()
+
+
+def test_get_with_retry_refreshes_on_401() -> None:
+    call_count = {"n": 0}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "/auth/login" in request.url.path:
+            return httpx.Response(200, json={"jwt": "new-token"})
+        call_count["n"] += 1
+        if call_count["n"] == 1:
+            return httpx.Response(401)
+        return httpx.Response(200, json=[])
+
+    api = _make_rest_api(handler)
+    resp = api._get_with_retry("/games")
+    assert resp.status_code == 200  # noqa: PLR2004
+    assert call_count["n"] == 2  # noqa: PLR2004
+    api.close()
+
+
+def test_get_games_returns_list() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "/games" in request.url.path:
+            return httpx.Response(200, json=[{"match_id": "42"}])
+        return httpx.Response(404)
+
+    api = _make_rest_api(handler)
+    games = api.get_games(season="2025_2026")
+    assert games == [Games(match_id="42")]
+    api.close()
+
+
+def test_get_stats_returns_list() -> None:
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "/stats/99" in request.url.path:
+            return httpx.Response(200, json=[{"player_id": 1}])
+        return httpx.Response(404)
+
+    api = _make_rest_api(handler)
+    stats = api.get_stats(99)
+    assert stats[0]["player_id"] == 1
+    api.close()
+
+
+def test_get_events_passes_event_type_param() -> None:
+    received_params: dict[str, str] = {}
+
+    def handler(request: httpx.Request) -> httpx.Response:
+        if "/events/55" in request.url.path:
+            received_params.update(dict(request.url.params))
+            return httpx.Response(200, json=[{"id": 1}])
+        return httpx.Response(404)
+
+    api = _make_rest_api(handler)
+    events = api.get_events(55, event_type="shot")
+    assert events == [{"id": 1}]
+    assert received_params.get("event") == "shot"
+    api.close()
+
+
+def test_connect_websocket_with_match_id_auto_subscribes(monkeypatch: Any) -> None:
+    sent: list[str] = []
+
+    class FakeSio:
+        def __init__(self, **_: Any) -> None:
+            self.handlers: dict[str, Any] = {}
+
+        def on(self, name: str, cb: Any) -> None:
+            self.handlers[name] = cb
+
+        def connect(self, url: str, **_: Any) -> None:
+            # simulate "Connected" message
+            self.handlers["message"]("Connected")
+
+        def send(self, payload: Any) -> None:
+            sent.append(payload)
+
+    monkeypatch.setitem(sys.modules, "socketio", SimpleNamespace(Client=FakeSio))
+    api = StatisticsCenterAPI(username="u", password="p")
+    api._jwt = "tok"
+    api.connect_websocket(match_id="62090316")
+    api.close()
+
+    parsed = [_json.loads(s) for s in sent]
+    types_sent = {m["type"] for m in parsed}
+    assert "live_events" in types_sent
+    assert "events" in types_sent
+    shot_filter = next(m for m in parsed if m["type"] == "events")
+    assert shot_filter.get("filter") == {"event": "shot"}
+    assert all(m["identifier"] == "62090316" for m in parsed)
 
 
 def test_connect_websocket_registers_handlers(monkeypatch: Any) -> None:
     state: dict[str, Any] = {}
 
     class FakeSocketClient:
-        def __init__(self) -> None:
+        def __init__(self, **_: Any) -> None:
             self.handlers: dict[str, Any] = {}
 
         def on(self, name: str, callback: Any) -> None:
@@ -134,7 +267,7 @@ def test_connect_websocket_registers_handlers(monkeypatch: Any) -> None:
         )
 
         assert state["headers"]["Authorization"] == "Bearer jwt-xyz"
-        assert state["url"] == "wss://hbl.kinexon.com:5002"
+        assert state["url"] == "ws://hbl.kinexon.com:5002"
         assert socket_client.handlers["message"] is msg_handler
         assert socket_client.handlers["error"] is err_handler
         assert socket_client.handlers["connect"] is conn_handler

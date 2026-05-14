@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -12,17 +13,18 @@ from ...types import Response
 def _get_kwargs(
     team_id: int,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/teams/{team_id}/players",
+        "url": "/teams/{team_id}/players".format(
+            team_id=quote(str(team_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[list["PlayerModel"]]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> list[PlayerModel] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -39,9 +41,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[list["PlayerModel"]]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[list[PlayerModel]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -54,7 +54,7 @@ def sync_detailed(
     team_id: int,
     *,
     client: AuthenticatedClient,
-) -> Response[list["PlayerModel"]]:
+) -> Response[list[PlayerModel]]:
     """List players of team
 
      Retuns a list of all Player for given {teamId}
@@ -67,7 +67,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['PlayerModel']]
+        Response[list[PlayerModel]]
     """
 
     kwargs = _get_kwargs(
@@ -85,7 +85,7 @@ def sync(
     team_id: int,
     *,
     client: AuthenticatedClient,
-) -> Optional[list["PlayerModel"]]:
+) -> list[PlayerModel] | None:
     """List players of team
 
      Retuns a list of all Player for given {teamId}
@@ -98,7 +98,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['PlayerModel']
+        list[PlayerModel]
     """
 
     return sync_detailed(
@@ -111,7 +111,7 @@ async def asyncio_detailed(
     team_id: int,
     *,
     client: AuthenticatedClient,
-) -> Response[list["PlayerModel"]]:
+) -> Response[list[PlayerModel]]:
     """List players of team
 
      Retuns a list of all Player for given {teamId}
@@ -124,7 +124,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['PlayerModel']]
+        Response[list[PlayerModel]]
     """
 
     kwargs = _get_kwargs(
@@ -140,7 +140,7 @@ async def asyncio(
     team_id: int,
     *,
     client: AuthenticatedClient,
-) -> Optional[list["PlayerModel"]]:
+) -> list[PlayerModel] | None:
     """List players of team
 
      Retuns a list of all Player for given {teamId}
@@ -153,7 +153,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['PlayerModel']
+        list[PlayerModel]
     """
 
     return (

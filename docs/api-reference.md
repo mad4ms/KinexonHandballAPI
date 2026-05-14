@@ -197,10 +197,47 @@ sc = StatisticsCenterAPI(
 
 ### `login(force_refresh=False)`
 
-Authenticates and returns the JWT. Cached on the instance after first call.
+Authenticates and returns the JWT. Cached on the instance after first call. The response is parsed via the generated `LoginSuccess` model.
 
 ```python
 jwt = sc.login()
+```
+
+### `get_games(season="")`
+
+Returns all matches for the given season. Returns `list[Games]` (from `statistics_center_client.models`).
+
+```python
+from statistics_center_client.models import Games
+
+games: list[Games] = sc.get_games(season="2025_2026")
+for g in games:
+    print(g.match_id, g.home_team, g.away_team)
+    # extra fields from the API are in g.additional_properties
+```
+
+### `get_stats(match_id)`
+
+Returns player statistics for a match from `/stats/{match_id}`. Returns `list[dict[str, Any]]` (the Statistics Center spec has no field-level schema for stats responses).
+
+```python
+stats = sc.get_stats("123456")
+```
+
+### `get_events(match_id, event_type="")`
+
+Returns events for a match from `/events/{match_id}`. Returns `list[dict[str, Any]]`.
+
+```python
+events = sc.get_events("123456", event_type="shot")
+```
+
+### `get_games_via_websocket(season, timeout_s=10.0)`
+
+Discovers matches for a season via the WebSocket matches stream. Returns `list[Games]`.
+
+```python
+games: list[Games] = sc.get_games_via_websocket("2025_2026")
 ```
 
 ### `list_endpoints(jwt=None)`

@@ -1,19 +1,22 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item")
+T = TypeVar("T", bound="Statistics")
 
 
 @_attrs_define
-class GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item:
+class Statistics:
     """ """
 
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
 
@@ -22,10 +25,10 @@ class GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierR
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        get_public_v1_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item = cls()
+        statistics = cls()
 
-        get_public_v1_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item.additional_properties = d
-        return get_public_v1_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item
+        statistics.additional_properties = d
+        return statistics
 
     @property
     def additional_keys(self) -> list[str]:

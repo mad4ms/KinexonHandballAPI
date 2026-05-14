@@ -7,14 +7,22 @@ This project uses a **Wrapper Pattern** around an auto-generated OpenAPI client.
 ```
 User Code
     │
-    ▼
-HandballAPI / StatisticsCenterAPI        ← hand-written (src/kinexon_handball_api/)
+    ├──► HandballAPI                      ← hand-written (src/kinexon_handball_api/)
+    │        │
+    │        ▼
+    │    kinexon_client (generated)       ← auto-generated (src/_vendor/kinexon_client/)
+    │        │
+    │        ▼
+    │    Kinexon Cloud REST API
     │
-    ▼
-kinexon_client (generated)               ← auto-generated (src/_vendor/kinexon_client/)
-    │
-    ▼
-Kinexon REST API
+    └──► StatisticsCenterAPI             ← hand-written (src/kinexon_handball_api/)
+             │
+             ▼
+         statistics_center_client        ← auto-generated (src/_vendor/statistics_center_client/)
+         (models: Games, LoginSuccess)
+             │
+             ▼
+         Statistics Center REST + WS API
 ```
 
 There are two distinct public interfaces:
@@ -35,18 +43,26 @@ src/
 │   └── config/
 │       └── teams.yaml             # team IDs keyed by season
 └── _vendor/
-    └── kinexon_client/            # generated OpenAPI client (do not edit)
-        ├── api/                   # one module per API endpoint group
-        │   ├── events/
-        │   ├── exports/
-        │   ├── players/
-        │   ├── sessions_and_phases/
-        │   ├── statistics/
-        │   ├── categories_and_thresholds/
-        │   └── available_metrics_and_events/
-        ├── models/                # Pydantic v2 models for all request/response types
-        ├── client.py              # Client / AuthenticatedClient base classes
-        └── errors.py              # generated error types
+    ├── kinexon_client/            # generated from openapi/sports_app.json (do not edit)
+    │   ├── api/                   # one module per API endpoint group
+    │   │   ├── events/
+    │   │   ├── exports/
+    │   │   ├── players/
+    │   │   ├── sessions_and_phases/
+    │   │   ├── statistics/
+    │   │   ├── categories_and_thresholds/
+    │   │   └── available_metrics_and_events/
+    │   ├── models/                # attrs models for all request/response types
+    │   ├── client.py              # Client / AuthenticatedClient base classes
+    │   └── errors.py
+    └── statistics_center_client/  # generated from openapi/statistics_center.json (do not edit)
+        ├── api/
+        │   ├── games/             # GET /games
+        │   ├── login/             # POST /auth/login
+        │   └── stats/             # GET /stats/{matchId}, GET /events/{matchId}
+        ├── models/                # Login, LoginSuccess, Games, Statistics
+        ├── client.py
+        └── errors.py
 ```
 
 The `pyproject.toml` build configuration points `setuptools` at both `src/` and `src/_vendor/` so both `kinexon_handball_api` and `kinexon_client` are installable from a single package.
@@ -87,12 +103,21 @@ Inherits `KinexonAPI`. Adds:
 Standalone client (does not inherit `KinexonAPI`). Uses:
 
 - `httpx.Client` for REST calls.
-- JWT authentication via `/auth/login`.
+- JWT authentication via `/auth/login`. The login response is parsed into a `LoginSuccess` model from `statistics_center_client.models`.
+- `get_games()` and `get_games_via_websocket()` return `list[Games]` (typed attrs model from `statistics_center_client.models`).
+- `get_stats()` and `get_events()` return `list[dict[str, Any]]` — the Statistics Center spec has no field-level schema for these responses.
 - `python-socketio` for WebSocket subscriptions (lazy-imported so the dependency is optional at import time).
 
-## Generated Client
+## Generated Clients
 
-The generated client in `src/_vendor/kinexon_client/` is produced by [`openapi-python-client`](https://github.com/openapi-generators/openapi-python-client) from the Kinexon OpenAPI specification (`openapi/sports_app.json`).
+There are two generated clients, both produced by [`openapi-python-client`](https://github.com/openapi-generators/openapi-python-client) via `scripts/codegen.sh`:
+
+| Client | Spec | Package |
+|---|---|---|
+| `kinexon_client` | `openapi/sports_app.json` | `src/_vendor/kinexon_client/` |
+| `statistics_center_client` | `openapi/statistics_center.json` | `src/_vendor/statistics_center_client/` |
+
+The `sports_app.json` spec uses hash-based `operationId` values. `scripts/rename_operation_ids.py` replaces them with readable path-derived names before generation. The `statistics_center.json` spec has self-referential `allOf` schemas which are flattened by a pre-processing step in `codegen.sh`.
 
 Each endpoint is a module with two callable functions:
 

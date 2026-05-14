@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType(str, Enum):
+class GetPublicV1EventsByEventTypePlayerTimeEntityType(str, Enum):
     PHASE = "phase"
     SESSION = "session"
 

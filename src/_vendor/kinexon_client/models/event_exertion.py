@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,34 +16,34 @@ T = TypeVar("T", bound="EventExertion")
 class EventExertion:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        duration (Union[Unset, float]):
-        accel_load_avg (Union[Unset, float]):
-        accel_load_max (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        exertion_category (Union[Unset, EventExertionExertionCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        duration (float | Unset):
+        accel_load_avg (float | Unset):
+        accel_load_max (float | Unset):
+        distance (float | Unset):
+        speed_max (float | Unset):
+        trajectory (str | Unset):
+        exertion_category (EventExertionExertionCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    duration: Union[Unset, float] = UNSET
-    accel_load_avg: Union[Unset, float] = UNSET
-    accel_load_max: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    exertion_category: Union[Unset, EventExertionExertionCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    duration: float | Unset = UNSET
+    accel_load_avg: float | Unset = UNSET
+    accel_load_max: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    exertion_category: EventExertionExertionCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -69,7 +71,7 @@ class EventExertion:
 
         trajectory = self.trajectory
 
-        exertion_category: Union[Unset, str] = UNSET
+        exertion_category: str | Unset = UNSET
         if not isinstance(self.exertion_category, Unset):
             exertion_category = self.exertion_category.value
 
@@ -133,7 +135,7 @@ class EventExertion:
         trajectory = d.pop("trajectory", UNSET)
 
         _exertion_category = d.pop("exertion_category", UNSET)
-        exertion_category: Union[Unset, EventExertionExertionCategory]
+        exertion_category: EventExertionExertionCategory | Unset
         if isinstance(_exertion_category, Unset):
             exertion_category = UNSET
         else:

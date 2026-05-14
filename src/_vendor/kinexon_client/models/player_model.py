@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,38 +15,38 @@ T = TypeVar("T", bound="PlayerModel")
 class PlayerModel:
     """
     Attributes:
-        cache_buster_hash (Union[Unset, str]): the cachebuster hash
-        id (Union[Unset, int]): the player id
-        first_name (Union[Unset, str]): First Name of the player
-        last_name (Union[Unset, str]): Last Name of the player
-        function (Union[Unset, str]): Function of the player
-        number (Union[Unset, int]): Number of the player
-        date_of_birth (Union[Unset, str]): Date of birth of the player
-        last_tag_ids (Union[Unset, list[int]]): Array of last tag id's (integers) of the player
-        last_group (Union[Unset, int]): Last Group of the player
-        team_id (Union[Unset, int]): Team Id of the player
-        league_id (Union[Unset, str]): League Id of the player
-        deleted (Union[Unset, bool]): Is the player deleted
-        player_db_uuid (Union[Unset, str]): UUID of the Player
-        sports_cloud_uuid (Union[Unset, str]): UUID in Sports Cloud
-        sports_cloud_version (Union[Unset, str]): Datetime version
+        cache_buster_hash (str | Unset): the cachebuster hash
+        id (int | Unset): the player id
+        first_name (str | Unset): First Name of the player
+        last_name (str | Unset): Last Name of the player
+        function (str | Unset): Function of the player
+        number (int | Unset): Number of the player
+        date_of_birth (str | Unset): Date of birth of the player
+        last_tag_ids (list[int] | Unset): Array of last tag id's (integers) of the player
+        last_group (int | Unset): Last Group of the player
+        team_id (int | Unset): Team Id of the player
+        league_id (str | Unset): League Id of the player
+        deleted (bool | Unset): Is the player deleted
+        player_db_uuid (str | Unset): UUID of the Player
+        sports_cloud_uuid (str | Unset): UUID in Sports Cloud
+        sports_cloud_version (str | Unset): Datetime version
     """
 
-    cache_buster_hash: Union[Unset, str] = UNSET
-    id: Union[Unset, int] = UNSET
-    first_name: Union[Unset, str] = UNSET
-    last_name: Union[Unset, str] = UNSET
-    function: Union[Unset, str] = UNSET
-    number: Union[Unset, int] = UNSET
-    date_of_birth: Union[Unset, str] = UNSET
-    last_tag_ids: Union[Unset, list[int]] = UNSET
-    last_group: Union[Unset, int] = UNSET
-    team_id: Union[Unset, int] = UNSET
-    league_id: Union[Unset, str] = UNSET
-    deleted: Union[Unset, bool] = UNSET
-    player_db_uuid: Union[Unset, str] = UNSET
-    sports_cloud_uuid: Union[Unset, str] = UNSET
-    sports_cloud_version: Union[Unset, str] = UNSET
+    cache_buster_hash: str | Unset = UNSET
+    id: int | Unset = UNSET
+    first_name: str | Unset = UNSET
+    last_name: str | Unset = UNSET
+    function: str | Unset = UNSET
+    number: int | Unset = UNSET
+    date_of_birth: str | Unset = UNSET
+    last_tag_ids: list[int] | Unset = UNSET
+    last_group: int | Unset = UNSET
+    team_id: int | Unset = UNSET
+    league_id: str | Unset = UNSET
+    deleted: bool | Unset = UNSET
+    player_db_uuid: str | Unset = UNSET
+    sports_cloud_uuid: str | Unset = UNSET
+    sports_cloud_version: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -62,7 +64,7 @@ class PlayerModel:
 
         date_of_birth = self.date_of_birth
 
-        last_tag_ids: Union[Unset, list[int]] = UNSET
+        last_tag_ids: list[int] | Unset = UNSET
         if not isinstance(self.last_tag_ids, Unset):
             last_tag_ids = self.last_tag_ids
 

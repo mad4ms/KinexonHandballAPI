@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -16,36 +18,36 @@ T = TypeVar("T", bound="EventPlayerCounterPressing")
 class EventPlayerCounterPressing:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        group_id (Union[Unset, int]):
-        pressing_index (Union[Unset, float]):
-        opponent_player_id (Union[Unset, float]):
-        distance_min (Union[Unset, float]):
-        distance_max (Union[Unset, float]):
-        duration (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        player_counter_pressing_category (Union[Unset, EventPlayerCounterPressingPlayerCounterPressingCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        group_id (int | Unset):
+        pressing_index (float | Unset):
+        opponent_player_id (float | Unset):
+        distance_min (float | Unset):
+        distance_max (float | Unset):
+        duration (float | Unset):
+        trajectory (str | Unset):
+        player_counter_pressing_category (EventPlayerCounterPressingPlayerCounterPressingCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    group_id: Union[Unset, int] = UNSET
-    pressing_index: Union[Unset, float] = UNSET
-    opponent_player_id: Union[Unset, float] = UNSET
-    distance_min: Union[Unset, float] = UNSET
-    distance_max: Union[Unset, float] = UNSET
-    duration: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    player_counter_pressing_category: Union[Unset, EventPlayerCounterPressingPlayerCounterPressingCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    group_id: int | Unset = UNSET
+    pressing_index: float | Unset = UNSET
+    opponent_player_id: float | Unset = UNSET
+    distance_min: float | Unset = UNSET
+    distance_max: float | Unset = UNSET
+    duration: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    player_counter_pressing_category: EventPlayerCounterPressingPlayerCounterPressingCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -75,7 +77,7 @@ class EventPlayerCounterPressing:
 
         trajectory = self.trajectory
 
-        player_counter_pressing_category: Union[Unset, str] = UNSET
+        player_counter_pressing_category: str | Unset = UNSET
         if not isinstance(self.player_counter_pressing_category, Unset):
             player_counter_pressing_category = self.player_counter_pressing_category.value
 
@@ -143,7 +145,7 @@ class EventPlayerCounterPressing:
         trajectory = d.pop("trajectory", UNSET)
 
         _player_counter_pressing_category = d.pop("player_counter_pressing_category", UNSET)
-        player_counter_pressing_category: Union[Unset, EventPlayerCounterPressingPlayerCounterPressingCategory]
+        player_counter_pressing_category: EventPlayerCounterPressingPlayerCounterPressingCategory | Unset
         if isinstance(_player_counter_pressing_category, Unset):
             player_counter_pressing_category = UNSET
         else:

@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -17,45 +19,44 @@ T = TypeVar("T", bound="Session")
 
 @_attrs_define
 class Session:
-    """Session
-
+    """
     Attributes:
-        session_id (Union[Unset, int]):  Example: 12.
-        start_session (Union[Unset, datetime.datetime]): Start of the session in UTC Example: 2019-01-01 12:00:00.
-        end_session (Union[None, Unset, datetime.datetime]): End of the session in UTC Example: 2019-01-01 13:00:00.
-        duration (Union[Unset, int]): Length of session in seconds Example: 1200.
-        type_ (Union[Unset, str]):  Example: GAME.
-        description (Union[Unset, str]):  Example: Kinexon Sports vs. Kinexon Industries.
-        timezone_id (Union[Unset, int]): ID of the timezone the session was recorded in Example: 3.
-        group_assignment (Union[Unset, str]): The player to group assignment for this session in JSON format Example:
-            {1: {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}.
-        group_colors (Union[Unset, list[str]]): Color of the groups in this session in JSON format Example: ['#00ff00',
+        session_id (int | Unset): Session Example: 12.
+        start_session (datetime.datetime | Unset): Start of the session in UTC Example: 2019-01-01 12:00:00.
+        end_session (datetime.datetime | None | Unset): End of the session in UTC Example: 2019-01-01 13:00:00.
+        duration (int | Unset): Length of session in seconds Example: 1200.
+        type_ (str | Unset):  Example: GAME.
+        description (str | Unset):  Example: Kinexon Sports vs. Kinexon Industries.
+        timezone_id (int | Unset): ID of the timezone the session was recorded in Example: 3.
+        group_assignment (str | Unset): The player to group assignment for this session in JSON format Example: {1:
+            {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}.
+        group_colors (list[str] | Unset): Color of the groups in this session in JSON format Example: ['#00ff00',
             '#3399ff'].
-        group_names (Union[Unset, list[str]]): Name of the respective groups Example: ['Team A', 'Team B'].
-        phases (Union[Unset, list['Phase']]):
+        group_names (list[str] | Unset): Name of the respective groups Example: ['Team A', 'Team B'].
+        phases (list[Phase] | Unset):
     """
 
-    session_id: Union[Unset, int] = UNSET
-    start_session: Union[Unset, datetime.datetime] = UNSET
-    end_session: Union[None, Unset, datetime.datetime] = UNSET
-    duration: Union[Unset, int] = UNSET
-    type_: Union[Unset, str] = UNSET
-    description: Union[Unset, str] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    group_assignment: Union[Unset, str] = UNSET
-    group_colors: Union[Unset, list[str]] = UNSET
-    group_names: Union[Unset, list[str]] = UNSET
-    phases: Union[Unset, list["Phase"]] = UNSET
+    session_id: int | Unset = UNSET
+    start_session: datetime.datetime | Unset = UNSET
+    end_session: datetime.datetime | None | Unset = UNSET
+    duration: int | Unset = UNSET
+    type_: str | Unset = UNSET
+    description: str | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    group_assignment: str | Unset = UNSET
+    group_colors: list[str] | Unset = UNSET
+    group_names: list[str] | Unset = UNSET
+    phases: list[Phase] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
         session_id = self.session_id
 
-        start_session: Union[Unset, str] = UNSET
+        start_session: str | Unset = UNSET
         if not isinstance(self.start_session, Unset):
             start_session = self.start_session.isoformat()
 
-        end_session: Union[None, Unset, str]
+        end_session: None | str | Unset
         if isinstance(self.end_session, Unset):
             end_session = UNSET
         elif isinstance(self.end_session, datetime.datetime):
@@ -73,15 +74,15 @@ class Session:
 
         group_assignment = self.group_assignment
 
-        group_colors: Union[Unset, list[str]] = UNSET
+        group_colors: list[str] | Unset = UNSET
         if not isinstance(self.group_colors, Unset):
             group_colors = self.group_colors
 
-        group_names: Union[Unset, list[str]] = UNSET
+        group_names: list[str] | Unset = UNSET
         if not isinstance(self.group_names, Unset):
             group_names = self.group_names
 
-        phases: Union[Unset, list[dict[str, Any]]] = UNSET
+        phases: list[dict[str, Any]] | Unset = UNSET
         if not isinstance(self.phases, Unset):
             phases = []
             for phases_item_data in self.phases:
@@ -124,13 +125,13 @@ class Session:
         session_id = d.pop("session_id", UNSET)
 
         _start_session = d.pop("start_session", UNSET)
-        start_session: Union[Unset, datetime.datetime]
+        start_session: datetime.datetime | Unset
         if isinstance(_start_session, Unset):
             start_session = UNSET
         else:
             start_session = isoparse(_start_session)
 
-        def _parse_end_session(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_end_session(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -141,9 +142,9 @@ class Session:
                 end_session_type_0 = isoparse(data)
 
                 return end_session_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(datetime.datetime | None | Unset, data)
 
         end_session = _parse_end_session(d.pop("end_session", UNSET))
 
@@ -161,12 +162,14 @@ class Session:
 
         group_names = cast(list[str], d.pop("group_names", UNSET))
 
-        phases = []
         _phases = d.pop("phases", UNSET)
-        for phases_item_data in _phases or []:
-            phases_item = Phase.from_dict(phases_item_data)
+        phases: list[Phase] | Unset = UNSET
+        if _phases is not UNSET:
+            phases = []
+            for phases_item_data in _phases:
+                phases_item = Phase.from_dict(phases_item_data)
 
-            phases.append(phases_item)
+                phases.append(phases_item)
 
         session = cls(
             session_id=session_id,

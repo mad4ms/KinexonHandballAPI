@@ -1,6 +1,6 @@
 [project]
 name = "kinexon-handball-api"
-version = "0.1.1"
+version = "0.2.0"
 description = "A Python wrapper for accessing and processing Kinexon Handball data."
 authors = [
     { name = "Michael Adams", email = "m@ad4ms.de" }
@@ -90,6 +90,7 @@ extend-exclude = [
     "build",
     "dist",
     "src/_vendor/kinexon_client",
+    "src/_vendor/statistics_center_client",
 ]
 
 
@@ -119,7 +120,7 @@ check_untyped_defs = true
 disallow_untyped_defs = true
 
 [[tool.mypy.overrides]]
-module = "kinexon_client.*"
+module = ["kinexon_client.*", "statistics_center_client.*"]
 follow_imports = "skip"
 ignore_errors = true
 

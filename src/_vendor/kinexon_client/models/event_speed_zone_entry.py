@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_speed_zone_entry_speed_zone_entry_category import (
-    EventSpeedZoneEntrySpeedZoneEntryCategory,
-)
+from ..models.event_speed_zone_entry_speed_zone_entry_category import EventSpeedZoneEntrySpeedZoneEntryCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventSpeedZoneEntry")
@@ -16,24 +16,24 @@ T = TypeVar("T", bound="EventSpeedZoneEntry")
 class EventSpeedZoneEntry:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        trajectory (Union[Unset, str]):
-        speed_zone_entry_category (Union[Unset, EventSpeedZoneEntrySpeedZoneEntryCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        trajectory (str | Unset):
+        speed_zone_entry_category (EventSpeedZoneEntrySpeedZoneEntryCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    speed_zone_entry_category: Union[Unset, EventSpeedZoneEntrySpeedZoneEntryCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    speed_zone_entry_category: EventSpeedZoneEntrySpeedZoneEntryCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -51,7 +51,7 @@ class EventSpeedZoneEntry:
 
         trajectory = self.trajectory
 
-        speed_zone_entry_category: Union[Unset, str] = UNSET
+        speed_zone_entry_category: str | Unset = UNSET
         if not isinstance(self.speed_zone_entry_category, Unset):
             speed_zone_entry_category = self.speed_zone_entry_category.value
 
@@ -95,7 +95,7 @@ class EventSpeedZoneEntry:
         trajectory = d.pop("trajectory", UNSET)
 
         _speed_zone_entry_category = d.pop("speed_zone_entry_category", UNSET)
-        speed_zone_entry_category: Union[Unset, EventSpeedZoneEntrySpeedZoneEntryCategory]
+        speed_zone_entry_category: EventSpeedZoneEntrySpeedZoneEntryCategory | Unset
         if isinstance(_speed_zone_entry_category, Unset):
             speed_zone_entry_category = UNSET
         else:

@@ -23,6 +23,11 @@ OPID_MAP = {
     "3709a95cd3000e6377d69b3a55d048e2": "GetPublicV1TeamsByTeamIdSessionsAndPhases",
     "2a9ca44b0734126f65503a9cb9a0260b": "GetStatisticsBySessionIdCategoriesDeprecated",
     "7e09029201135344482130236d7d3626": "GetPublicV1StatisticsBySessionIdCategories",
+    # Events endpoints
+    "a2d93066d4278e254a8a683ce39adff3": "GetEventsCountPerEventTypePlayerDeprecated",
+    "80bd21154c9dd382cee43a48b1b85b88": "GetEventsByEventTypePlayerDeprecated",
+    "4627367d28727b4c605ecadb3f3a14c1": "GetPublicV1EventsCountPerEventTypePlayer",
+    "3586aec1f9c85dda5c999478c1168897": "GetPublicV1EventsByEventTypePlayer",
 }
 
 
@@ -43,15 +48,15 @@ def replace_operation_ids(data: Any) -> Any:
 
 
 def main() -> None:
-    with open("openapi/sport_app.json", encoding="utf-8") as f:
+    with open("openapi/sports_app.json", encoding="utf-8") as f:
         spec = json.load(f)
 
     updated = replace_operation_ids(spec)
 
-    with open("sports_app_opids.json", "w", encoding="utf-8") as f:
+    with open("openapi/sports_app.json", "w", encoding="utf-8") as f:
         json.dump(updated, f, indent=2, ensure_ascii=False)
 
-    print("Updated file written to sports_app.with-opids.json")
+    print("Updated operationIds written back to openapi/sports_app.json")
 
 
 if __name__ == "__main__":

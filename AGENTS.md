@@ -10,8 +10,10 @@ Python wrapper for the Kinexon Handball API. Provides a user-friendly abstractio
   - `api.py`: Two-step authentication and `httpx` client initialization.
   - `handball.py`: Main entry point (`HandballAPI`). Convenience methods for common API operations.
   - `fetchers.py`: Static data loading (e.g., team IDs from `config/teams.yaml`).
-  - `statistics_center.py`: Separate wrapper for the Statistics Center REST + WebSocket API.
-- **Generated Client (`src/_vendor/kinexon_client/`)**: Auto-generated OpenAPI client via `openapi-python-client`.
+  - `statistics_center.py`: Separate wrapper for the Statistics Center REST + WebSocket API. Uses `Games` and `LoginSuccess` from the generated `statistics_center_client`.
+- **Generated Clients (`src/_vendor/`)**: Two auto-generated OpenAPI clients via `openapi-python-client`.
+  - `kinexon_client/` — generated from `openapi/sports_app.json` (main Kinexon Cloud REST API).
+  - `statistics_center_client/` — generated from `openapi/statistics_center.json` (Statistics Center REST API).
   - **CRITICAL: Do NOT edit files in `src/_vendor/` manually.** They are overwritten by `scripts/codegen.sh`.
   - If the API spec changes, regenerate using `scripts/codegen.sh` (Linux/Mac) or `scripts/codegen.ps1` (Windows).
 
@@ -46,7 +48,7 @@ If the upstream OpenAPI spec changes:
 ./scripts/codegen.ps1        # Windows PowerShell
 ```
 
-This downloads the latest spec to `openapi/sports_app.json` and regenerates `src/_vendor/kinexon_client/`.
+This downloads the latest specs to `openapi/sports_app.json` and `openapi/statistics_center.json`, runs `scripts/rename_operation_ids.py` to replace hash-based `operationId`s with readable names, fixes self-referential `allOf` schemas in the Statistics Center spec, then regenerates both `src/_vendor/kinexon_client/` and `src/_vendor/statistics_center_client/`.
 
 See [docs/codegen.md](docs/codegen.md) for details.
 
@@ -64,8 +66,8 @@ uv run mypy src/kinexon_handball_api  # type-check
 ## Conventions & Patterns
 
 - **Authentication**: `KinexonAPI` handles the two-step auth automatically. Do not pass generic auth headers manually; the client injects the `api-key`.
-- **Imports**: Import generated classes/functions from `kinexon_client.*`. The build system treats `src/_vendor` as a package source.
-- **Type Hints**: Use standard Python typing (`list`, `dict`, `Optional`) and Pydantic models from `kinexon_client.models`.
+- **Imports**: Import generated classes/functions from `kinexon_client.*` (main REST) or `statistics_center_client.*` (Statistics Center). The build system treats `src/_vendor` as a package source.
+- **Type Hints**: Use standard Python typing (`list`, `dict`, `Optional`) and attrs models from `kinexon_client.models` or `statistics_center_client.models`.
 - **Config**: Keep configuration (team IDs, seasons) in `config/teams.yaml` via `fetchers.py`. Do not hardcode in logic.
 - **Linting**: Ruff (line length 88, target py312). The `src/_vendor/` directory is excluded from all linting.
 - **Tests**: `pytest`. Integration tests require a live API and are skipped without credentials (`@pytest.mark.integration`).
@@ -78,7 +80,9 @@ uv run mypy src/kinexon_handball_api  # type-check
 | `src/kinexon_handball_api/api.py` | Auth base class (`KinexonAPI`) |
 | `src/kinexon_handball_api/fetchers.py` | Team ID loading from YAML config |
 | `src/kinexon_handball_api/statistics_center.py` | Statistics Center API client |
-| `src/_vendor/kinexon_client/` | Generated OpenAPI client (do not edit) |
+| `src/_vendor/kinexon_client/` | Generated OpenAPI client for main REST API (do not edit) |
+| `src/_vendor/statistics_center_client/` | Generated OpenAPI client for Statistics Center (do not edit) |
+| `scripts/rename_operation_ids.py` | Pre-processing: replaces hash-based operationIds with readable names |
 | `config/teams.yaml` | Team IDs and season configuration |
 | `scripts/codegen.sh` | Client regeneration script |
 | `pyproject.toml` | Project metadata, dependencies, tool config |

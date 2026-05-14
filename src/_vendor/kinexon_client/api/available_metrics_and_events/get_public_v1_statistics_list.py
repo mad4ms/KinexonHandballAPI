@@ -1,17 +1,16 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
 
 import httpx
 
 from ... import errors
 from ...client import AuthenticatedClient, Client
-from ...models.get_public_v1_statistics_list_response_200 import (
-    GetPublicV1StatisticsListResponse200,
-)
+from ...models.get_public_v1_statistics_list_response_200 import GetPublicV1StatisticsListResponse200
 from ...types import Response
 
 
 def _get_kwargs() -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
         "url": "/public/v1/statistics/list",
@@ -21,8 +20,8 @@ def _get_kwargs() -> dict[str, Any]:
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[GetPublicV1StatisticsListResponse200]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> GetPublicV1StatisticsListResponse200 | None:
     if response.status_code == 200:
         response_200 = GetPublicV1StatisticsListResponse200.from_dict(response.json())
 
@@ -35,7 +34,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[GetPublicV1StatisticsListResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -73,7 +72,7 @@ def sync_detailed(
 def sync(
     *,
     client: AuthenticatedClient,
-) -> Optional[GetPublicV1StatisticsListResponse200]:
+) -> GetPublicV1StatisticsListResponse200 | None:
     """List of available metrics and events
 
      Retuns a list of all metric names and event names
@@ -117,7 +116,7 @@ async def asyncio_detailed(
 async def asyncio(
     *,
     client: AuthenticatedClient,
-) -> Optional[GetPublicV1StatisticsListResponse200]:
+) -> GetPublicV1StatisticsListResponse200 | None:
     """List of available metrics and events
 
      Retuns a list of all metric names and event names

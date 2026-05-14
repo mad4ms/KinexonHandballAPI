@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -21,11 +22,12 @@ def _get_kwargs(
     time_entity_type: GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDeprecatedTimeEntityType,
     time_entity_identifier: str,
     *,
-    fields: Union[Unset, list[str]] = UNSET,
+    fields: list[str] | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
-    json_fields: Union[Unset, list[str]] = UNSET
+    json_fields: list[str] | Unset = UNSET
     if not isinstance(fields, Unset):
         json_fields = fields
 
@@ -35,16 +37,19 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/statistics/{type_}/{player_id}/{time_entity_type}/{time_entity_identifier}",
+        "url": "/statistics/{type_}/{player_id}/{time_entity_type}/{time_entity_identifier}".format(
+            type_=quote(str(type_), safe=""),
+            player_id=quote(str(player_id), safe=""),
+            time_entity_type=quote(str(time_entity_type), safe=""),
+            time_entity_identifier=quote(str(time_entity_identifier), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[list["PlayerStatistic"]]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> list[PlayerStatistic] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -62,8 +67,8 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[list["PlayerStatistic"]]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> Response[list[PlayerStatistic]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -79,8 +84,8 @@ def sync_detailed(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    fields: Union[Unset, list[str]] = UNSET,
-) -> Response[list["PlayerStatistic"]]:
+    fields: list[str] | Unset = UNSET,
+) -> Response[list[PlayerStatistic]]:
     """Request statistics for a single session or phase.
 
     Args:
@@ -89,14 +94,14 @@ def sync_detailed(
         time_entity_type (GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDepre
             catedTimeEntityType):
         time_entity_identifier (str):
-        fields (Union[Unset, list[str]]):
+        fields (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['PlayerStatistic']]
+        Response[list[PlayerStatistic]]
     """
 
     kwargs = _get_kwargs(
@@ -121,8 +126,8 @@ def sync(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    fields: Union[Unset, list[str]] = UNSET,
-) -> Optional[list["PlayerStatistic"]]:
+    fields: list[str] | Unset = UNSET,
+) -> list[PlayerStatistic] | None:
     """Request statistics for a single session or phase.
 
     Args:
@@ -131,14 +136,14 @@ def sync(
         time_entity_type (GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDepre
             catedTimeEntityType):
         time_entity_identifier (str):
-        fields (Union[Unset, list[str]]):
+        fields (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['PlayerStatistic']
+        list[PlayerStatistic]
     """
 
     return sync_detailed(
@@ -158,8 +163,8 @@ async def asyncio_detailed(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    fields: Union[Unset, list[str]] = UNSET,
-) -> Response[list["PlayerStatistic"]]:
+    fields: list[str] | Unset = UNSET,
+) -> Response[list[PlayerStatistic]]:
     """Request statistics for a single session or phase.
 
     Args:
@@ -168,14 +173,14 @@ async def asyncio_detailed(
         time_entity_type (GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDepre
             catedTimeEntityType):
         time_entity_identifier (str):
-        fields (Union[Unset, list[str]]):
+        fields (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['PlayerStatistic']]
+        Response[list[PlayerStatistic]]
     """
 
     kwargs = _get_kwargs(
@@ -198,8 +203,8 @@ async def asyncio(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    fields: Union[Unset, list[str]] = UNSET,
-) -> Optional[list["PlayerStatistic"]]:
+    fields: list[str] | Unset = UNSET,
+) -> list[PlayerStatistic] | None:
     """Request statistics for a single session or phase.
 
     Args:
@@ -208,14 +213,14 @@ async def asyncio(
         time_entity_type (GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDepre
             catedTimeEntityType):
         time_entity_identifier (str):
-        fields (Union[Unset, list[str]]):
+        fields (list[str] | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['PlayerStatistic']
+        list[PlayerStatistic]
     """
 
     return (

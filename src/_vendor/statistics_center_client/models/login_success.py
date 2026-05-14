@@ -1,31 +1,57 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
 from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-T = TypeVar("T", bound="GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item")
+from ..types import UNSET, Unset
+
+T = TypeVar("T", bound="LoginSuccess")
 
 
 @_attrs_define
-class GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item:
-    """ """
+class LoginSuccess:
+    """
+    Attributes:
+        message (str | Unset):  Example: test.
+        jwt (str | Unset):  Example: eyJhbGciOaJIUzI1NiIsInR5cCI6IkpXVCJ.....
+    """
 
+    message: str | Unset = UNSET
+    jwt: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
+        message = self.message
+
+        jwt = self.jwt
+
         field_dict: dict[str, Any] = {}
         field_dict.update(self.additional_properties)
+        field_dict.update({})
+        if message is not UNSET:
+            field_dict["message"] = message
+        if jwt is not UNSET:
+            field_dict["jwt"] = jwt
 
         return field_dict
 
     @classmethod
     def from_dict(cls: type[T], src_dict: Mapping[str, Any]) -> T:
         d = dict(src_dict)
-        get_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item = cls()
+        message = d.pop("message", UNSET)
 
-        get_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item.additional_properties = d
-        return get_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item
+        jwt = d.pop("jwt", UNSET)
+
+        login_success = cls(
+            message=message,
+            jwt=jwt,
+        )
+
+        login_success.additional_properties = d
+        return login_success
 
     @property
     def additional_keys(self) -> list[str]:

@@ -1,6 +1,7 @@
 import datetime
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -16,6 +17,7 @@ def _get_kwargs(
     min_: datetime.datetime,
     max_: datetime.datetime,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     json_min_ = min_.isoformat()
@@ -28,16 +30,16 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/public/v1/teams/{team_id}/sessions-and-phases",
+        "url": "/public/v1/teams/{team_id}/sessions-and-phases".format(
+            team_id=quote(str(team_id), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[list["Session"]]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> list[Session] | None:
     if response.status_code == 200:
         response_200 = []
         _response_200 = response.json()
@@ -54,9 +56,7 @@ def _parse_response(
         return None
 
 
-def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Response[list["Session"]]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[list[Session]]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -71,7 +71,7 @@ def sync_detailed(
     client: AuthenticatedClient,
     min_: datetime.datetime,
     max_: datetime.datetime,
-) -> Response[list["Session"]]:
+) -> Response[list[Session]]:
     """List of sessions and nested phases
 
      Retuns a list of all sessions for given {teamId} in range {min} - {max}.
@@ -86,7 +86,7 @@ def sync_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['Session']]
+        Response[list[Session]]
     """
 
     kwargs = _get_kwargs(
@@ -108,7 +108,7 @@ def sync(
     client: AuthenticatedClient,
     min_: datetime.datetime,
     max_: datetime.datetime,
-) -> Optional[list["Session"]]:
+) -> list[Session] | None:
     """List of sessions and nested phases
 
      Retuns a list of all sessions for given {teamId} in range {min} - {max}.
@@ -123,7 +123,7 @@ def sync(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['Session']
+        list[Session]
     """
 
     return sync_detailed(
@@ -140,7 +140,7 @@ async def asyncio_detailed(
     client: AuthenticatedClient,
     min_: datetime.datetime,
     max_: datetime.datetime,
-) -> Response[list["Session"]]:
+) -> Response[list[Session]]:
     """List of sessions and nested phases
 
      Retuns a list of all sessions for given {teamId} in range {min} - {max}.
@@ -155,7 +155,7 @@ async def asyncio_detailed(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        Response[list['Session']]
+        Response[list[Session]]
     """
 
     kwargs = _get_kwargs(
@@ -175,7 +175,7 @@ async def asyncio(
     client: AuthenticatedClient,
     min_: datetime.datetime,
     max_: datetime.datetime,
-) -> Optional[list["Session"]]:
+) -> list[Session] | None:
     """List of sessions and nested phases
 
      Retuns a list of all sessions for given {teamId} in range {min} - {max}.
@@ -190,7 +190,7 @@ async def asyncio(
         httpx.TimeoutException: If the request takes longer than Client.timeout.
 
     Returns:
-        list['Session']
+        list[Session]
     """
 
     return (

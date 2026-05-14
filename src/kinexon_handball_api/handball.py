@@ -13,9 +13,7 @@ import httpx
 from kinexon_client.api.available_metrics_and_events import (
     get_public_v1_statistics_list,
 )
-from kinexon_client.api.events import (
-    get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier,
-)
+from kinexon_client.api.events import get_public_v1_events_by_event_type_player
 from kinexon_client.api.exports import (
     get_public_v1_export_positions_session_by_time_entity_identifier,
 )
@@ -74,7 +72,7 @@ class HandballAPI(KinexonAPI):
         session_id: str = "latest",
     ) -> Any:
         self._require_value("session_id", session_id)
-        resp = get_public_v_1_events_event_type_player_players_time_entity_type_time_entity_identifier.sync_detailed(  # noqa: E501
+        resp = get_public_v1_events_by_event_type_player.sync_detailed(
             event_type=event_type,
             players=players,
             time_entity_type="session",

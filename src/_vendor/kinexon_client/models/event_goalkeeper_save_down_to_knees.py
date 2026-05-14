@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -16,35 +18,35 @@ T = TypeVar("T", bound="EventGoalkeeperSaveDownToKnees")
 class EventGoalkeeperSaveDownToKnees:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        time_to_ground_ms (Union[Unset, float]):
-        time_to_feet_ms (Union[Unset, float]):
-        x (Union[Unset, float]):
-        y (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        goalkeeper_save_down_to_knees_category (Union[Unset,
-            EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        time_to_ground_ms (float | Unset):
+        time_to_feet_ms (float | Unset):
+        x (float | Unset):
+        y (float | Unset):
+        trajectory (str | Unset):
+        goalkeeper_save_down_to_knees_category (EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory |
+            Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    time_to_ground_ms: Union[Unset, float] = UNSET
-    time_to_feet_ms: Union[Unset, float] = UNSET
-    x: Union[Unset, float] = UNSET
-    y: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    goalkeeper_save_down_to_knees_category: Union[
-        Unset, EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory
-    ] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    time_to_ground_ms: float | Unset = UNSET
+    time_to_feet_ms: float | Unset = UNSET
+    x: float | Unset = UNSET
+    y: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    goalkeeper_save_down_to_knees_category: EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory | Unset = (
+        UNSET
+    )
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -70,7 +72,7 @@ class EventGoalkeeperSaveDownToKnees:
 
         trajectory = self.trajectory
 
-        goalkeeper_save_down_to_knees_category: Union[Unset, str] = UNSET
+        goalkeeper_save_down_to_knees_category: str | Unset = UNSET
         if not isinstance(self.goalkeeper_save_down_to_knees_category, Unset):
             goalkeeper_save_down_to_knees_category = self.goalkeeper_save_down_to_knees_category.value
 
@@ -130,9 +132,7 @@ class EventGoalkeeperSaveDownToKnees:
         trajectory = d.pop("trajectory", UNSET)
 
         _goalkeeper_save_down_to_knees_category = d.pop("goalkeeper_save_down_to_knees_category", UNSET)
-        goalkeeper_save_down_to_knees_category: Union[
-            Unset, EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory
-        ]
+        goalkeeper_save_down_to_knees_category: EventGoalkeeperSaveDownToKneesGoalkeeperSaveDownToKneesCategory | Unset
         if isinstance(_goalkeeper_save_down_to_knees_category, Unset):
             goalkeeper_save_down_to_knees_category = UNSET
         else:

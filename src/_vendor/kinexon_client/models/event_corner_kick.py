@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_corner_kick_corner_kick_category import (
-    EventCornerKickCornerKickCategory,
-)
+from ..models.event_corner_kick_corner_kick_category import EventCornerKickCornerKickCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventCornerKick")
@@ -16,34 +16,34 @@ T = TypeVar("T", bound="EventCornerKick")
 class EventCornerKick:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        speed (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        receiving_player_id (Union[Unset, float]):
-        successful (Union[Unset, float]):
-        duration (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        corner_kick_category (Union[Unset, EventCornerKickCornerKickCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        speed (float | Unset):
+        distance (float | Unset):
+        receiving_player_id (float | Unset):
+        successful (float | Unset):
+        duration (float | Unset):
+        trajectory (str | Unset):
+        corner_kick_category (EventCornerKickCornerKickCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    speed: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    receiving_player_id: Union[Unset, float] = UNSET
-    successful: Union[Unset, float] = UNSET
-    duration: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    corner_kick_category: Union[Unset, EventCornerKickCornerKickCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    speed: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    receiving_player_id: float | Unset = UNSET
+    successful: float | Unset = UNSET
+    duration: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    corner_kick_category: EventCornerKickCornerKickCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -71,7 +71,7 @@ class EventCornerKick:
 
         trajectory = self.trajectory
 
-        corner_kick_category: Union[Unset, str] = UNSET
+        corner_kick_category: str | Unset = UNSET
         if not isinstance(self.corner_kick_category, Unset):
             corner_kick_category = self.corner_kick_category.value
 
@@ -135,7 +135,7 @@ class EventCornerKick:
         trajectory = d.pop("trajectory", UNSET)
 
         _corner_kick_category = d.pop("corner_kick_category", UNSET)
-        corner_kick_category: Union[Unset, EventCornerKickCornerKickCategory]
+        corner_kick_category: EventCornerKickCornerKickCategory | Unset
         if isinstance(_corner_kick_category, Unset):
             corner_kick_category = UNSET
         else:

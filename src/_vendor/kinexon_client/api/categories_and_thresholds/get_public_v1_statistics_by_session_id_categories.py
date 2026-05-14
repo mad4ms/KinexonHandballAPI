@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,17 +15,20 @@ from ...types import Response
 def _get_kwargs(
     session_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/public/v1/statistics/{session_id}/categories",
+        "url": "/public/v1/statistics/{session_id}/categories".format(
+            session_id=quote(str(session_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[GetPublicV1StatisticsBySessionIdCategoriesResponse200]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> GetPublicV1StatisticsBySessionIdCategoriesResponse200 | None:
     if response.status_code == 200:
         response_200 = GetPublicV1StatisticsBySessionIdCategoriesResponse200.from_dict(response.json())
 
@@ -37,7 +41,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[GetPublicV1StatisticsBySessionIdCategoriesResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -82,7 +86,7 @@ def sync(
     session_id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[GetPublicV1StatisticsBySessionIdCategoriesResponse200]:
+) -> GetPublicV1StatisticsBySessionIdCategoriesResponse200 | None:
     """Returns categories and thresholds for a session
 
      Returns categories and thresholds for a session
@@ -137,7 +141,7 @@ async def asyncio(
     session_id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[GetPublicV1StatisticsBySessionIdCategoriesResponse200]:
+) -> GetPublicV1StatisticsBySessionIdCategoriesResponse200 | None:
     """Returns categories and thresholds for a session
 
      Returns categories and thresholds for a session

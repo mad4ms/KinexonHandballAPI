@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,48 +16,48 @@ T = TypeVar("T", bound="EventDflCross")
 class EventDflCross:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        receiving_player (Union[Unset, float]):
-        height (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        dfl_from_open_play (Union[Unset, float]):
-        dfl_penalty_box (Union[Unset, float]):
-        dfl_play_origin (Union[Unset, float]):
-        dfl_semi_field (Union[Unset, float]):
-        dfl_flat_cross (Union[Unset, float]):
-        dfl_rotation (Union[Unset, float]):
-        side (Union[Unset, float]):
-        dfl_goalkeeper_interference (Union[Unset, float]):
-        dfl_goalkeeper (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        dfl_cross_category (Union[Unset, EventDflCrossDflCrossCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        receiving_player (float | Unset):
+        height (float | Unset):
+        distance (float | Unset):
+        dfl_from_open_play (float | Unset):
+        dfl_penalty_box (float | Unset):
+        dfl_play_origin (float | Unset):
+        dfl_semi_field (float | Unset):
+        dfl_flat_cross (float | Unset):
+        dfl_rotation (float | Unset):
+        side (float | Unset):
+        dfl_goalkeeper_interference (float | Unset):
+        dfl_goalkeeper (float | Unset):
+        trajectory (str | Unset):
+        dfl_cross_category (EventDflCrossDflCrossCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    receiving_player: Union[Unset, float] = UNSET
-    height: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    dfl_from_open_play: Union[Unset, float] = UNSET
-    dfl_penalty_box: Union[Unset, float] = UNSET
-    dfl_play_origin: Union[Unset, float] = UNSET
-    dfl_semi_field: Union[Unset, float] = UNSET
-    dfl_flat_cross: Union[Unset, float] = UNSET
-    dfl_rotation: Union[Unset, float] = UNSET
-    side: Union[Unset, float] = UNSET
-    dfl_goalkeeper_interference: Union[Unset, float] = UNSET
-    dfl_goalkeeper: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    dfl_cross_category: Union[Unset, EventDflCrossDflCrossCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    receiving_player: float | Unset = UNSET
+    height: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    dfl_from_open_play: float | Unset = UNSET
+    dfl_penalty_box: float | Unset = UNSET
+    dfl_play_origin: float | Unset = UNSET
+    dfl_semi_field: float | Unset = UNSET
+    dfl_flat_cross: float | Unset = UNSET
+    dfl_rotation: float | Unset = UNSET
+    side: float | Unset = UNSET
+    dfl_goalkeeper_interference: float | Unset = UNSET
+    dfl_goalkeeper: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    dfl_cross_category: EventDflCrossDflCrossCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -97,7 +99,7 @@ class EventDflCross:
 
         trajectory = self.trajectory
 
-        dfl_cross_category: Union[Unset, str] = UNSET
+        dfl_cross_category: str | Unset = UNSET
         if not isinstance(self.dfl_cross_category, Unset):
             dfl_cross_category = self.dfl_cross_category.value
 
@@ -189,7 +191,7 @@ class EventDflCross:
         trajectory = d.pop("trajectory", UNSET)
 
         _dfl_cross_category = d.pop("dfl_cross_category", UNSET)
-        dfl_cross_category: Union[Unset, EventDflCrossDflCrossCategory]
+        dfl_cross_category: EventDflCrossDflCrossCategory | Unset
         if isinstance(_dfl_cross_category, Unset):
             dfl_cross_category = UNSET
         else:

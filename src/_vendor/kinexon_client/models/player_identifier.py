@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,21 +15,20 @@ T = TypeVar("T", bound="PlayerIdentifier")
 class PlayerIdentifier:
     """
     Attributes:
-        in_team_team (Union[Unset, str]): Select all players of a team <TEAM>
-        in_group_group (Union[Unset, str]): Select all players of a group <GROUP>
-        in_league_league (Union[Unset, str]): Select all players of league <LEAGUE>
-        in_entity (Union[Unset, str]): Select all players of selected entity (only in combination with TimeEntity
-            schema)
-        player_id (Union[Unset, int]): Select only one player with given <PLAYER_ID>
-        player_idplayer_id (Union[Unset, str]): Select a set of player with comma seperated <PLAYER_ID>
+        in_team_team (str | Unset): Select all players of a team <TEAM>
+        in_group_group (str | Unset): Select all players of a group <GROUP>
+        in_league_league (str | Unset): Select all players of league <LEAGUE>
+        in_entity (str | Unset): Select all players of selected entity (only in combination with TimeEntity schema)
+        player_id (int | Unset): Select only one player with given <PLAYER_ID>
+        player_idplayer_id (str | Unset): Select a set of player with comma seperated <PLAYER_ID>
     """
 
-    in_team_team: Union[Unset, str] = UNSET
-    in_group_group: Union[Unset, str] = UNSET
-    in_league_league: Union[Unset, str] = UNSET
-    in_entity: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    player_idplayer_id: Union[Unset, str] = UNSET
+    in_team_team: str | Unset = UNSET
+    in_group_group: str | Unset = UNSET
+    in_league_league: str | Unset = UNSET
+    in_entity: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    player_idplayer_id: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

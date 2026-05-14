@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,48 +15,48 @@ T = TypeVar("T", bound="EventPassFifa")
 class EventPassFifa:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        duration_ms (Union[Unset, float]):
-        distance_m (Union[Unset, float]):
-        max_speed_mps (Union[Unset, float]):
-        average_spin_rate_rotp_s (Union[Unset, float]):
-        start_position_mx (Union[Unset, float]):
-        start_position_my (Union[Unset, float]):
-        start_position_mz (Union[Unset, float]):
-        end_position_mx (Union[Unset, float]):
-        end_position_my (Union[Unset, float]):
-        end_position_mz (Union[Unset, float]):
-        verticality_m (Union[Unset, float]):
-        horizontality_m (Union[Unset, float]):
-        is_successful (Union[Unset, int]):
-        meta_data (Union[Unset, str]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        duration_ms (float | Unset):
+        distance_m (float | Unset):
+        max_speed_mps (float | Unset):
+        average_spin_rate_rotp_s (float | Unset):
+        start_position_mx (float | Unset):
+        start_position_my (float | Unset):
+        start_position_mz (float | Unset):
+        end_position_mx (float | Unset):
+        end_position_my (float | Unset):
+        end_position_mz (float | Unset):
+        verticality_m (float | Unset):
+        horizontality_m (float | Unset):
+        is_successful (int | Unset):
+        meta_data (str | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    duration_ms: Union[Unset, float] = UNSET
-    distance_m: Union[Unset, float] = UNSET
-    max_speed_mps: Union[Unset, float] = UNSET
-    average_spin_rate_rotp_s: Union[Unset, float] = UNSET
-    start_position_mx: Union[Unset, float] = UNSET
-    start_position_my: Union[Unset, float] = UNSET
-    start_position_mz: Union[Unset, float] = UNSET
-    end_position_mx: Union[Unset, float] = UNSET
-    end_position_my: Union[Unset, float] = UNSET
-    end_position_mz: Union[Unset, float] = UNSET
-    verticality_m: Union[Unset, float] = UNSET
-    horizontality_m: Union[Unset, float] = UNSET
-    is_successful: Union[Unset, int] = UNSET
-    meta_data: Union[Unset, str] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    duration_ms: float | Unset = UNSET
+    distance_m: float | Unset = UNSET
+    max_speed_mps: float | Unset = UNSET
+    average_spin_rate_rotp_s: float | Unset = UNSET
+    start_position_mx: float | Unset = UNSET
+    start_position_my: float | Unset = UNSET
+    start_position_mz: float | Unset = UNSET
+    end_position_mx: float | Unset = UNSET
+    end_position_my: float | Unset = UNSET
+    end_position_mz: float | Unset = UNSET
+    verticality_m: float | Unset = UNSET
+    horizontality_m: float | Unset = UNSET
+    is_successful: int | Unset = UNSET
+    meta_data: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_detected_shot_ice_hockey_shot_made import (
-    EventDetectedShotIceHockeyShotMade,
-)
+from ..models.event_detected_shot_ice_hockey_shot_made import EventDetectedShotIceHockeyShotMade
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventDetectedShotIceHockey")
@@ -16,28 +16,28 @@ T = TypeVar("T", bound="EventDetectedShotIceHockey")
 class EventDetectedShotIceHockey:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        distance (Union[Unset, float]):
-        speed_puck (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        shot_made (Union[Unset, EventDetectedShotIceHockeyShotMade]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        distance (float | Unset):
+        speed_puck (float | Unset):
+        trajectory (str | Unset):
+        shot_made (EventDetectedShotIceHockeyShotMade | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_puck: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    shot_made: Union[Unset, EventDetectedShotIceHockeyShotMade] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_puck: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    shot_made: EventDetectedShotIceHockeyShotMade | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -59,7 +59,7 @@ class EventDetectedShotIceHockey:
 
         trajectory = self.trajectory
 
-        shot_made: Union[Unset, int] = UNSET
+        shot_made: int | Unset = UNSET
         if not isinstance(self.shot_made, Unset):
             shot_made = self.shot_made.value
 
@@ -111,7 +111,7 @@ class EventDetectedShotIceHockey:
         trajectory = d.pop("trajectory", UNSET)
 
         _shot_made = d.pop("shot_made", UNSET)
-        shot_made: Union[Unset, EventDetectedShotIceHockeyShotMade]
+        shot_made: EventDetectedShotIceHockeyShotMade | Unset
         if isinstance(_shot_made, Unset):
             shot_made = UNSET
         else:

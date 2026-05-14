@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,46 +16,46 @@ T = TypeVar("T", bound="EventNoahShot")
 class EventNoahShot:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        x (Union[Unset, float]):
-        y (Union[Unset, float]):
-        z (Union[Unset, float]):
-        rating_category (Union[Unset, float]):
-        jump_height (Union[Unset, float]):
-        arc (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        shot_load (Union[Unset, float]):
-        acceleration_max (Union[Unset, float]):
-        deceleration_max (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        noah_timestamp (Union[Unset, str]):
-        made (Union[Unset, EventNoahShotMade]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        x (float | Unset):
+        y (float | Unset):
+        z (float | Unset):
+        rating_category (float | Unset):
+        jump_height (float | Unset):
+        arc (float | Unset):
+        distance (float | Unset):
+        shot_load (float | Unset):
+        acceleration_max (float | Unset):
+        deceleration_max (float | Unset):
+        speed_max (float | Unset):
+        noah_timestamp (str | Unset):
+        made (EventNoahShotMade | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    x: Union[Unset, float] = UNSET
-    y: Union[Unset, float] = UNSET
-    z: Union[Unset, float] = UNSET
-    rating_category: Union[Unset, float] = UNSET
-    jump_height: Union[Unset, float] = UNSET
-    arc: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    shot_load: Union[Unset, float] = UNSET
-    acceleration_max: Union[Unset, float] = UNSET
-    deceleration_max: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    noah_timestamp: Union[Unset, str] = UNSET
-    made: Union[Unset, EventNoahShotMade] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    x: float | Unset = UNSET
+    y: float | Unset = UNSET
+    z: float | Unset = UNSET
+    rating_category: float | Unset = UNSET
+    jump_height: float | Unset = UNSET
+    arc: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    shot_load: float | Unset = UNSET
+    acceleration_max: float | Unset = UNSET
+    deceleration_max: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    noah_timestamp: str | Unset = UNSET
+    made: EventNoahShotMade | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -93,7 +95,7 @@ class EventNoahShot:
 
         noah_timestamp = self.noah_timestamp
 
-        made: Union[Unset, str] = UNSET
+        made: str | Unset = UNSET
         if not isinstance(self.made, Unset):
             made = self.made.value
 
@@ -181,7 +183,7 @@ class EventNoahShot:
         noah_timestamp = d.pop("noah_timestamp", UNSET)
 
         _made = d.pop("made", UNSET)
-        made: Union[Unset, EventNoahShotMade]
+        made: EventNoahShotMade | Unset
         if isinstance(_made, Unset):
             made = UNSET
         else:
