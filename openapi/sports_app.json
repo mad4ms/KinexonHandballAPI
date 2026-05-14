@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "title": "SportAppAPI",
+    "title": "Sport App API",
     "version": "1.0"
   },
   "paths": {
@@ -10,7 +10,8 @@
         "tags": [
           "Events"
         ],
-        "summary": "Requestalistofeventsandtherespectiveeventcountsforasetofplayers.",
+        "summary": "Request a list of events and the respective event counts for a set of players. ",
+        "operationId": "GetEventsCountPerEventTypePlayerDeprecated",
         "parameters": [
           {
             "$ref": "#/components/parameters/players"
@@ -24,7 +25,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sessionand/orphases",
+            "description": "Session and/or phases",
             "content": {
               "application/json": {
                 "schema": {
@@ -47,7 +48,8 @@
         "tags": [
           "Events"
         ],
-        "summary": "Requestalistofeventsandtherespectiveeventcountsforasetofplayers.",
+        "summary": "Request a list of events and the respective event counts for a set of players. ",
+        "operationId": "GetEventsByEventTypePlayerDeprecated",
         "parameters": [
           {
             "$ref": "#/components/parameters/eventType"
@@ -64,7 +66,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ReturnsanarrayofrequestedEventType(see[EventTypes](#model-EventTypes)schemaforallavailableresponsetypes)",
+            "description": "Returns an array of requested EventType (see [EventTypes](#model-EventTypes) schema for all available response types)",
             "content": {
               "application/json": {
                 "schema": {
@@ -90,7 +92,8 @@
         "tags": [
           "Events"
         ],
-        "summary": "Requestalistofeventsandtherespectiveeventcountsforasetofplayers.",
+        "summary": "Request a list of events and the respective event counts for a set of players. ",
+        "operationId": "GetPublicV1EventsCountPerEventTypePlayer",
         "parameters": [
           {
             "$ref": "#/components/parameters/players"
@@ -104,7 +107,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sessionand/orphases",
+            "description": "Session and/or phases",
             "content": {
               "application/json": {
                 "schema": {
@@ -126,7 +129,8 @@
         "tags": [
           "Events"
         ],
-        "summary": "Requestalistofeventsandtherespectiveeventcountsforasetofplayers.",
+        "summary": "Request a list of events and the respective event counts for a set of players. ",
+        "operationId": "GetPublicV1EventsByEventTypePlayer",
         "parameters": [
           {
             "$ref": "#/components/parameters/eventType"
@@ -143,7 +147,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ReturnsanarrayofrequestedEventType(see[EventTypes](#model-EventTypes)schemaforallavailableresponsetypes)",
+            "description": "Returns an array of requested EventType (see [EventTypes](#model-EventTypes) schema for all available response types)",
             "content": {
               "application/json": {
                 "schema": {
@@ -166,14 +170,14 @@
     "/statistics/list": {
       "get": {
         "tags": [
-          "AvailableMetricsandEvents"
+          "Available Metrics and Events"
         ],
-        "summary": "Listofavailablemetricsandevents",
-        "description": "Retunsalistofallmetricnamesandeventnames",
+        "summary": "List of available metrics and events",
+        "description": "Retuns a list of all metric names and event names",
         "operationId": "GetStatisticsListDeprecated",
         "responses": {
           "200": {
-            "description": "Listofavailablemetricsandevents",
+            "description": "List of available metrics and events",
             "content": {
               "application/json": {
                 "schema": {
@@ -208,14 +212,14 @@
     "/public/v1/statistics/list": {
       "get": {
         "tags": [
-          "AvailableMetricsandEvents"
+          "Available Metrics and Events"
         ],
-        "summary": "Listofavailablemetricsandevents",
-        "description": "Retunsalistofallmetricnamesandeventnames",
+        "summary": "List of available metrics and events",
+        "description": "Retuns a list of all metric names and event names",
         "operationId": "GetPublicV1StatisticsList",
         "responses": {
           "200": {
-            "description": "Listofavailablemetricsandevents",
+            "description": "List of available metrics and events",
             "content": {
               "application/json": {
                 "schema": {
@@ -251,8 +255,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Listplayersofteam",
-        "description": "RetunsalistofallPlayerforgiven{teamId}",
+        "summary": "List players of team",
+        "description": "Retuns a list of all Player for given {teamId}",
         "operationId": "GetTeamsByTeamIdPlayersDeprecated",
         "parameters": [
           {
@@ -261,7 +265,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Playersofagiventeam",
+            "description": "Players of a given team",
             "content": {
               "application/json": {
                 "schema": {
@@ -287,8 +291,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Listplayersofteam",
-        "description": "RetunsalistofallPlayerforgiven{teamId}",
+        "summary": "List players of team",
+        "description": "Retuns a list of all Player for given {teamId}",
         "operationId": "GetPublicV1TeamsByTeamIdPlayers",
         "parameters": [
           {
@@ -297,7 +301,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Playersofagiventeam",
+            "description": "Players of a given team",
             "content": {
               "application/json": {
                 "schema": {
@@ -322,8 +326,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Getaplayerofateam",
-        "description": "RetunsaPlayerby{id}forgiven{teamId}",
+        "summary": "Get a player of a team",
+        "description": "Retuns a Player by {id} for given {teamId}",
         "operationId": "GetTeamsByTeamIdPlayersByPlayerIdDeprecated",
         "parameters": [
           {
@@ -335,7 +339,7 @@
         ],
         "responses": {
           "200": {
-            "description": "PlayerofagivenTeam",
+            "description": "Player of a given Team",
             "content": {
               "application/json": {
                 "schema": {
@@ -358,8 +362,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Getaplayerofateam",
-        "description": "RetunsaPlayerby{id}forgiven{teamId}",
+        "summary": "Get a player of a team",
+        "description": "Retuns a Player by {id} for given {teamId}",
         "operationId": "GetPublicV1TeamsByTeamIdPlayersByPlayerId",
         "parameters": [
           {
@@ -371,7 +375,7 @@
         ],
         "responses": {
           "200": {
-            "description": "PlayerofagivenTeam",
+            "description": "Player of a given Team",
             "content": {
               "application/json": {
                 "schema": {
@@ -393,7 +397,7 @@
         "tags": [
           "Statistics"
         ],
-        "summary": "Requeststatisticsforasinglesessionorphase.",
+        "summary": "Request statistics for a single session or phase.",
         "operationId": "GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDeprecated",
         "parameters": [
           {
@@ -424,7 +428,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session/PhaseStatisticsfortherequestedPlayer(s).Seeschemafordescriptionofoutput\n*values.",
+            "description": "Session/Phase Statistics for the requested Player(s). See schema for description of output\n     *        values.",
             "content": {
               "application/json": {
                 "schema": {
@@ -450,7 +454,7 @@
         "tags": [
           "Statistics"
         ],
-        "summary": "Requeststatisticsforasinglesessionorphase.",
+        "summary": "Request statistics for a single session or phase.",
         "operationId": "GetPublicV1StatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifier",
         "parameters": [
           {
@@ -481,7 +485,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session/PhaseStatisticsfortherequestedPlayer(s).Seeschemafordescriptionofoutput\n*values.",
+            "description": "Session/Phase Statistics for the requested Player(s). See schema for description of output\n     *        values.",
             "content": {
               "application/json": {
                 "schema": {
@@ -506,7 +510,7 @@
         "tags": [
           "Statistics"
         ],
-        "summary": "Requeststatisticsforarangeofstatistics",
+        "summary": "Request statistics for a range of statistics",
         "operationId": "GetStatisticsByTypeByPlayerIdByTimeEntityRangeTypeDeprecated",
         "parameters": [
           {
@@ -540,7 +544,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session/PhaseStatisticsinselectedrangeforselectedPlayer(s).Seeschemafor\n*descriptionofoutputvalues.",
+            "description": "Session/Phase Statistics in selected range for selected Player(s). See schema for\n     *         description of output values.",
             "content": {
               "application/json": {
                 "schema": {
@@ -566,7 +570,7 @@
         "tags": [
           "Statistics"
         ],
-        "summary": "Requeststatisticsforarangeofstatistics",
+        "summary": "Request statistics for a range of statistics",
         "operationId": "GetPublicV1StatisticsByTypeByPlayerIdByTimeEntityRangeType",
         "parameters": [
           {
@@ -600,7 +604,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Session/PhaseStatisticsinselectedrangeforselectedPlayer(s).Seeschemafor\n*descriptionofoutputvalues.",
+            "description": "Session/Phase Statistics in selected range for selected Player(s). See schema for\n     *         description of output values.",
             "content": {
               "application/json": {
                 "schema": {
@@ -625,8 +629,8 @@
         "tags": [
           "Exports"
         ],
-        "summary": "Getaexportforpositionsofagivensession",
-        "description": "RetunsaCSVforthegivenSessionandParameters",
+        "summary": "Get a export for positions of a given session",
+        "description": "Retuns a CSV for the given Session and Parameters",
         "operationId": "GetExportPositionsSessionByTimeEntityIdentifierDeprecated",
         "parameters": [
           {
@@ -644,7 +648,7 @@
           {
             "name": "players",
             "in": "query",
-            "description": "Theidsofselectedplayerscommaseperated",
+            "description": "The ids of selected players comma seperated",
             "required": false,
             "schema": {
               "type": "string"
@@ -653,13 +657,13 @@
         ],
         "responses": {
           "200": {
-            "description": "PositionsexportasCSVe.g.",
+            "description": "Positions export as CSV e.g. ",
             "content": {
               "text/csv": {
                 "schema": {
                   "type": "string"
                 },
-                "example": "tsinms\tformattedlocaltime\tsensorid\tmappedid\tnumber\tfullname\tleagueid\tgroupid\tgroupname\txinm\tyinm\tspeedinm/s\tdirectionofmovementindeg\taccelerationinm/s2\ttotaldistanceinm\tmetabolicpowerinW/kg\taccelerationload\n1618323586050\t13.04.202114:19:46.050\t3\t4\t3\tTest3Name3\t\t2\tGroupB\t\t\t\t\t\t0\n1618323586050\t13.04.202114:19:46.050\t2\t3\t2\tTest2Name2\t\t1\tGroupA\t\t\t\t\t\t0"
+                "example": "ts in ms\tformatted local time\tsensor id\tmapped id\tnumber\tfull name\tleague id\tgroup id\tgroup name\tx in m\ty in m\tspeed in m/s\tdirection of movement in deg\tacceleration in m/s2\ttotal distance in m\tmetabolic power in W/kg\tacceleration load\n1618323586050\t13.04.2021 14:19:46.050\t3\t4\t3\tTest 3 Name 3\t\t2\tGroup B\t\t\t\t\t\t0\n1618323586050\t13.04.2021 14:19:46.050\t2\t3\t2\tTest 2 Name 2\t\t1\tGroup A\t\t\t\t\t\t0"
               }
             }
           }
@@ -677,8 +681,8 @@
         "tags": [
           "Exports"
         ],
-        "summary": "Getaexportforpositionsofagivensession",
-        "description": "RetunsaCSVforthegivenSessionandParameters",
+        "summary": "Get a export for positions of a given session",
+        "description": "Retuns a CSV for the given Session and Parameters",
         "operationId": "GetPublicV1ExportPositionsSessionByTimeEntityIdentifier",
         "parameters": [
           {
@@ -702,7 +706,7 @@
           {
             "name": "players",
             "in": "query",
-            "description": "Theidsofselectedplayerscommaseperated",
+            "description": "The ids of selected players comma seperated",
             "required": false,
             "schema": {
               "type": "string"
@@ -711,13 +715,13 @@
         ],
         "responses": {
           "200": {
-            "description": "PositionsexportasCSVe.g.",
+            "description": "Positions export as CSV e.g. ",
             "content": {
               "text/csv": {
                 "schema": {
                   "type": "string"
                 },
-                "example": "tsinms\tformattedlocaltime\tsensorid\tmappedid\tnumber\tfullname\tleagueid\tgroupid\tgroupname\txinm\tyinm\tspeedinm/s\tdirectionofmovementindeg\taccelerationinm/s2\ttotaldistanceinm\tmetabolicpowerinW/kg\taccelerationload\n1618323586050\t13.04.202114:19:46.050\t3\t4\t3\tTest3Name3\t\t2\tGroupB\t\t\t\t\t\t0\n1618323586050\t13.04.202114:19:46.050\t2\t3\t2\tTest2Name2\t\t1\tGroupA\t\t\t\t\t\t0"
+                "example": "ts in ms\tformatted local time\tsensor id\tmapped id\tnumber\tfull name\tleague id\tgroup id\tgroup name\tx in m\ty in m\tspeed in m/s\tdirection of movement in deg\tacceleration in m/s2\ttotal distance in m\tmetabolic power in W/kg\tacceleration load\n1618323586050\t13.04.2021 14:19:46.050\t3\t4\t3\tTest 3 Name 3\t\t2\tGroup B\t\t\t\t\t\t0\n1618323586050\t13.04.2021 14:19:46.050\t2\t3\t2\tTest 2 Name 2\t\t1\tGroup A\t\t\t\t\t\t0"
               }
             }
           }
@@ -734,8 +738,8 @@
         "tags": [
           "Exports"
         ],
-        "summary": "Getaexportforinertialofagivensession",
-        "description": "RetunsaCSVforthegivenSessionandParameters",
+        "summary": "Get a export for inertial of a given session",
+        "description": "Retuns a CSV for the given Session and Parameters",
         "operationId": "GetExportInertialSessionByTimeEntityIdentifierDeprecated",
         "parameters": [
           {
@@ -750,7 +754,7 @@
           {
             "name": "players",
             "in": "query",
-            "description": "Theidsofselectedplayerscommaseperated",
+            "description": "The ids of selected players comma seperated",
             "required": false,
             "schema": {
               "type": "string"
@@ -759,13 +763,13 @@
         ],
         "responses": {
           "200": {
-            "description": "InertialexportasCSV",
+            "description": "Inertial export as CSV",
             "content": {
               "text/csv": {
                 "schema": {
                   "type": "string"
                 },
-                "example": "tsinms\tformattedlocaltime\tsensorid\tmappedid\tnumber\tfullname\tleagueid\tgroupid\tgroupname\txinm\tyinm\tspeedinm/s\tdirectionofmovementindeg\taccelerationinm/s2\ttotaldistanceinm\tmetabolicpowerinW/kg\taccelerationload\n1618323586050\t13.04.202114:19:46.050\t3\t4\t3\tTest3Name3\t\t2\tGroupB\t\t\t\t\t\t0\n1618323586050\t13.04.202114:19:46.050\t2\t3\t2\tTest2Name2\t\t1\tGroupA\t\t\t\t\t\t0"
+                "example": "ts in ms\tformatted local time\tsensor id\tmapped id\tnumber\tfull name\tleague id\tgroup id\tgroup name\tx in m\ty in m\tspeed in m/s\tdirection of movement in deg\tacceleration in m/s2\ttotal distance in m\tmetabolic power in W/kg\tacceleration load\n    1618323586050\t13.04.2021 14:19:46.050\t3\t4\t3\tTest 3 Name 3\t\t2\tGroup B\t\t\t\t\t\t0\n    1618323586050\t13.04.2021 14:19:46.050\t2\t3\t2\tTest 2 Name 2\t\t1\tGroup A\t\t\t\t\t\t0"
               }
             }
           }
@@ -783,8 +787,8 @@
         "tags": [
           "Exports"
         ],
-        "summary": "Getaexportforinertialofagivensession",
-        "description": "RetunsaCSVforthegivenSessionandParameters",
+        "summary": "Get a export for inertial of a given session",
+        "description": "Retuns a CSV for the given Session and Parameters",
         "operationId": "GetPublicV1ExportInertialSessionByTimeEntityIdentifier",
         "parameters": [
           {
@@ -802,7 +806,7 @@
           {
             "name": "players",
             "in": "query",
-            "description": "Theidsofselectedplayerscommaseperated",
+            "description": "The ids of selected players comma seperated",
             "required": false,
             "schema": {
               "type": "string"
@@ -811,13 +815,13 @@
         ],
         "responses": {
           "200": {
-            "description": "InertialexportasCSV",
+            "description": "Inertial export as CSV",
             "content": {
               "text/csv": {
                 "schema": {
                   "type": "string"
                 },
-                "example": "tsinms\tformattedlocaltime\tsensorid\tmappedid\tnumber\tfullname\tleagueid\tgroupid\tgroupname\txinm\tyinm\tspeedinm/s\tdirectionofmovementindeg\taccelerationinm/s2\ttotaldistanceinm\tmetabolicpowerinW/kg\taccelerationload\n1618323586050\t13.04.202114:19:46.050\t3\t4\t3\tTest3Name3\t\t2\tGroupB\t\t\t\t\t\t0\n1618323586050\t13.04.202114:19:46.050\t2\t3\t2\tTest2Name2\t\t1\tGroupA\t\t\t\t\t\t0"
+                "example": "ts in ms\tformatted local time\tsensor id\tmapped id\tnumber\tfull name\tleague id\tgroup id\tgroup name\tx in m\ty in m\tspeed in m/s\tdirection of movement in deg\tacceleration in m/s2\ttotal distance in m\tmetabolic power in W/kg\tacceleration load\n    1618323586050\t13.04.2021 14:19:46.050\t3\t4\t3\tTest 3 Name 3\t\t2\tGroup B\t\t\t\t\t\t0\n    1618323586050\t13.04.2021 14:19:46.050\t2\t3\t2\tTest 2 Name 2\t\t1\tGroup A\t\t\t\t\t\t0"
               }
             }
           }
@@ -834,8 +838,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Getthesensorassignmentforagivensession",
-        "description": "RetunsthesensorassignmentforagivenSession",
+        "summary": "Get the sensor assignment for a given session",
+        "description": "Retuns the sensor assignment for a given Session",
         "operationId": "GetSensorAssignmentByTimeEntityIdentifierDeprecated",
         "parameters": [
           {
@@ -844,7 +848,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ListofSensorAssignments",
+            "description": "List of Sensor Assignments",
             "content": {
               "application/json": {
                 "schema": {
@@ -870,8 +874,8 @@
         "tags": [
           "Players"
         ],
-        "summary": "Getthesensorassignmentforagivensession",
-        "description": "RetunsthesensorassignmentforagivenSession",
+        "summary": "Get the sensor assignment for a given session",
+        "description": "Retuns the sensor assignment for a given Session",
         "operationId": "GetPublicV1SensorAssignmentByTimeEntityIdentifier",
         "parameters": [
           {
@@ -880,7 +884,7 @@
         ],
         "responses": {
           "200": {
-            "description": "ListofSensorAssignments",
+            "description": "List of Sensor Assignments",
             "content": {
               "application/json": {
                 "schema": {
@@ -903,10 +907,10 @@
     "/teams/{teamId}/sessions-and-phases": {
       "get": {
         "tags": [
-          "Sessionsandphases"
+          "Sessions and phases"
         ],
-        "summary": "Listofsessionsandnestedphases",
-        "description": "Retunsalistofallsessionsforgiven{teamId}inrange{min}-{max}.",
+        "summary": "List of sessions and nested phases",
+        "description": "Retuns a list of all sessions for given {teamId} in range {min} - {max}.",
         "operationId": "GetTeamsByTeamIdSessionsAndPhasesDeprecated",
         "parameters": [
           {
@@ -921,7 +925,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sessionswithnestedphases",
+            "description": "Sessions with nested phases",
             "content": {
               "application/json": {
                 "schema": {
@@ -945,10 +949,10 @@
     "/public/v1/teams/{teamId}/sessions-and-phases": {
       "get": {
         "tags": [
-          "Sessionsandphases"
+          "Sessions and phases"
         ],
-        "summary": "Listofsessionsandnestedphases",
-        "description": "Retunsalistofallsessionsforgiven{teamId}inrange{min}-{max}.",
+        "summary": "List of sessions and nested phases",
+        "description": "Retuns a list of all sessions for given {teamId} in range {min} - {max}.",
         "operationId": "GetPublicV1TeamsByTeamIdSessionsAndPhases",
         "parameters": [
           {
@@ -963,7 +967,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Sessionswithnestedphases",
+            "description": "Sessions with nested phases",
             "content": {
               "application/json": {
                 "schema": {
@@ -986,10 +990,10 @@
     "/statistics/{sessionId}/categories": {
       "get": {
         "tags": [
-          "CategoriesandThresholds"
+          "Categories and Thresholds"
         ],
-        "summary": "Returnscategoriesandthresholdsforasession",
-        "description": "Returnscategoriesandthresholdsforasession",
+        "summary": "Returns categories and thresholds for a session",
+        "description": "Returns categories and thresholds for a session",
         "operationId": "GetStatisticsBySessionIdCategoriesDeprecated",
         "parameters": [
           {
@@ -998,7 +1002,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Categoriesandthresholds",
+            "description": "Categories and thresholds",
             "content": {
               "application/json": {
                 "schema": {
@@ -1036,10 +1040,10 @@
     "/public/v1/statistics/{sessionId}/categories": {
       "get": {
         "tags": [
-          "CategoriesandThresholds"
+          "Categories and Thresholds"
         ],
-        "summary": "Returnscategoriesandthresholdsforasession",
-        "description": "Returnscategoriesandthresholdsforasession",
+        "summary": "Returns categories and thresholds for a session",
+        "description": "Returns categories and thresholds for a session",
         "operationId": "GetPublicV1StatisticsBySessionIdCategories",
         "parameters": [
           {
@@ -1048,7 +1052,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Categoriesandthresholds",
+            "description": "Categories and thresholds",
             "content": {
               "application/json": {
                 "schema": {
@@ -1122,6 +1126,7 @@
           "dfl_sprint",
           "dfl_tackling",
           "dfl_throw_in",
+          "diagnostics_sprint",
           "down_on_pads",
           "dribbling_soccer",
           "dynamic_defence",
@@ -1265,6 +1270,9 @@
           "dfl_throw_in": {
             "$ref": "#/components/schemas/Event_DflThrowIn"
           },
+          "diagnostics_sprint": {
+            "$ref": "#/components/schemas/Event_DiagnosticsSprint"
+          },
           "down_on_pads": {
             "$ref": "#/components/schemas/Event_DownOnPads"
           },
@@ -1379,6 +1387,9 @@
         "type": "object",
         "allOf": [
           {
+            "$ref": "#/components/schemas/TimeEntity"
+          },
+          {
             "properties": {
               "id": {
                 "type": "integer",
@@ -1391,88 +1402,82 @@
                 "example": 12
               },
               "start_phase": {
-                "description": "StartofthephaseinUTC",
+                "description": "Start of the phase in UTC",
                 "type": "string",
                 "format": "date-time",
-                "example": "2019-01-0112:05:00"
+                "example": "2019-01-01 12:05:00"
               },
               "end_phase": {
-                "nullable": true,
-                "description": "EndofthephaseinUTC",
+                "description": "End of the phase in UTC",
                 "type": "string",
                 "format": "date-time",
-                "example": "2019-01-0112:05:00"
+                "example": "2019-01-01 12:05:00",
+                "nullable": true
               },
               "description": {
                 "type": "string",
-                "example": "SprintTraining"
+                "example": "Sprint Training"
               },
               "duration": {
-                "description": "Durationofthephaseinseconds",
+                "description": "Duration of the phase in seconds",
                 "type": "integer",
                 "format": "int32",
                 "example": 60
               },
               "type": {
                 "type": "string",
-                "example": "SprintTraining"
+                "example": "Sprint Training"
               },
               "group_assignment": {
-                "description": "TheplayertogroupassignmentforthissessioninJSONformat",
+                "description": "The player to group assignment for this session in JSON format",
                 "type": "string",
-                "example": "{1:{'player_id':1,'function':'M'},2:{'player_id':2,'function':'C'}}"
+                "example": "{1: {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}"
               },
               "group_colors": {
-                "description": "ColorofthegroupsinthissessioninJSONformat",
+                "description": "Color of the groups in this session in JSON format",
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "example": "['#00ff00','#3399ff']"
+                "example": "['#00ff00', '#3399ff']"
               },
               "group_names": {
-                "description": "Nameoftherespectivegroups",
+                "description": "Name of the respective groups",
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "example": "['TeamA','TeamB']"
+                "example": "['Team A', 'Team B']"
               }
             },
             "type": "object"
-          },
-          {
-            "$ref": "#/components/schemas/TimeEntity"
-          },
-          {
-            "$ref": "#/components/schemas/TimeEntity"
           }
         ]
       },
       "PlayerIdentifier": {
         "properties": {
           "in-team-<TEAM>": {
-            "description": "Selectallplayersofateam<TEAM>",
+            "description": "Select all players of a team <TEAM>",
             "type": "string"
           },
           "in-group-<GROUP>": {
-            "description": "Selectallplayersofagroup<GROUP>",
+            "description": "Select all players of a group <GROUP>",
             "type": "string"
           },
           "in-league-<LEAGUE>": {
-            "description": "Selectallplayersofleague<LEAGUE>",
+            "description": "Select all players of league <LEAGUE>",
             "type": "string"
           },
           "in-entity": {
-            "description": "Selectallplayersofselectedentity(onlyincombinationwithTimeEntityschema)",
+            "description": "Select all players of selected entity (only in combination with TimeEntity schema)",
             "type": "string"
           },
           "<PLAYER_ID>": {
-            "description": "Selectonlyoneplayerwithgiven<PLAYER_ID>",
+            "description": "Select only one player with given <PLAYER_ID>",
             "type": "integer"
           },
           "<PLAYER_ID>,<PLAYER_ID>": {
-            "description": "Selectasetofplayerwithcommaseperated<PLAYER_ID>",
+            "description": "Select a set of player with comma seperated <PLAYER_ID>",
             "type": "string"
           }
         },
@@ -1481,66 +1486,66 @@
       "PlayerModel": {
         "properties": {
           "cacheBusterHash": {
-            "description": "thecachebusterhash",
+            "description": "the cachebuster hash",
             "type": "string"
           },
           "id": {
-            "description": "theplayerid",
+            "description": "the player id",
             "type": "integer"
           },
           "first_name": {
-            "description": "FirstNameoftheplayer",
+            "description": "First Name of the player",
             "type": "string"
           },
           "last_name": {
-            "description": "LastNameoftheplayer",
+            "description": "Last Name of the player",
             "type": "string"
           },
           "function": {
-            "description": "Functionoftheplayer",
+            "description": "Function of the player",
             "type": "string"
           },
           "number": {
-            "description": "Numberoftheplayer",
+            "description": "Number of the player",
             "type": "integer"
           },
           "dateOfBirth": {
-            "description": "Dateofbirthoftheplayer",
+            "description": "Date of birth of the player",
             "type": "string"
           },
           "last_tag_ids": {
-            "description": "Arrayoflasttagid's(integers)oftheplayer",
+            "description": "Array of last tag id's (integers) of the player",
             "type": "array",
             "items": {
               "type": "integer"
             }
           },
           "last_group": {
-            "description": "LastGroupoftheplayer",
+            "description": "Last Group of the player",
             "type": "integer"
           },
           "team_id": {
-            "description": "TeamIdoftheplayer",
+            "description": "Team Id of the player",
             "type": "integer"
           },
           "league_id": {
-            "description": "LeagueIdoftheplayer",
+            "description": "League Id of the player",
             "type": "string"
           },
           "deleted": {
-            "description": "Istheplayerdeleted",
+            "description": "Is the player deleted",
             "type": "boolean"
           },
           "player_db_uuid": {
-            "description": "UUIDofthePlayer",
+            "description": "UUID of the Player",
             "type": "string"
           },
           "sports_cloud_uuid": {
-            "description": "UUIDinSportsCloud",
+            "description": "UUID in Sports Cloud",
             "type": "string"
           },
           "sports_cloud_version": {
-            "description": "Datetimeversion",
+            "description": "Datetime version",
             "type": "string"
           }
         },
@@ -1549,6 +1554,9 @@
       "SensorAssignment": {
         "type": "object",
         "allOf": [
+          {
+            "$ref": "#/components/schemas/SensorAssignment"
+          },
           {
             "properties": {
               "sensor_eui": {
@@ -1565,38 +1573,38 @@
               }
             },
             "type": "object"
-          },
-          {
-            "$ref": "#/components/schemas/SensorAssignment"
           }
         ]
       },
       "Session": {
-        "description": "Session",
         "type": "object",
         "allOf": [
           {
+            "$ref": "#/components/schemas/TimeEntity"
+          },
+          {
             "properties": {
               "session_id": {
+                "description": "Session",
                 "type": "integer",
                 "format": "int32",
                 "example": 12
               },
               "start_session": {
-                "description": "StartofthesessioninUTC",
+                "description": "Start of the session in UTC",
                 "type": "string",
                 "format": "date-time",
-                "example": "2019-01-0112:00:00"
+                "example": "2019-01-01 12:00:00"
               },
               "end_session": {
-                "nullable": true,
-                "description": "EndofthesessioninUTC",
+                "description": "End of the session in UTC",
                 "type": "string",
                 "format": "date-time",
-                "example": "2019-01-0113:00:00"
+                "example": "2019-01-01 13:00:00",
+                "nullable": true
               },
               "duration": {
-                "description": "Lengthofsessioninseconds",
+                "description": "Length of session in seconds",
                 "type": "integer",
                 "format": "int32",
                 "example": 1200
@@ -1607,34 +1615,34 @@
               },
               "description": {
                 "type": "string",
-                "example": "KinexonSportsvs.KinexonIndustries"
+                "example": "Kinexon Sports vs. Kinexon Industries"
               },
               "timezone_id": {
-                "description": "IDofthetimezonethesessionwasrecordedin",
+                "description": "ID of the timezone the session was recorded in",
                 "type": "integer",
                 "format": "int32",
                 "example": 3
               },
               "group_assignment": {
-                "description": "TheplayertogroupassignmentforthissessioninJSONformat",
+                "description": "The player to group assignment for this session in JSON format",
                 "type": "string",
-                "example": "{1:{'player_id':1,'function':'M'},2:{'player_id':2,'function':'C'}}"
+                "example": "{1: {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}"
               },
               "group_colors": {
-                "description": "ColorofthegroupsinthissessioninJSONformat",
+                "description": "Color of the groups in this session in JSON format",
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "example": "['#00ff00','#3399ff']"
+                "example": "['#00ff00', '#3399ff']"
               },
               "group_names": {
-                "description": "Nameoftherespectivegroups",
+                "description": "Name of the respective groups",
                 "type": "array",
                 "items": {
                   "type": "string"
                 },
-                "example": "['TeamA','TeamB']"
+                "example": "['Team A', 'Team B']"
               },
               "phases": {
                 "type": "array",
@@ -1644,27 +1652,21 @@
               }
             },
             "type": "object"
-          },
-          {
-            "$ref": "#/components/schemas/TimeEntity"
-          },
-          {
-            "$ref": "#/components/schemas/TimeEntity"
           }
         ]
       },
       "TimeEntityIdentifier": {
         "properties": {
           "generic-id": {
-            "description": "GenericSessionId",
+            "description": "Generic Session Id",
             "type": "string"
           },
           "id": {
-            "description": "SessionofPhaseId",
+            "description": "Session of Phase Id",
             "type": "integer"
           },
           "quick-identifier": {
-            "description": "returnsthe'latest'(lastendedsession/phase)orthe'current'(stillrunning)phase/session",
+            "description": "returns the 'latest' (last ended session/phase) or the 'current' (still running) phase/session",
             "type": "string",
             "enum": [
               "latest",
@@ -1680,48 +1682,9 @@
       "PlayerStatistic": {
         "type": "object",
         "properties": {
-          "heart_rate_min": {
-            "example": 72,
-            "type": "integer"
-          },
-          "heart_rate_max": {
-            "description": "bpm",
-            "example": 192,
-            "type": "integer"
-          },
-          "heart_rate_avg": {
-            "description": "bpm",
-            "example": 122,
-            "type": "number",
-            "format": "float"
-          },
-          "speed_max": {
-            "description": "m/s",
-            "example": 3.1,
-            "type": "number",
-            "format": "float"
-          },
-          "speed_min": {
-            "description": "m/s",
-            "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
           "speed_avg": {
             "description": "m/s",
             "example": 2.4,
-            "type": "number",
-            "format": "float"
-          },
-          "accel_max": {
-            "description": "m/s²",
-            "example": 2.5,
-            "type": "number",
-            "format": "float"
-          },
-          "accel_min": {
-            "description": "m/s²",
-            "example": 1.1,
             "type": "number",
             "format": "float"
           },
@@ -1731,18 +1694,8 @@
             "type": "number",
             "format": "float"
           },
-          "accel_load_max": {
-            "example": 5.5,
-            "type": "number",
-            "format": "float"
-          },
           "accel_load_avg": {
             "example": 4.5,
-            "type": "number",
-            "format": "float"
-          },
-          "accel_load_accum": {
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -1752,17 +1705,7 @@
             "type": "number",
             "format": "float"
           },
-          "load_acceleration_load_category1": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "load_acceleration_load_category1_avg_per_minute": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "load_acceleration_load_category2": {
             "example": 20,
             "type": "number",
             "format": "float"
@@ -1772,17 +1715,7 @@
             "type": "number",
             "format": "float"
           },
-          "load_acceleration_load_category3": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "load_acceleration_load_category3_avg_per_minute": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "load_acceleration_load_category4": {
             "example": 20,
             "type": "number",
             "format": "float"
@@ -1792,27 +1725,12 @@
             "type": "number",
             "format": "float"
           },
-          "load_acceleration_load_category5": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "load_acceleration_load_category5_avg_per_minute": {
             "example": 20,
             "type": "number",
             "format": "float"
           },
-          "load_acceleration_load_category6": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "load_acceleration_load_category6_avg_per_minute": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "load_acceleration_load_category7": {
             "example": 20,
             "type": "number",
             "format": "float"
@@ -1828,30 +1746,6 @@
             "type": "number",
             "format": "float"
           },
-          "metabolic_power_max": {
-            "description": "W",
-            "example": 320,
-            "type": "number",
-            "format": "float"
-          },
-          "metabolic_power_per_mass_max": {
-            "description": "W/kg",
-            "example": 7.2,
-            "type": "number",
-            "format": "float"
-          },
-          "metabolic_power_min": {
-            "description": "W",
-            "example": 210,
-            "type": "number",
-            "format": "float"
-          },
-          "metabolic_power_per_mass_min": {
-            "description": "W/kg",
-            "example": 3.6,
-            "type": "number",
-            "format": "float"
-          },
           "metabolic_power_avg": {
             "example": 280,
             "type": "number",
@@ -1863,141 +1757,9 @@
             "type": "number",
             "format": "float"
           },
-          "distance_acceleration_load_category1": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category2": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category3": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category4": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category5": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category6": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_acceleration_load_category7": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category1": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category2": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category3": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category4": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category5": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category6": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_acceleration_load_category7": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_total": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
           "distance_total_avg_per_minute": {
             "description": "m",
             "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category1": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category2": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category3": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category4": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category5": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category6": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_category7": {
-            "description": "m",
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -2043,57 +1805,9 @@
             "type": "number",
             "format": "float"
           },
-          "distance_total_relative": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
           "distance_total_relative_avg_per_minute": {
             "description": "m",
             "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category1": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category2": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category3": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category4": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category5": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category6": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_speed_relative_category7": {
-            "description": "m",
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -2139,111 +1853,9 @@
             "type": "number",
             "format": "float"
           },
-          "time_total": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category1": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category2": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category3": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category4": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category5": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category6": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_speed_category7": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category1": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category2": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category3": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category4": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category5": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category6": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_heart_rate_category7": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_high_metabolic_load": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
           "distance_high_metabolic_load_avg_per_minute": {
             "description": "m",
             "example": 4.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_high_metabolic_power": {
-            "description": "m",
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -2253,69 +1865,9 @@
             "type": "number",
             "format": "float"
           },
-          "distance_anaerobic_activity": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_from_steps": {
-            "description": "m",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
           "distance_from_steps_avg_per_minute": {
             "description": "m",
             "example": 20,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category1": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category2": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category3": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category4": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category5": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category6": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_metabolic_power_category7": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "metabolic_work": {
-            "description": "kcal",
-            "example": 333,
             "type": "number",
             "format": "float"
           },
@@ -2325,61 +1877,8 @@
             "type": "number",
             "format": "float"
           },
-          "number_of_steps": {
-            "description": "s",
-            "example": 300,
-            "type": "integer"
-          },
-          "time_on_playing_field": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "time_on_playing_field_defence": {
-            "description": "s",
-            "example": 600,
-            "type": "number",
-            "format": "float"
-          },
-          "time_on_playing_field_offence": {
-            "description": "s",
-            "example": 600,
-            "type": "number",
-            "format": "float"
-          },
-          "time_on_playing_field_pp": {
-            "description": "s",
-            "example": 600,
-            "type": "number",
-            "format": "float"
-          },
-          "time_on_playing_field_pk": {
-            "description": "s",
-            "example": 600,
-            "type": "number",
-            "format": "float"
-          },
-          "active_game_time": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "jump_load": {
-            "description": "J",
-            "example": 200,
-            "type": "number",
-            "format": "float"
-          },
           "jump_load_avg_per_minute": {
             "description": "J",
-            "example": 2.1,
-            "type": "number",
-            "format": "float"
-          },
-          "jump_load_per_mass": {
-            "description": "J/kg",
             "example": 2.1,
             "type": "number",
             "format": "float"
@@ -2390,79 +1889,8 @@
             "type": "number",
             "format": "float"
           },
-          "time_ball_possession": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "time_anaerobic_activity": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "jump_height_max": {
-            "description": "m",
-            "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "trimp": {
-            "type": "number",
-            "format": "float"
-          },
-          "heart_rate_impulse": {
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category1": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category2": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category3": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category4": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category5": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category6": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
-          "physio_load_speed_category7": {
-            "example": 120.1,
-            "type": "number",
-            "format": "float"
-          },
           "physio_intensity": {
             "description": "physio_load/total_time",
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_load": {
-            "example": 120.1,
             "type": "number",
             "format": "float"
           },
@@ -2471,18 +1899,8 @@
             "type": "number",
             "format": "float"
           },
-          "mechanical_accel_total": {
-            "example": 123,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_accel_total_avg_per_minute": {
             "example": 2.1,
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_accel_category1": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2491,18 +1909,8 @@
             "type": "number",
             "format": "float"
           },
-          "mechanical_accel_category2": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_accel_category2_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_accel_category3": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2511,18 +1919,8 @@
             "type": "number",
             "format": "float"
           },
-          "mechanical_accel_category4": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_accel_category4_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_decel_total": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2531,18 +1929,8 @@
             "type": "number",
             "format": "float"
           },
-          "mechanical_decel_category1": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_decel_category1_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_decel_category2": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2551,43 +1939,13 @@
             "type": "number",
             "format": "float"
           },
-          "mechanical_decel_category3": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_decel_category3_avg_per_minute": {
             "example": 1.2,
             "type": "number",
             "format": "float"
           },
-          "mechanical_decel_category4": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "mechanical_decel_category4_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "data_quality": {
-            "description": "%",
-            "example": 95,
-            "type": "number",
-            "format": "float"
-          },
-          "data_availability": {
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_load_defence": {
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "mechanical_load_offence": {
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -2606,76 +1964,15 @@
             "type": "number",
             "format": "float"
           },
-          "human_core_temperature_max": {
-            "description": "°C",
-            "example": 37.9,
-            "type": "number",
-            "format": "float"
-          },
           "human_core_temperature_avg": {
             "description": "°C",
             "example": 37.6,
             "type": "number",
             "format": "float"
           },
-          "time_high_metabolic_load": {
-            "description": "s",
-            "example": 120,
-            "type": "number",
-            "format": "float"
-          },
-          "imu_flag": {
-            "type": "integer"
-          },
-          "distance_forward": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_backward": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_left": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_right": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_unknown": {
-            "description": "m",
-            "example": 1500,
-            "type": "number",
-            "format": "float"
-          },
-          "ball_contact_count": {
-            "example": 85,
-            "type": "integer"
-          },
           "ball_contact_count_avg_per_minute": {
             "description": "float",
             "example": 2.1,
-            "type": "number",
-            "format": "float"
-          },
-          "time_total_skating": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_total_skating": {
-            "description": "m",
-            "example": 1500,
             "type": "number",
             "format": "float"
           },
@@ -2685,18 +1982,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_skating_speed_category1": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_skating_speed_category1_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_skating_speed_category2": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2705,18 +1992,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_skating_speed_category3": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_skating_speed_category3_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_skating_speed_category4": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2725,18 +2002,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_skating_speed_category5": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_skating_speed_category5_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_skating_speed_category6": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2745,25 +2012,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_skating_speed_category7": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_skating_speed_category7_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "time_total_gliding": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_total_gliding": {
-            "description": "m",
-            "example": 1500,
             "type": "number",
             "format": "float"
           },
@@ -2773,18 +2023,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_gliding_speed_category1": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_gliding_speed_category1_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_gliding_speed_category2": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2793,18 +2033,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_gliding_speed_category3": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_gliding_speed_category3_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_gliding_speed_category4": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2813,18 +2043,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_gliding_speed_category5": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_gliding_speed_category5_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "distance_gliding_speed_category6": {
-            "example": 20,
             "type": "number",
             "format": "float"
           },
@@ -2833,25 +2053,8 @@
             "type": "number",
             "format": "float"
           },
-          "distance_gliding_speed_category7": {
-            "example": 20,
-            "type": "number",
-            "format": "float"
-          },
           "distance_gliding_speed_category7_avg_per_minute": {
             "example": 1.2,
-            "type": "number",
-            "format": "float"
-          },
-          "time_total_standing": {
-            "description": "s",
-            "example": 1200,
-            "type": "number",
-            "format": "float"
-          },
-          "time_imu_defective": {
-            "description": "s",
-            "example": 120,
             "type": "number",
             "format": "float"
           },
@@ -2867,63 +2070,21 @@
         "items": {
           "type": "string",
           "enum": [
-            "heart_rate_min",
-            "heart_rate_max",
-            "heart_rate_avg",
-            "speed_max",
-            "speed_min",
             "speed_avg",
-            "accel_max",
-            "accel_min",
             "accel_avg",
-            "accel_load_max",
             "accel_load_avg",
-            "accel_load_accum",
             "accel_load_accum_avg_per_minute",
-            "load_acceleration_load_category1",
             "load_acceleration_load_category1_avg_per_minute",
-            "load_acceleration_load_category2",
             "load_acceleration_load_category2_avg_per_minute",
-            "load_acceleration_load_category3",
             "load_acceleration_load_category3_avg_per_minute",
-            "load_acceleration_load_category4",
             "load_acceleration_load_category4_avg_per_minute",
-            "load_acceleration_load_category5",
             "load_acceleration_load_category5_avg_per_minute",
-            "load_acceleration_load_category6",
             "load_acceleration_load_category6_avg_per_minute",
-            "load_acceleration_load_category7",
             "load_acceleration_load_category7_avg_per_minute",
             "step_balance_avg",
-            "metabolic_power_max",
-            "metabolic_power_per_mass_max",
-            "metabolic_power_min",
-            "metabolic_power_per_mass_min",
             "metabolic_power_avg",
             "metabolic_power_per_mass_avg",
-            "distance_acceleration_load_category1",
-            "distance_acceleration_load_category2",
-            "distance_acceleration_load_category3",
-            "distance_acceleration_load_category4",
-            "distance_acceleration_load_category5",
-            "distance_acceleration_load_category6",
-            "distance_acceleration_load_category7",
-            "time_acceleration_load_category1",
-            "time_acceleration_load_category2",
-            "time_acceleration_load_category3",
-            "time_acceleration_load_category4",
-            "time_acceleration_load_category5",
-            "time_acceleration_load_category6",
-            "time_acceleration_load_category7",
-            "distance_total",
             "distance_total_avg_per_minute",
-            "distance_speed_category1",
-            "distance_speed_category2",
-            "distance_speed_category3",
-            "distance_speed_category4",
-            "distance_speed_category5",
-            "distance_speed_category6",
-            "distance_speed_category7",
             "distance_speed_category1_avg_per_minute",
             "distance_speed_category2_avg_per_minute",
             "distance_speed_category3_avg_per_minute",
@@ -2931,15 +2092,7 @@
             "distance_speed_category5_avg_per_minute",
             "distance_speed_category6_avg_per_minute",
             "distance_speed_category7_avg_per_minute",
-            "distance_total_relative",
             "distance_total_relative_avg_per_minute",
-            "distance_speed_relative_category1",
-            "distance_speed_relative_category2",
-            "distance_speed_relative_category3",
-            "distance_speed_relative_category4",
-            "distance_speed_relative_category5",
-            "distance_speed_relative_category6",
-            "distance_speed_relative_category7",
             "distance_speed_relative_category1_avg_per_minute",
             "distance_speed_relative_category2_avg_per_minute",
             "distance_speed_relative_category3_avg_per_minute",
@@ -2947,138 +2100,45 @@
             "distance_speed_relative_category5_avg_per_minute",
             "distance_speed_relative_category6_avg_per_minute",
             "distance_speed_relative_category7_avg_per_minute",
-            "time_total",
-            "time_speed_category1",
-            "time_speed_category2",
-            "time_speed_category3",
-            "time_speed_category4",
-            "time_speed_category5",
-            "time_speed_category6",
-            "time_speed_category7",
-            "time_heart_rate_category1",
-            "time_heart_rate_category2",
-            "time_heart_rate_category3",
-            "time_heart_rate_category4",
-            "time_heart_rate_category5",
-            "time_heart_rate_category6",
-            "time_heart_rate_category7",
-            "distance_high_metabolic_load",
             "distance_high_metabolic_load_avg_per_minute",
-            "distance_high_metabolic_power",
             "distance_high_metabolic_power_avg_per_minute",
-            "distance_anaerobic_activity",
-            "distance_from_steps",
             "distance_from_steps_avg_per_minute",
-            "time_metabolic_power_category1",
-            "time_metabolic_power_category2",
-            "time_metabolic_power_category3",
-            "time_metabolic_power_category4",
-            "time_metabolic_power_category5",
-            "time_metabolic_power_category6",
-            "time_metabolic_power_category7",
-            "metabolic_work",
             "metabolic_work_avg_per_minute",
-            "number_of_steps",
-            "time_on_playing_field",
-            "time_on_playing_field_defence",
-            "time_on_playing_field_offence",
-            "time_on_playing_field_pp",
-            "time_on_playing_field_pk",
-            "active_game_time",
-            "jump_load",
             "jump_load_avg_per_minute",
-            "jump_load_per_mass",
             "jump_load_per_mass_avg_per_minute",
-            "time_ball_possession",
-            "time_anaerobic_activity",
-            "jump_height_max",
-            "trimp",
-            "heart_rate_impulse",
-            "physio_load",
-            "physio_load_speed_category1",
-            "physio_load_speed_category2",
-            "physio_load_speed_category3",
-            "physio_load_speed_category4",
-            "physio_load_speed_category5",
-            "physio_load_speed_category6",
-            "physio_load_speed_category7",
             "physio_intensity",
-            "mechanical_load",
             "mechanical_intensity",
-            "mechanical_accel_total",
             "mechanical_accel_total_avg_per_minute",
-            "mechanical_accel_category1",
             "mechanical_accel_category1_avg_per_minute",
-            "mechanical_accel_category2",
             "mechanical_accel_category2_avg_per_minute",
-            "mechanical_accel_category3",
             "mechanical_accel_category3_avg_per_minute",
-            "mechanical_accel_category4",
             "mechanical_accel_category4_avg_per_minute",
-            "mechanical_decel_total",
             "mechanical_decel_total_avg_per_minute",
-            "mechanical_decel_category1",
             "mechanical_decel_category1_avg_per_minute",
-            "mechanical_decel_category2",
             "mechanical_decel_category2_avg_per_minute",
-            "mechanical_decel_category3",
             "mechanical_decel_category3_avg_per_minute",
-            "mechanical_decel_category4",
             "mechanical_decel_category4_avg_per_minute",
-            "data_quality",
-            "data_availability",
-            "mechanical_load_defence",
-            "mechanical_load_offence",
             "mechanical_intensity_offence",
             "mechanical_intensity_defence",
             "playoff_load",
-            "human_core_temperature_max",
             "human_core_temperature_avg",
-            "time_high_metabolic_load",
-            "imu_flag",
-            "distance_forward",
-            "distance_backward",
-            "distance_left",
-            "distance_right",
-            "distance_unknown",
-            "ball_contact_count",
             "ball_contact_count_avg_per_minute",
-            "time_total_skating",
-            "distance_total_skating",
             "distance_total_skating_avg_per_minute",
-            "distance_skating_speed_category1",
             "distance_skating_speed_category1_avg_per_minute",
-            "distance_skating_speed_category2",
             "distance_skating_speed_category2_avg_per_minute",
-            "distance_skating_speed_category3",
             "distance_skating_speed_category3_avg_per_minute",
-            "distance_skating_speed_category4",
             "distance_skating_speed_category4_avg_per_minute",
-            "distance_skating_speed_category5",
             "distance_skating_speed_category5_avg_per_minute",
-            "distance_skating_speed_category6",
             "distance_skating_speed_category6_avg_per_minute",
-            "distance_skating_speed_category7",
             "distance_skating_speed_category7_avg_per_minute",
-            "time_total_gliding",
-            "distance_total_gliding",
             "distance_total_gliding_avg_per_minute",
-            "distance_gliding_speed_category1",
             "distance_gliding_speed_category1_avg_per_minute",
-            "distance_gliding_speed_category2",
             "distance_gliding_speed_category2_avg_per_minute",
-            "distance_gliding_speed_category3",
             "distance_gliding_speed_category3_avg_per_minute",
-            "distance_gliding_speed_category4",
             "distance_gliding_speed_category4_avg_per_minute",
-            "distance_gliding_speed_category5",
             "distance_gliding_speed_category5_avg_per_minute",
-            "distance_gliding_speed_category6",
             "distance_gliding_speed_category6_avg_per_minute",
-            "distance_gliding_speed_category7",
             "distance_gliding_speed_category7_avg_per_minute",
-            "time_total_standing",
-            "time_imu_defective",
             "imu_missing_recording_ratio"
           ]
         }
@@ -3186,6 +2246,9 @@
             "type": "integer"
           },
           "count_dfl_throw_in": {
+            "type": "integer"
+          },
+          "count_diagnostics_sprint": {
             "type": "integer"
           },
           "count_down_on_pads": {
@@ -5133,6 +4196,51 @@
               "missed",
               "fault_execution"
             ]
+          }
+        }
+      },
+      "Event_DiagnosticsSprint": {
+        "type": "object",
+        "properties": {
+          "timestamp": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timestamp_ms": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "timezone_id": {
+            "type": "integer"
+          },
+          "game_clock": {
+            "type": "string"
+          },
+          "period": {
+            "type": "string"
+          },
+          "player_id": {
+            "type": "integer"
+          },
+          "duration": {
+            "type": "number",
+            "format": "float"
+          },
+          "distance": {
+            "type": "number",
+            "format": "float"
+          },
+          "speed_max": {
+            "type": "number",
+            "format": "float"
+          },
+          "distance_until_max_speed": {
+            "type": "number",
+            "format": "float"
+          },
+          "time_until_max_speed": {
+            "type": "number",
+            "format": "float"
           }
         }
       },
@@ -7095,7 +6203,7 @@
       "eventType": {
         "name": "eventType",
         "in": "path",
-        "description": "Typeoftheselectedevent(see[EventTypes](#model-EventTypes)schemaforallavailableeventtypes)",
+        "description": "Type of the selected event (see [EventTypes](#model-EventTypes) schema for all available event types)",
         "required": true,
         "schema": {
           "type": "string"
@@ -7105,7 +6213,7 @@
       "playerId": {
         "name": "playerId",
         "in": "path",
-        "description": "TheselectedplayerId",
+        "description": "The selected playerId",
         "required": true,
         "schema": {
           "type": "integer"
@@ -7114,7 +6222,7 @@
       "players": {
         "name": "players",
         "in": "path",
-        "description": "Theselectedplayerorgroupofplayers,see[PlayerIdentifier](#model-PlayerIdentifier)schemaforavailablevalues.",
+        "description": "The selected player or group of players, see [PlayerIdentifier](#model-PlayerIdentifier) schema for available values.",
         "required": true,
         "schema": {
           "type": "string"
@@ -7124,7 +6232,7 @@
       "fields": {
         "name": "fields",
         "in": "query",
-        "description": "Leaveblanktorequestallmetricsorsupplyacommaseparatedlistofmetrics",
+        "description": "Leave blank to request all metrics or supply a comma separated list of metrics",
         "required": false,
         "schema": {
           "type": "array",
@@ -7136,7 +6244,7 @@
       "sessionId": {
         "name": "sessionId",
         "in": "path",
-        "description": "SessionID",
+        "description": "Session ID",
         "required": true,
         "schema": {
           "type": "string"
@@ -7146,7 +6254,7 @@
       "teamId": {
         "name": "teamId",
         "in": "path",
-        "description": "TheIDofyourteamonthekinexonsystem",
+        "description": "The ID of your team on the kinexon system",
         "required": true,
         "schema": {
           "type": "integer",
@@ -7157,7 +6265,7 @@
       "timeEntityType": {
         "name": "timeEntityType",
         "in": "path",
-        "description": "Thetypeofresultyouwanttoget(sessionorphase)",
+        "description": "The type of result you want to get (session or phase)",
         "required": true,
         "schema": {
           "type": "string",
@@ -7171,7 +6279,7 @@
       "timeEntityRangeType": {
         "name": "timeEntityRangeType",
         "in": "path",
-        "description": "Thetypeofresultyouwanttoget(sessionsorphases)",
+        "description": "The type of result you want to get (sessions or phases)",
         "required": true,
         "schema": {
           "type": "string",
@@ -7185,7 +6293,7 @@
       "timeEntityIdentifier": {
         "name": "timeEntityIdentifier",
         "in": "path",
-        "description": "Theidentifierofthesessionorphase,see[TimeEntityIdentifier](#model-TimeEntityIdentifier)schemaforavailableinputs",
+        "description": "The identifier of the session or phase, see [TimeEntityIdentifier](#model-TimeEntityIdentifier) schema for available inputs",
         "required": true,
         "schema": {
           "type": "string"
@@ -7195,29 +6303,29 @@
       "min": {
         "name": "min",
         "in": "query",
-        "description": "Startoftherange(formatyyyy-mm-ddHH:ii:ss)inUTC",
+        "description": "Start of the range (format yyyy-mm-dd HH:ii:ss) in UTC",
         "required": true,
         "schema": {
           "type": "string",
           "format": "date-time"
         },
-        "example": "2019-01-0112:00:00"
+        "example": "2019-01-01 12:00:00"
       },
       "max": {
         "name": "max",
         "in": "query",
-        "description": "Endoftherange(formatyyyy-mm-ddHH:ii:ss)inUTC",
+        "description": "End of the range (format yyyy-mm-dd HH:ii:ss) in UTC",
         "required": true,
         "schema": {
           "type": "string",
           "format": "date-time"
         },
-        "example": "2019-01-0113:00:00"
+        "example": "2019-01-01 13:00:00"
       },
       "updateRate": {
         "name": "updateRate",
         "in": "query",
-        "description": "Theupdateratefortheexportedvalues,default:20",
+        "description": "The update rate for the exported values, default: 20",
         "required": false,
         "schema": {
           "type": "integer"
@@ -7226,7 +6334,7 @@
       "useLocalFrameIMU": {
         "name": "useLocalFrameIMU",
         "in": "query",
-        "description": "Exportaccelerometerdatainlocalframe,default:false",
+        "description": "Export accelerometer data in local frame, default: false",
         "required": false,
         "schema": {
           "type": "boolean"
@@ -7235,7 +6343,7 @@
       "compressOutput": {
         "name": "compressOutput",
         "in": "query",
-        "description": "Compresstheoutput,default:false",
+        "description": "Compress the output, default: false",
         "required": false,
         "schema": {
           "type": "boolean"
@@ -7244,7 +6352,7 @@
       "centerOrigin": {
         "name": "centerOrigin",
         "in": "query",
-        "description": "Settheoriginofthepositiondatatothecenterofeachfield,default:false",
+        "description": "Set the origin of the position data to the center of each field, default: false",
         "required": false,
         "schema": {
           "type": "boolean"
@@ -7253,7 +6361,7 @@
       "groupByTimestamp": {
         "name": "groupByTimestamp",
         "in": "query",
-        "description": "Groupplayersbytimestamp,default:false",
+        "description": "Group players by timestamp, default: false",
         "required": false,
         "schema": {
           "type": "boolean"
@@ -7267,5 +6375,35 @@
         "in": "query"
       }
     }
-  }
+  },
+  "tags": [
+    {
+      "name": "Events",
+      "description": "Events"
+    },
+    {
+      "name": "Available Metrics and Events",
+      "description": "Available Metrics and Events"
+    },
+    {
+      "name": "Players",
+      "description": "Players"
+    },
+    {
+      "name": "Statistics",
+      "description": "Statistics"
+    },
+    {
+      "name": "Exports",
+      "description": "Exports"
+    },
+    {
+      "name": "Sessions and phases",
+      "description": "Sessions and phases"
+    },
+    {
+      "name": "Categories and Thresholds",
+      "description": "Categories and Thresholds"
+    }
+  ]
 }

@@ -36,6 +36,7 @@ class EventTypeIdentifier(str, Enum):
     DFL_SPRINT = "dfl_sprint"
     DFL_TACKLING = "dfl_tackling"
     DFL_THROW_IN = "dfl_throw_in"
+    DIAGNOSTICS_SPRINT = "diagnostics_sprint"
     DOWN_ON_PADS = "down_on_pads"
     DRIBBLING_SOCCER = "dribbling_soccer"
     DYNAMIC_DEFENCE = "dynamic_defence"

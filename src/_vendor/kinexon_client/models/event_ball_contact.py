@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,26 +15,26 @@ T = TypeVar("T", bound="EventBallContact")
 class EventBallContact:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        sensor_id (Union[Unset, float]):
-        x (Union[Unset, float]):
-        y (Union[Unset, float]):
-        z (Union[Unset, float]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        sensor_id (float | Unset):
+        x (float | Unset):
+        y (float | Unset):
+        z (float | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    sensor_id: Union[Unset, float] = UNSET
-    x: Union[Unset, float] = UNSET
-    y: Union[Unset, float] = UNSET
-    z: Union[Unset, float] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    sensor_id: float | Unset = UNSET
+    x: float | Unset = UNSET
+    y: float | Unset = UNSET
+    z: float | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

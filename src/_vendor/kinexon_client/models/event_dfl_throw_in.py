@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_dfl_throw_in_dfl_throw_in_category import (
-    EventDflThrowInDflThrowInCategory,
-)
+from ..models.event_dfl_throw_in_dfl_throw_in_category import EventDflThrowInDflThrowInCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventDflThrowIn")
@@ -16,28 +16,28 @@ T = TypeVar("T", bound="EventDflThrowIn")
 class EventDflThrowIn:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        dfl_side (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        dfl_throw_in_category (Union[Unset, EventDflThrowInDflThrowInCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        dfl_side (float | Unset):
+        distance (float | Unset):
+        trajectory (str | Unset):
+        dfl_throw_in_category (EventDflThrowInDflThrowInCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    dfl_side: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    dfl_throw_in_category: Union[Unset, EventDflThrowInDflThrowInCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    dfl_side: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    dfl_throw_in_category: EventDflThrowInDflThrowInCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -59,7 +59,7 @@ class EventDflThrowIn:
 
         trajectory = self.trajectory
 
-        dfl_throw_in_category: Union[Unset, str] = UNSET
+        dfl_throw_in_category: str | Unset = UNSET
         if not isinstance(self.dfl_throw_in_category, Unset):
             dfl_throw_in_category = self.dfl_throw_in_category.value
 
@@ -111,7 +111,7 @@ class EventDflThrowIn:
         trajectory = d.pop("trajectory", UNSET)
 
         _dfl_throw_in_category = d.pop("dfl_throw_in_category", UNSET)
-        dfl_throw_in_category: Union[Unset, EventDflThrowInDflThrowInCategory]
+        dfl_throw_in_category: EventDflThrowInDflThrowInCategory | Unset
         if isinstance(_dfl_throw_in_category, Unset):
             dfl_throw_in_category = UNSET
         else:

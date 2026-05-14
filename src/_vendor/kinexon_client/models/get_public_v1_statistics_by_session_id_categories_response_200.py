@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union, cast
+from typing import TYPE_CHECKING, Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -25,32 +27,32 @@ T = TypeVar("T", bound="GetPublicV1StatisticsBySessionIdCategoriesResponse200")
 class GetPublicV1StatisticsBySessionIdCategoriesResponse200:
     """
     Attributes:
-        percentage_maps (Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps]):
-        category_names (Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames]):
-        category_colors (Union[Unset, list[str]]):
-        players (Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200Players]):
+        percentage_maps (GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps | Unset):
+        category_names (GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames | Unset):
+        category_colors (list[str] | Unset):
+        players (GetPublicV1StatisticsBySessionIdCategoriesResponse200Players | Unset):
     """
 
-    percentage_maps: Union[Unset, "GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps"] = UNSET
-    category_names: Union[Unset, "GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames"] = UNSET
-    category_colors: Union[Unset, list[str]] = UNSET
-    players: Union[Unset, "GetPublicV1StatisticsBySessionIdCategoriesResponse200Players"] = UNSET
+    percentage_maps: GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps | Unset = UNSET
+    category_names: GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames | Unset = UNSET
+    category_colors: list[str] | Unset = UNSET
+    players: GetPublicV1StatisticsBySessionIdCategoriesResponse200Players | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        percentage_maps: Union[Unset, dict[str, Any]] = UNSET
+        percentage_maps: dict[str, Any] | Unset = UNSET
         if not isinstance(self.percentage_maps, Unset):
             percentage_maps = self.percentage_maps.to_dict()
 
-        category_names: Union[Unset, dict[str, Any]] = UNSET
+        category_names: dict[str, Any] | Unset = UNSET
         if not isinstance(self.category_names, Unset):
             category_names = self.category_names.to_dict()
 
-        category_colors: Union[Unset, list[str]] = UNSET
+        category_colors: list[str] | Unset = UNSET
         if not isinstance(self.category_colors, Unset):
             category_colors = self.category_colors
 
-        players: Union[Unset, dict[str, Any]] = UNSET
+        players: dict[str, Any] | Unset = UNSET
         if not isinstance(self.players, Unset):
             players = self.players.to_dict()
 
@@ -82,7 +84,7 @@ class GetPublicV1StatisticsBySessionIdCategoriesResponse200:
 
         d = dict(src_dict)
         _percentage_maps = d.pop("percentageMaps", UNSET)
-        percentage_maps: Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps]
+        percentage_maps: GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps | Unset
         if isinstance(_percentage_maps, Unset):
             percentage_maps = UNSET
         else:
@@ -91,7 +93,7 @@ class GetPublicV1StatisticsBySessionIdCategoriesResponse200:
             )
 
         _category_names = d.pop("categoryNames", UNSET)
-        category_names: Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames]
+        category_names: GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames | Unset
         if isinstance(_category_names, Unset):
             category_names = UNSET
         else:
@@ -102,7 +104,7 @@ class GetPublicV1StatisticsBySessionIdCategoriesResponse200:
         category_colors = cast(list[str], d.pop("categoryColors", UNSET))
 
         _players = d.pop("players", UNSET)
-        players: Union[Unset, GetPublicV1StatisticsBySessionIdCategoriesResponse200Players]
+        players: GetPublicV1StatisticsBySessionIdCategoriesResponse200Players | Unset
         if isinstance(_players, Unset):
             players = UNSET
         else:

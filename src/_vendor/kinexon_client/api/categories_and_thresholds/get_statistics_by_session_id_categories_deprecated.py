@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -14,17 +15,20 @@ from ...types import Response
 def _get_kwargs(
     session_id: str,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/statistics/{session_id}/categories",
+        "url": "/statistics/{session_id}/categories".format(
+            session_id=quote(str(session_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
 def _parse_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
-) -> Optional[GetStatisticsBySessionIdCategoriesDeprecatedResponse200]:
+    *, client: AuthenticatedClient | Client, response: httpx.Response
+) -> GetStatisticsBySessionIdCategoriesDeprecatedResponse200 | None:
     if response.status_code == 200:
         response_200 = GetStatisticsBySessionIdCategoriesDeprecatedResponse200.from_dict(response.json())
 
@@ -37,7 +41,7 @@ def _parse_response(
 
 
 def _build_response(
-    *, client: Union[AuthenticatedClient, Client], response: httpx.Response
+    *, client: AuthenticatedClient | Client, response: httpx.Response
 ) -> Response[GetStatisticsBySessionIdCategoriesDeprecatedResponse200]:
     return Response(
         status_code=HTTPStatus(response.status_code),
@@ -82,7 +86,7 @@ def sync(
     session_id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[GetStatisticsBySessionIdCategoriesDeprecatedResponse200]:
+) -> GetStatisticsBySessionIdCategoriesDeprecatedResponse200 | None:
     """Returns categories and thresholds for a session
 
      Returns categories and thresholds for a session
@@ -137,7 +141,7 @@ async def asyncio(
     session_id: str,
     *,
     client: AuthenticatedClient,
-) -> Optional[GetStatisticsBySessionIdCategoriesDeprecatedResponse200]:
+) -> GetStatisticsBySessionIdCategoriesDeprecatedResponse200 | None:
     """Returns categories and thresholds for a session
 
      Returns categories and thresholds for a session

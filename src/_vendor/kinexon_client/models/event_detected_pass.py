@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,36 +16,36 @@ T = TypeVar("T", bound="EventDetectedPass")
 class EventDetectedPass:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        distance (Union[Unset, float]):
-        speed_ball (Union[Unset, float]):
-        packing (Union[Unset, float]):
-        receiving_player_id (Union[Unset, float]):
-        verticality (Union[Unset, float]):
-        horizontality (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        type_ (Union[Unset, EventDetectedPassType]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        distance (float | Unset):
+        speed_ball (float | Unset):
+        packing (float | Unset):
+        receiving_player_id (float | Unset):
+        verticality (float | Unset):
+        horizontality (float | Unset):
+        trajectory (str | Unset):
+        type_ (EventDetectedPassType | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_ball: Union[Unset, float] = UNSET
-    packing: Union[Unset, float] = UNSET
-    receiving_player_id: Union[Unset, float] = UNSET
-    verticality: Union[Unset, float] = UNSET
-    horizontality: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    type_: Union[Unset, EventDetectedPassType] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_ball: float | Unset = UNSET
+    packing: float | Unset = UNSET
+    receiving_player_id: float | Unset = UNSET
+    verticality: float | Unset = UNSET
+    horizontality: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    type_: EventDetectedPassType | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -73,7 +75,7 @@ class EventDetectedPass:
 
         trajectory = self.trajectory
 
-        type_: Union[Unset, str] = UNSET
+        type_: str | Unset = UNSET
         if not isinstance(self.type_, Unset):
             type_ = self.type_.value
 
@@ -141,7 +143,7 @@ class EventDetectedPass:
         trajectory = d.pop("trajectory", UNSET)
 
         _type_ = d.pop("type", UNSET)
-        type_: Union[Unset, EventDetectedPassType]
+        type_: EventDetectedPassType | Unset
         if isinstance(_type_, Unset):
             type_ = UNSET
         else:

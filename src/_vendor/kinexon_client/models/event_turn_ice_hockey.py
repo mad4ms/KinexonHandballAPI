@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,38 +16,38 @@ T = TypeVar("T", bound="EventTurnIceHockey")
 class EventTurnIceHockey:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        group_id (Union[Unset, int]):
-        duration (Union[Unset, float]):
-        turn_radius (Union[Unset, float]):
-        turn_angle (Union[Unset, float]):
-        direction_of_rotation (Union[Unset, float]):
-        turn_speed_start (Union[Unset, float]):
-        turn_speed_end (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        turn_category (Union[Unset, EventTurnIceHockeyTurnCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        group_id (int | Unset):
+        duration (float | Unset):
+        turn_radius (float | Unset):
+        turn_angle (float | Unset):
+        direction_of_rotation (float | Unset):
+        turn_speed_start (float | Unset):
+        turn_speed_end (float | Unset):
+        trajectory (str | Unset):
+        turn_category (EventTurnIceHockeyTurnCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    group_id: Union[Unset, int] = UNSET
-    duration: Union[Unset, float] = UNSET
-    turn_radius: Union[Unset, float] = UNSET
-    turn_angle: Union[Unset, float] = UNSET
-    direction_of_rotation: Union[Unset, float] = UNSET
-    turn_speed_start: Union[Unset, float] = UNSET
-    turn_speed_end: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    turn_category: Union[Unset, EventTurnIceHockeyTurnCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    group_id: int | Unset = UNSET
+    duration: float | Unset = UNSET
+    turn_radius: float | Unset = UNSET
+    turn_angle: float | Unset = UNSET
+    direction_of_rotation: float | Unset = UNSET
+    turn_speed_start: float | Unset = UNSET
+    turn_speed_end: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    turn_category: EventTurnIceHockeyTurnCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -77,7 +79,7 @@ class EventTurnIceHockey:
 
         trajectory = self.trajectory
 
-        turn_category: Union[Unset, str] = UNSET
+        turn_category: str | Unset = UNSET
         if not isinstance(self.turn_category, Unset):
             turn_category = self.turn_category.value
 
@@ -149,7 +151,7 @@ class EventTurnIceHockey:
         trajectory = d.pop("trajectory", UNSET)
 
         _turn_category = d.pop("turn_category", UNSET)
-        turn_category: Union[Unset, EventTurnIceHockeyTurnCategory]
+        turn_category: EventTurnIceHockeyTurnCategory | Unset
         if isinstance(_turn_category, Unset):
             turn_category = UNSET
         else:

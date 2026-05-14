@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.time_entity_identifier_quick_identifier import (
-    TimeEntityIdentifierQuickIdentifier,
-)
+from ..models.time_entity_identifier_quick_identifier import TimeEntityIdentifierQuickIdentifier
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="TimeEntityIdentifier")
@@ -16,15 +16,15 @@ T = TypeVar("T", bound="TimeEntityIdentifier")
 class TimeEntityIdentifier:
     """
     Attributes:
-        generic_id (Union[Unset, str]): Generic Session Id
-        id (Union[Unset, int]): Session of Phase Id
-        quick_identifier (Union[Unset, TimeEntityIdentifierQuickIdentifier]): returns the 'latest' (last ended
-            session/phase) or the 'current' (still running) phase/session
+        generic_id (str | Unset): Generic Session Id
+        id (int | Unset): Session of Phase Id
+        quick_identifier (TimeEntityIdentifierQuickIdentifier | Unset): returns the 'latest' (last ended session/phase)
+            or the 'current' (still running) phase/session
     """
 
-    generic_id: Union[Unset, str] = UNSET
-    id: Union[Unset, int] = UNSET
-    quick_identifier: Union[Unset, TimeEntityIdentifierQuickIdentifier] = UNSET
+    generic_id: str | Unset = UNSET
+    id: int | Unset = UNSET
+    quick_identifier: TimeEntityIdentifierQuickIdentifier | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -32,7 +32,7 @@ class TimeEntityIdentifier:
 
         id = self.id
 
-        quick_identifier: Union[Unset, str] = UNSET
+        quick_identifier: str | Unset = UNSET
         if not isinstance(self.quick_identifier, Unset):
             quick_identifier = self.quick_identifier.value
 
@@ -56,7 +56,7 @@ class TimeEntityIdentifier:
         id = d.pop("id", UNSET)
 
         _quick_identifier = d.pop("quick-identifier", UNSET)
-        quick_identifier: Union[Unset, TimeEntityIdentifierQuickIdentifier]
+        quick_identifier: TimeEntityIdentifierQuickIdentifier | Unset
         if isinstance(_quick_identifier, Unset):
             quick_identifier = UNSET
         else:

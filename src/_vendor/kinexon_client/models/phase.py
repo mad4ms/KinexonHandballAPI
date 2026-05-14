@@ -1,6 +1,8 @@
+from __future__ import annotations
+
 import datetime
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union, cast
+from typing import Any, TypeVar, cast
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -15,30 +17,30 @@ T = TypeVar("T", bound="Phase")
 class Phase:
     """
     Attributes:
-        id (Union[Unset, int]):  Example: 2.
-        session_id (Union[Unset, int]):  Example: 12.
-        start_phase (Union[Unset, datetime.datetime]): Start of the phase in UTC Example: 2019-01-01 12:05:00.
-        end_phase (Union[None, Unset, datetime.datetime]): End of the phase in UTC Example: 2019-01-01 12:05:00.
-        description (Union[Unset, str]):  Example: Sprint Training.
-        duration (Union[Unset, int]): Duration of the phase in seconds Example: 60.
-        type_ (Union[Unset, str]):  Example: Sprint Training.
-        group_assignment (Union[Unset, str]): The player to group assignment for this session in JSON format Example:
-            {1: {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}.
-        group_colors (Union[Unset, list[str]]): Color of the groups in this session in JSON format Example: ['#00ff00',
+        id (int | Unset):  Example: 2.
+        session_id (int | Unset):  Example: 12.
+        start_phase (datetime.datetime | Unset): Start of the phase in UTC Example: 2019-01-01 12:05:00.
+        end_phase (datetime.datetime | None | Unset): End of the phase in UTC Example: 2019-01-01 12:05:00.
+        description (str | Unset):  Example: Sprint Training.
+        duration (int | Unset): Duration of the phase in seconds Example: 60.
+        type_ (str | Unset):  Example: Sprint Training.
+        group_assignment (str | Unset): The player to group assignment for this session in JSON format Example: {1:
+            {'player_id': 1, 'function': 'M'}, 2: {'player_id': 2, 'function': 'C'}}.
+        group_colors (list[str] | Unset): Color of the groups in this session in JSON format Example: ['#00ff00',
             '#3399ff'].
-        group_names (Union[Unset, list[str]]): Name of the respective groups Example: ['Team A', 'Team B'].
+        group_names (list[str] | Unset): Name of the respective groups Example: ['Team A', 'Team B'].
     """
 
-    id: Union[Unset, int] = UNSET
-    session_id: Union[Unset, int] = UNSET
-    start_phase: Union[Unset, datetime.datetime] = UNSET
-    end_phase: Union[None, Unset, datetime.datetime] = UNSET
-    description: Union[Unset, str] = UNSET
-    duration: Union[Unset, int] = UNSET
-    type_: Union[Unset, str] = UNSET
-    group_assignment: Union[Unset, str] = UNSET
-    group_colors: Union[Unset, list[str]] = UNSET
-    group_names: Union[Unset, list[str]] = UNSET
+    id: int | Unset = UNSET
+    session_id: int | Unset = UNSET
+    start_phase: datetime.datetime | Unset = UNSET
+    end_phase: datetime.datetime | None | Unset = UNSET
+    description: str | Unset = UNSET
+    duration: int | Unset = UNSET
+    type_: str | Unset = UNSET
+    group_assignment: str | Unset = UNSET
+    group_colors: list[str] | Unset = UNSET
+    group_names: list[str] | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -46,11 +48,11 @@ class Phase:
 
         session_id = self.session_id
 
-        start_phase: Union[Unset, str] = UNSET
+        start_phase: str | Unset = UNSET
         if not isinstance(self.start_phase, Unset):
             start_phase = self.start_phase.isoformat()
 
-        end_phase: Union[None, Unset, str]
+        end_phase: None | str | Unset
         if isinstance(self.end_phase, Unset):
             end_phase = UNSET
         elif isinstance(self.end_phase, datetime.datetime):
@@ -66,11 +68,11 @@ class Phase:
 
         group_assignment = self.group_assignment
 
-        group_colors: Union[Unset, list[str]] = UNSET
+        group_colors: list[str] | Unset = UNSET
         if not isinstance(self.group_colors, Unset):
             group_colors = self.group_colors
 
-        group_names: Union[Unset, list[str]] = UNSET
+        group_names: list[str] | Unset = UNSET
         if not isinstance(self.group_names, Unset):
             group_names = self.group_names
 
@@ -108,13 +110,13 @@ class Phase:
         session_id = d.pop("session_id", UNSET)
 
         _start_phase = d.pop("start_phase", UNSET)
-        start_phase: Union[Unset, datetime.datetime]
+        start_phase: datetime.datetime | Unset
         if isinstance(_start_phase, Unset):
             start_phase = UNSET
         else:
             start_phase = isoparse(_start_phase)
 
-        def _parse_end_phase(data: object) -> Union[None, Unset, datetime.datetime]:
+        def _parse_end_phase(data: object) -> datetime.datetime | None | Unset:
             if data is None:
                 return data
             if isinstance(data, Unset):
@@ -125,9 +127,9 @@ class Phase:
                 end_phase_type_0 = isoparse(data)
 
                 return end_phase_type_0
-            except:  # noqa: E722
+            except (TypeError, ValueError, AttributeError, KeyError):
                 pass
-            return cast(Union[None, Unset, datetime.datetime], data)
+            return cast(datetime.datetime | None | Unset, data)
 
         end_phase = _parse_end_phase(d.pop("end_phase", UNSET))
 

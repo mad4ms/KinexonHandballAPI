@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_change_of_pace_change_of_pace_category import (
-    EventChangeOfPaceChangeOfPaceCategory,
-)
+from ..models.event_change_of_pace_change_of_pace_category import EventChangeOfPaceChangeOfPaceCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventChangeOfPace")
@@ -16,52 +16,52 @@ T = TypeVar("T", bound="EventChangeOfPace")
 class EventChangeOfPace:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        duration (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        acceleration_max (Union[Unset, float]):
-        change_of_pace_category (Union[Unset, EventChangeOfPaceChangeOfPaceCategory]):
-        x1 (Union[Unset, float]):
-        y1 (Union[Unset, float]):
-        x2 (Union[Unset, float]):
-        y2 (Union[Unset, float]):
-        x3 (Union[Unset, float]):
-        y3 (Union[Unset, float]):
-        x4 (Union[Unset, float]):
-        y4 (Union[Unset, float]):
-        x5 (Union[Unset, float]):
-        y5 (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        duration (float | Unset):
+        distance (float | Unset):
+        speed_max (float | Unset):
+        acceleration_max (float | Unset):
+        change_of_pace_category (EventChangeOfPaceChangeOfPaceCategory | Unset):
+        x1 (float | Unset):
+        y1 (float | Unset):
+        x2 (float | Unset):
+        y2 (float | Unset):
+        x3 (float | Unset):
+        y3 (float | Unset):
+        x4 (float | Unset):
+        y4 (float | Unset):
+        x5 (float | Unset):
+        y5 (float | Unset):
+        trajectory (str | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    duration: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    acceleration_max: Union[Unset, float] = UNSET
-    change_of_pace_category: Union[Unset, EventChangeOfPaceChangeOfPaceCategory] = UNSET
-    x1: Union[Unset, float] = UNSET
-    y1: Union[Unset, float] = UNSET
-    x2: Union[Unset, float] = UNSET
-    y2: Union[Unset, float] = UNSET
-    x3: Union[Unset, float] = UNSET
-    y3: Union[Unset, float] = UNSET
-    x4: Union[Unset, float] = UNSET
-    y4: Union[Unset, float] = UNSET
-    x5: Union[Unset, float] = UNSET
-    y5: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    duration: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    acceleration_max: float | Unset = UNSET
+    change_of_pace_category: EventChangeOfPaceChangeOfPaceCategory | Unset = UNSET
+    x1: float | Unset = UNSET
+    y1: float | Unset = UNSET
+    x2: float | Unset = UNSET
+    y2: float | Unset = UNSET
+    x3: float | Unset = UNSET
+    y3: float | Unset = UNSET
+    x4: float | Unset = UNSET
+    y4: float | Unset = UNSET
+    x5: float | Unset = UNSET
+    y5: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -85,7 +85,7 @@ class EventChangeOfPace:
 
         acceleration_max = self.acceleration_max
 
-        change_of_pace_category: Union[Unset, str] = UNSET
+        change_of_pace_category: str | Unset = UNSET
         if not isinstance(self.change_of_pace_category, Unset):
             change_of_pace_category = self.change_of_pace_category.value
 
@@ -185,7 +185,7 @@ class EventChangeOfPace:
         acceleration_max = d.pop("acceleration_max", UNSET)
 
         _change_of_pace_category = d.pop("change_of_pace_category", UNSET)
-        change_of_pace_category: Union[Unset, EventChangeOfPaceChangeOfPaceCategory]
+        change_of_pace_category: EventChangeOfPaceChangeOfPaceCategory | Unset
         if isinstance(_change_of_pace_category, Unset):
             change_of_pace_category = UNSET
         else:

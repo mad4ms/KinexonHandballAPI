@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_dfl_free_kick_dfl_free_kick_category import (
-    EventDflFreeKickDflFreeKickCategory,
-)
+from ..models.event_dfl_free_kick_dfl_free_kick_category import EventDflFreeKickDflFreeKickCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventDflFreeKick")
@@ -16,32 +16,32 @@ T = TypeVar("T", bound="EventDflFreeKick")
 class EventDflFreeKick:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        dfl_execution_mode (Union[Unset, float]):
-        height (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        dfl_free_kick_play (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        dfl_free_kick_category (Union[Unset, EventDflFreeKickDflFreeKickCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        dfl_execution_mode (float | Unset):
+        height (float | Unset):
+        distance (float | Unset):
+        dfl_free_kick_play (float | Unset):
+        trajectory (str | Unset):
+        dfl_free_kick_category (EventDflFreeKickDflFreeKickCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    dfl_execution_mode: Union[Unset, float] = UNSET
-    height: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    dfl_free_kick_play: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    dfl_free_kick_category: Union[Unset, EventDflFreeKickDflFreeKickCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    dfl_execution_mode: float | Unset = UNSET
+    height: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    dfl_free_kick_play: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    dfl_free_kick_category: EventDflFreeKickDflFreeKickCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -67,7 +67,7 @@ class EventDflFreeKick:
 
         trajectory = self.trajectory
 
-        dfl_free_kick_category: Union[Unset, str] = UNSET
+        dfl_free_kick_category: str | Unset = UNSET
         if not isinstance(self.dfl_free_kick_category, Unset):
             dfl_free_kick_category = self.dfl_free_kick_category.value
 
@@ -127,7 +127,7 @@ class EventDflFreeKick:
         trajectory = d.pop("trajectory", UNSET)
 
         _dfl_free_kick_category = d.pop("dfl_free_kick_category", UNSET)
-        dfl_free_kick_category: Union[Unset, EventDflFreeKickDflFreeKickCategory]
+        dfl_free_kick_category: EventDflFreeKickDflFreeKickCategory | Unset
         if isinstance(_dfl_free_kick_category, Unset):
             dfl_free_kick_category = UNSET
         else:

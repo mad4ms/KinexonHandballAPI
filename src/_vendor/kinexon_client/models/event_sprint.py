@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,32 +16,32 @@ T = TypeVar("T", bound="EventSprint")
 class EventSprint:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        duration (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        speed_avg (Union[Unset, float]):
-        sprint_category (Union[Unset, EventSprintSprintCategory]):
-        trajectory (Union[Unset, str]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        duration (float | Unset):
+        distance (float | Unset):
+        speed_max (float | Unset):
+        speed_avg (float | Unset):
+        sprint_category (EventSprintSprintCategory | Unset):
+        trajectory (str | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    duration: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    speed_avg: Union[Unset, float] = UNSET
-    sprint_category: Union[Unset, EventSprintSprintCategory] = UNSET
-    trajectory: Union[Unset, str] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    duration: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    speed_avg: float | Unset = UNSET
+    sprint_category: EventSprintSprintCategory | Unset = UNSET
+    trajectory: str | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -63,7 +65,7 @@ class EventSprint:
 
         speed_avg = self.speed_avg
 
-        sprint_category: Union[Unset, str] = UNSET
+        sprint_category: str | Unset = UNSET
         if not isinstance(self.sprint_category, Unset):
             sprint_category = self.sprint_category.value
 
@@ -123,7 +125,7 @@ class EventSprint:
         speed_avg = d.pop("speed_avg", UNSET)
 
         _sprint_category = d.pop("sprint_category", UNSET)
-        sprint_category: Union[Unset, EventSprintSprintCategory]
+        sprint_category: EventSprintSprintCategory | Unset
         if isinstance(_sprint_category, Unset):
             sprint_category = UNSET
         else:

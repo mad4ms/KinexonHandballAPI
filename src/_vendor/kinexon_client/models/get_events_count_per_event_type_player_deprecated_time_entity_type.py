@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class GetEventsCountPerEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType(str, Enum):
+class GetEventsCountPerEventTypePlayerDeprecatedTimeEntityType(str, Enum):
     PHASE = "phase"
     SESSION = "session"
 

@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,32 +15,32 @@ T = TypeVar("T", bound="EventDynamicDefence")
 class EventDynamicDefence:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        group_id (Union[Unset, int]):
-        distance (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        acceleration_max (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        duration (Union[Unset, float]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        group_id (int | Unset):
+        distance (float | Unset):
+        speed_max (float | Unset):
+        acceleration_max (float | Unset):
+        trajectory (str | Unset):
+        duration (float | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    group_id: Union[Unset, int] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    acceleration_max: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    duration: Union[Unset, float] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    group_id: int | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    acceleration_max: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    duration: float | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

@@ -1,9 +1,7 @@
 """Contains all the data models used in inputs/outputs"""
 
 from .event_acceleration import EventAcceleration
-from .event_acceleration_acceleration_category import (
-    EventAccelerationAccelerationCategory,
-)
+from .event_acceleration_acceleration_category import EventAccelerationAccelerationCategory
 from .event_ball_contact import EventBallContact
 from .event_ball_possession import EventBallPossession
 from .event_ball_possession_lost import EventBallPossessionLost
@@ -12,9 +10,7 @@ from .event_change_of_direction import EventChangeOfDirection
 from .event_change_of_direction_direction import EventChangeOfDirectionDirection
 from .event_change_of_orientation import EventChangeOfOrientation
 from .event_change_of_pace import EventChangeOfPace
-from .event_change_of_pace_change_of_pace_category import (
-    EventChangeOfPaceChangeOfPaceCategory,
-)
+from .event_change_of_pace_change_of_pace_category import EventChangeOfPaceChangeOfPaceCategory
 from .event_corner_kick import EventCornerKick
 from .event_corner_kick_corner_kick_category import EventCornerKickCornerKickCategory
 from .event_count import EventCount
@@ -24,21 +20,15 @@ from .event_cut_direction import EventCutDirection
 from .event_cv_shot import EventCvShot
 from .event_cv_shot_shot_load_category import EventCvShotShotLoadCategory
 from .event_deceleration import EventDeceleration
-from .event_deceleration_deceleration_category import (
-    EventDecelerationDecelerationCategory,
-)
+from .event_deceleration_deceleration_category import EventDecelerationDecelerationCategory
 from .event_defence import EventDefence
 from .event_detected_cross import EventDetectedCross
-from .event_detected_cross_detected_cross_category import (
-    EventDetectedCrossDetectedCrossCategory,
-)
+from .event_detected_cross_detected_cross_category import EventDetectedCrossDetectedCrossCategory
 from .event_detected_offside_soccer import EventDetectedOffsideSoccer
 from .event_detected_pass import EventDetectedPass
 from .event_detected_pass_type import EventDetectedPassType
 from .event_detected_shot_basketball import EventDetectedShotBasketball
-from .event_detected_shot_basketball_shot_made import (
-    EventDetectedShotBasketballShotMade,
-)
+from .event_detected_shot_basketball_shot_made import EventDetectedShotBasketballShotMade
 from .event_detected_shot_fifa import EventDetectedShotFifa
 from .event_detected_shot_handball import EventDetectedShotHandball
 from .event_detected_shot_ice_hockey import EventDetectedShotIceHockey
@@ -49,19 +39,13 @@ from .event_detected_shot_intelligence_court_detected_shot_intelligence_court_ca
 )
 from .event_detected_shot_soccer import EventDetectedShotSoccer
 from .event_dfl_corner_kick import EventDflCornerKick
-from .event_dfl_corner_kick_dfl_corner_kick_category import (
-    EventDflCornerKickDflCornerKickCategory,
-)
+from .event_dfl_corner_kick_dfl_corner_kick_category import EventDflCornerKickDflCornerKickCategory
 from .event_dfl_cross import EventDflCross
 from .event_dfl_cross_dfl_cross_category import EventDflCrossDflCrossCategory
 from .event_dfl_free_kick import EventDflFreeKick
-from .event_dfl_free_kick_dfl_free_kick_category import (
-    EventDflFreeKickDflFreeKickCategory,
-)
+from .event_dfl_free_kick_dfl_free_kick_category import EventDflFreeKickDflFreeKickCategory
 from .event_dfl_goal_kick import EventDflGoalKick
-from .event_dfl_goal_kick_dfl_goal_kick_category import (
-    EventDflGoalKickDflGoalKickCategory,
-)
+from .event_dfl_goal_kick_dfl_goal_kick_category import EventDflGoalKickDflGoalKickCategory
 from .event_dfl_kick_off import EventDflKickOff
 from .event_dfl_kick_off_dfl_kick_off_category import EventDflKickOffDflKickOffCategory
 from .event_dfl_pass import EventDflPass
@@ -69,26 +53,21 @@ from .event_dfl_pass_successful import EventDflPassSuccessful
 from .event_dfl_penalty import EventDflPenalty
 from .event_dfl_penalty_successful import EventDflPenaltySuccessful
 from .event_dfl_shot_at_goal import EventDflShotAtGoal
-from .event_dfl_shot_at_goal_dfl_shot_kind_category import (
-    EventDflShotAtGoalDflShotKindCategory,
-)
+from .event_dfl_shot_at_goal_dfl_shot_kind_category import EventDflShotAtGoalDflShotKindCategory
 from .event_dfl_sprint import EventDflSprint
 from .event_dfl_tackling import EventDflTackling
 from .event_dfl_tackling_successful import EventDflTacklingSuccessful
 from .event_dfl_throw_in import EventDflThrowIn
 from .event_dfl_throw_in_dfl_throw_in_category import EventDflThrowInDflThrowInCategory
+from .event_diagnostics_sprint import EventDiagnosticsSprint
 from .event_down_on_pads import EventDownOnPads
 from .event_dribbling_soccer import EventDribblingSoccer
-from .event_dribbling_soccer_dribbling_soccer_category import (
-    EventDribblingSoccerDribblingSoccerCategory,
-)
+from .event_dribbling_soccer_dribbling_soccer_category import EventDribblingSoccerDribblingSoccerCategory
 from .event_dynamic_defence import EventDynamicDefence
 from .event_exertion import EventExertion
 from .event_exertion_exertion_category import EventExertionExertionCategory
 from .event_full_court_transition import EventFullCourtTransition
-from .event_full_court_transition_fct_category import (
-    EventFullCourtTransitionFctCategory,
-)
+from .event_full_court_transition_fct_category import EventFullCourtTransitionFctCategory
 from .event_goal_kick import EventGoalKick
 from .event_goal_kick_goal_kick_category import EventGoalKickGoalKickCategory
 from .event_goalkeeper_save_diving import EventGoalkeeperSaveDiving
@@ -140,9 +119,7 @@ from .event_speed_zone_entry_relative import EventSpeedZoneEntryRelative
 from .event_speed_zone_entry_relative_speed_zone_entry_relative_category import (
     EventSpeedZoneEntryRelativeSpeedZoneEntryRelativeCategory,
 )
-from .event_speed_zone_entry_speed_zone_entry_category import (
-    EventSpeedZoneEntrySpeedZoneEntryCategory,
-)
+from .event_speed_zone_entry_speed_zone_entry_category import EventSpeedZoneEntrySpeedZoneEntryCategory
 from .event_sprint import EventSprint
 from .event_sprint_sprint_category import EventSprintSprintCategory
 from .event_tag import EventTag
@@ -152,23 +129,21 @@ from .event_turn_ice_hockey import EventTurnIceHockey
 from .event_turn_ice_hockey_turn_category import EventTurnIceHockeyTurnCategory
 from .event_type_identifier import EventTypeIdentifier
 from .event_types import EventTypes
-from .get_events_count_per_event_type_player_players_time_entity_type_time_entity_identifier_time_entity_type import (
-    GetEventsCountPerEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType,
+from .get_events_by_event_type_player_deprecated_response_200_item import (
+    GetEventsByEventTypePlayerDeprecatedResponse200Item,
 )
-from .get_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item import (
-    GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item,
+from .get_events_by_event_type_player_deprecated_time_entity_type import (
+    GetEventsByEventTypePlayerDeprecatedTimeEntityType,
 )
-from .get_events_event_type_player_players_time_entity_type_time_entity_identifier_time_entity_type import (
-    GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType,
+from .get_events_count_per_event_type_player_deprecated_time_entity_type import (
+    GetEventsCountPerEventTypePlayerDeprecatedTimeEntityType,
 )
-from .get_public_v1_events_count_per_event_type_player_players_time_entity_type_time_entity_identifier_time_entity_type import (
-    GetPublicV1EventsCountPerEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType,
+from .get_public_v1_events_by_event_type_player_response_200_item import (
+    GetPublicV1EventsByEventTypePlayerResponse200Item,
 )
-from .get_public_v1_events_event_type_player_players_time_entity_type_time_entity_identifier_response_200_item import (
-    GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item,
-)
-from .get_public_v1_events_event_type_player_players_time_entity_type_time_entity_identifier_time_entity_type import (
-    GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType,
+from .get_public_v1_events_by_event_type_player_time_entity_type import GetPublicV1EventsByEventTypePlayerTimeEntityType
+from .get_public_v1_events_count_per_event_type_player_time_entity_type import (
+    GetPublicV1EventsCountPerEventTypePlayerTimeEntityType,
 )
 from .get_public_v1_statistics_by_session_id_categories_response_200 import (
     GetPublicV1StatisticsBySessionIdCategoriesResponse200,
@@ -194,9 +169,7 @@ from .get_public_v1_statistics_by_type_by_player_id_by_time_entity_type_by_time_
 from .get_public_v1_statistics_by_type_by_player_id_by_time_entity_type_by_time_entity_identifier_type import (
     GetPublicV1StatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierType,
 )
-from .get_public_v1_statistics_list_response_200 import (
-    GetPublicV1StatisticsListResponse200,
-)
+from .get_public_v1_statistics_list_response_200 import GetPublicV1StatisticsListResponse200
 from .get_statistics_by_session_id_categories_deprecated_response_200 import (
     GetStatisticsBySessionIdCategoriesDeprecatedResponse200,
 )
@@ -221,9 +194,7 @@ from .get_statistics_by_type_by_player_id_by_time_entity_type_by_time_entity_ide
 from .get_statistics_by_type_by_player_id_by_time_entity_type_by_time_entity_identifier_deprecated_type import (
     GetStatisticsByTypeByPlayerIdByTimeEntityTypeByTimeEntityIdentifierDeprecatedType,
 )
-from .get_statistics_list_deprecated_response_200 import (
-    GetStatisticsListDeprecatedResponse200,
-)
+from .get_statistics_list_deprecated_response_200 import GetStatisticsListDeprecatedResponse200
 from .phase import Phase
 from .player_identifier import PlayerIdentifier
 from .player_model import PlayerModel
@@ -292,6 +263,7 @@ __all__ = (
     "EventDflTacklingSuccessful",
     "EventDflThrowIn",
     "EventDflThrowInDflThrowInCategory",
+    "EventDiagnosticsSprint",
     "EventDownOnPads",
     "EventDribblingSoccer",
     "EventDribblingSoccerDribblingSoccerCategory",
@@ -349,12 +321,12 @@ __all__ = (
     "EventTurnIceHockeyTurnCategory",
     "EventTypeIdentifier",
     "EventTypes",
-    "GetEventsCountPerEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType",
-    "GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item",
-    "GetEventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType",
-    "GetPublicV1EventsCountPerEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType",
-    "GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierResponse200Item",
-    "GetPublicV1EventsEventTypePlayerPlayersTimeEntityTypeTimeEntityIdentifierTimeEntityType",
+    "GetEventsByEventTypePlayerDeprecatedResponse200Item",
+    "GetEventsByEventTypePlayerDeprecatedTimeEntityType",
+    "GetEventsCountPerEventTypePlayerDeprecatedTimeEntityType",
+    "GetPublicV1EventsByEventTypePlayerResponse200Item",
+    "GetPublicV1EventsByEventTypePlayerTimeEntityType",
+    "GetPublicV1EventsCountPerEventTypePlayerTimeEntityType",
     "GetPublicV1StatisticsBySessionIdCategoriesResponse200",
     "GetPublicV1StatisticsBySessionIdCategoriesResponse200CategoryNames",
     "GetPublicV1StatisticsBySessionIdCategoriesResponse200PercentageMaps",

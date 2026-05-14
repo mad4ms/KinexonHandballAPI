@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,34 +16,34 @@ T = TypeVar("T", bound="EventJump")
 class EventJump:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        airtime (Union[Unset, float]):
-        height (Union[Unset, float]):
-        x (Union[Unset, float]):
-        y (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        jump_max_ratio (Union[Unset, float]):
-        jump_category (Union[Unset, EventJumpJumpCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        airtime (float | Unset):
+        height (float | Unset):
+        x (float | Unset):
+        y (float | Unset):
+        distance (float | Unset):
+        jump_max_ratio (float | Unset):
+        jump_category (EventJumpJumpCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    airtime: Union[Unset, float] = UNSET
-    height: Union[Unset, float] = UNSET
-    x: Union[Unset, float] = UNSET
-    y: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    jump_max_ratio: Union[Unset, float] = UNSET
-    jump_category: Union[Unset, EventJumpJumpCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    airtime: float | Unset = UNSET
+    height: float | Unset = UNSET
+    x: float | Unset = UNSET
+    y: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    jump_max_ratio: float | Unset = UNSET
+    jump_category: EventJumpJumpCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -69,7 +71,7 @@ class EventJump:
 
         jump_max_ratio = self.jump_max_ratio
 
-        jump_category: Union[Unset, str] = UNSET
+        jump_category: str | Unset = UNSET
         if not isinstance(self.jump_category, Unset):
             jump_category = self.jump_category.value
 
@@ -133,7 +135,7 @@ class EventJump:
         jump_max_ratio = d.pop("jump_max_ratio", UNSET)
 
         _jump_category = d.pop("jump_category", UNSET)
-        jump_category: Union[Unset, EventJumpJumpCategory]
+        jump_category: EventJumpJumpCategory | Unset
         if isinstance(_jump_category, Unset):
             jump_category = UNSET
         else:

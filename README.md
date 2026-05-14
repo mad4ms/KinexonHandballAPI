@@ -127,26 +127,79 @@ if response.status_code == 200:
 ### Advanced: Adding new teams
 You can add new teams by modifying `config/teams.yaml`. Somehow there is no API endpoint to fetch all teams, so this is a manual step for now.
 
+### Statistics Center (REST + Websocket)
+
+The package also provides a dedicated wrapper for the Statistics Center API. REST responses use typed models from the generated `statistics_center_client`:
+
+```python
+from kinexon_handball_api import StatisticsCenterAPI
+from statistics_center_client.models import Games
+
+sc = StatisticsCenterAPI(
+  username="<USERNAME>",
+  password="<PASSWORD>",
+  interfaces_api_url="https://hbl.kinexon.com/statistics-center/interfaces-api",
+  outputs_push_url="https://hbl.kinexon.com/statistics-center/outputs-push",
+)
+
+# JWT login
+jwt = sc.login()
+
+# Typed REST responses
+games: list[Games] = sc.get_games(season="2025_2026")
+stats = sc.get_stats("<MATCH_ID>")        # list[dict]
+events = sc.get_events("<MATCH_ID>")      # list[dict]
+
+# Push endpoints
+all_endpoints = sc.list_endpoints()
+
+# WebSocket
+def on_message(data):
+  print("message", data)
+
+def on_error(error):
+  print("error", error)
+
+socket_client = sc.connect_websocket(
+  on_message=on_message,
+  on_error=on_error,
+)
+
+sc.subscribe(socket_client, subscription_type="matches", identifier="2019_2020")
+sc.subscribe(socket_client, subscription_type="stats", identifier="<MATCH_ID>")
+sc.subscribe(
+  socket_client,
+  subscription_type="events",
+  identifier="<MATCH_ID>",
+  filter={"event": "shot"},
+)
+sc.subscribe(socket_client, subscription_type="live_events", identifier="<MATCH_ID>")
+```
+
+Supported websocket subscription types are `matches`, `stats`, `events`, and `live_events`.
+
 ## Architecture
 
 This project uses a **Wrapper Pattern** around a generated OpenAPI client.
 
-- **`src/kinexon_handball_api/`**: The public-facing code. Contains the `HandballAPI` class, authentication logic, and user-friendly helpers.
-- **`src/_vendor/kinexon_client/`**: The low-level client code generated from the Kinexon OpenAPI specification.
-  - *Note*: This directory allows us to ship the generated code without external dependencies or versioning conflicts.
+- **`src/kinexon_handball_api/`**: The public-facing code. Contains the `HandballAPI` and `StatisticsCenterAPI` classes, authentication logic, and user-friendly helpers.
+- **`src/_vendor/kinexon_client/`**: Generated client for the main Kinexon Cloud REST API (from `openapi/sports_app.json`).
+- **`src/_vendor/statistics_center_client/`**: Generated client for the Statistics Center API (from `openapi/statistics_center.json`). Provides typed models (`Games`, `LoginSuccess`) used by `StatisticsCenterAPI`.
+  - *Note*: Vendoring the generated clients avoids external dependencies and versioning conflicts.
   - **Do not edit files in `_vendor` manually.** They are overwritten during code generation.
 
 ## Repository Layout
 
 - **`src/kinexon_handball_api/`**: Hand-written wrapper and helper APIs.
-- **`src/_vendor/kinexon_client/`**: Generated OpenAPI client (do not edit by hand).
-- **`scripts/`**: Code generation helpers for the OpenAPI client.
+- **`src/_vendor/kinexon_client/`**: Generated OpenAPI client for main REST API (do not edit).
+- **`src/_vendor/statistics_center_client/`**: Generated OpenAPI client for Statistics Center (do not edit).
+- **`openapi/`**: OpenAPI specs (`sports_app.json`, `statistics_center.json`) and generator configs.
+- **`scripts/`**: Code generation helpers (`codegen.sh`, `rename_operation_ids.py`).
 - **`test/`**: Test suite executed with `pytest`.
 
 ## AI Assistance
 
-If you are using GitHub Copilot in this repo, see the project-specific guidance in
-`.github/copilot-instructions.md`.
+If you are using an AI coding agent (Claude Code, GitHub Copilot, Cursor, etc.) in this repo, see the project-specific guidance in [AGENTS.md](AGENTS.md).
 
 ## Development
 

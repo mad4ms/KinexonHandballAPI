@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,34 +15,34 @@ T = TypeVar("T", bound="EventPlayByTeam")
 class EventPlayByTeam:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        event_name (Union[Unset, str]):
-        duration (Union[Unset, float]):
-        group_id (Union[Unset, int]):
-        down (Union[Unset, float]):
-        play_game_clock (Union[Unset, float]):
-        yard_line (Union[Unset, float]):
-        play_id (Union[Unset, float]):
-        yards_to_go (Union[Unset, float]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        event_name (str | Unset):
+        duration (float | Unset):
+        group_id (int | Unset):
+        down (float | Unset):
+        play_game_clock (float | Unset):
+        yard_line (float | Unset):
+        play_id (float | Unset):
+        yards_to_go (float | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    event_name: Union[Unset, str] = UNSET
-    duration: Union[Unset, float] = UNSET
-    group_id: Union[Unset, int] = UNSET
-    down: Union[Unset, float] = UNSET
-    play_game_clock: Union[Unset, float] = UNSET
-    yard_line: Union[Unset, float] = UNSET
-    play_id: Union[Unset, float] = UNSET
-    yards_to_go: Union[Unset, float] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    event_name: str | Unset = UNSET
+    duration: float | Unset = UNSET
+    group_id: int | Unset = UNSET
+    down: float | Unset = UNSET
+    play_game_clock: float | Unset = UNSET
+    yard_line: float | Unset = UNSET
+    play_id: float | Unset = UNSET
+    yards_to_go: float | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

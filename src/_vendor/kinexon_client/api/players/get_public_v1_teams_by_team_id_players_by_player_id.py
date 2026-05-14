@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -13,15 +14,19 @@ def _get_kwargs(
     team_id: int,
     player_id: int,
 ) -> dict[str, Any]:
+
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/public/v1/teams/{team_id}/players/{player_id}",
+        "url": "/public/v1/teams/{team_id}/players/{player_id}".format(
+            team_id=quote(str(team_id), safe=""),
+            player_id=quote(str(player_id), safe=""),
+        ),
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[PlayerModel]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> PlayerModel | None:
     if response.status_code == 200:
         response_200 = PlayerModel.from_dict(response.json())
 
@@ -33,7 +38,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[PlayerModel]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[PlayerModel]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -81,7 +86,7 @@ def sync(
     player_id: int,
     *,
     client: AuthenticatedClient,
-) -> Optional[PlayerModel]:
+) -> PlayerModel | None:
     """Get a player of a team
 
      Retuns a Player by {id} for given {teamId}
@@ -142,7 +147,7 @@ async def asyncio(
     player_id: int,
     *,
     client: AuthenticatedClient,
-) -> Optional[PlayerModel]:
+) -> PlayerModel | None:
     """Get a player of a team
 
      Retuns a Player by {id} for given {teamId}

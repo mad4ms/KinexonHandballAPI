@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,148 +15,150 @@ T = TypeVar("T", bound="EventCount")
 class EventCount:
     """
     Attributes:
-        count_acceleration (Union[Unset, int]):
-        count_ball_contact (Union[Unset, int]):
-        count_ball_possession (Union[Unset, int]):
-        count_ball_possession_lost (Union[Unset, int]):
-        count_ball_possession_recovery (Union[Unset, int]):
-        count_cv_shot (Union[Unset, int]):
-        count_change_of_direction (Union[Unset, int]):
-        count_change_of_orientation (Union[Unset, int]):
-        count_change_of_pace (Union[Unset, int]):
-        count_corner_kick (Union[Unset, int]):
-        count_counter_attack (Union[Unset, int]):
-        count_detected_cross (Union[Unset, int]):
-        count_cut (Union[Unset, int]):
-        count_deceleration (Union[Unset, int]):
-        count_defence (Union[Unset, int]):
-        count_detected_offside_soccer (Union[Unset, int]):
-        count_detected_pass (Union[Unset, int]):
-        count_detected_shot_basketball (Union[Unset, int]):
-        count_detected_shot_fifa (Union[Unset, int]):
-        count_detected_shot_handball (Union[Unset, int]):
-        count_detected_shot_ice_hockey (Union[Unset, int]):
-        count_detected_shot_intelligence_court (Union[Unset, int]):
-        count_detected_shot_soccer (Union[Unset, int]):
-        count_dfl_corner_kick (Union[Unset, int]):
-        count_dfl_cross (Union[Unset, int]):
-        count_dfl_free_kick (Union[Unset, int]):
-        count_dfl_goal_kick (Union[Unset, int]):
-        count_dfl_kick_off (Union[Unset, int]):
-        count_dfl_pass (Union[Unset, int]):
-        count_dfl_penalty (Union[Unset, int]):
-        count_dfl_shot_at_goal (Union[Unset, int]):
-        count_dfl_sprint (Union[Unset, int]):
-        count_dfl_tackling (Union[Unset, int]):
-        count_dfl_throw_in (Union[Unset, int]):
-        count_down_on_pads (Union[Unset, int]):
-        count_dribbling_soccer (Union[Unset, int]):
-        count_dynamic_defence (Union[Unset, int]):
-        count_exertion (Union[Unset, int]):
-        count_full_court_transition (Union[Unset, int]):
-        count_goal_kick (Union[Unset, int]):
-        count_goalkeeper_save_diving (Union[Unset, int]):
-        count_goalkeeper_save_down_to_knees (Union[Unset, int]):
-        count_goalkeeper_save_tilting (Union[Unset, int]):
-        count_group_counter_pressing (Union[Unset, int]):
-        count_group_empty_goal_handball (Union[Unset, int]):
-        count_heart_rate_recovery (Union[Unset, int]):
-        count_impact (Union[Unset, int]):
-        count_jump_beach_volleyball (Union[Unset, int]):
-        count_jump (Union[Unset, int]):
-        count_mid_court_transition (Union[Unset, int]):
-        count_noah_shot (Union[Unset, int]):
-        count_offence (Union[Unset, int]):
-        count_pass_fifa (Union[Unset, int]):
-        count_pick_and_pop (Union[Unset, int]):
-        count_pick_and_roll (Union[Unset, int]):
-        count_pivot_rotation (Union[Unset, int]):
-        count_play_by_player (Union[Unset, int]):
-        count_play_by_team (Union[Unset, int]):
-        count_player_counter_pressing (Union[Unset, int]):
-        count_rally_beach_volleyball (Union[Unset, int]):
-        count_rspct_shot (Union[Unset, int]):
-        count_shift (Union[Unset, int]):
-        count_skating_transition (Union[Unset, int]):
-        count_speed_zone_entry (Union[Unset, int]):
-        count_speed_zone_entry_relative (Union[Unset, int]):
-        count_sprint (Union[Unset, int]):
-        count_tag (Union[Unset, int]):
-        count_tempo_run (Union[Unset, int]):
-        count_throw_in (Union[Unset, int]):
-        count_turn_ice_hockey (Union[Unset, int]):
+        count_acceleration (int | Unset):
+        count_ball_contact (int | Unset):
+        count_ball_possession (int | Unset):
+        count_ball_possession_lost (int | Unset):
+        count_ball_possession_recovery (int | Unset):
+        count_cv_shot (int | Unset):
+        count_change_of_direction (int | Unset):
+        count_change_of_orientation (int | Unset):
+        count_change_of_pace (int | Unset):
+        count_corner_kick (int | Unset):
+        count_counter_attack (int | Unset):
+        count_detected_cross (int | Unset):
+        count_cut (int | Unset):
+        count_deceleration (int | Unset):
+        count_defence (int | Unset):
+        count_detected_offside_soccer (int | Unset):
+        count_detected_pass (int | Unset):
+        count_detected_shot_basketball (int | Unset):
+        count_detected_shot_fifa (int | Unset):
+        count_detected_shot_handball (int | Unset):
+        count_detected_shot_ice_hockey (int | Unset):
+        count_detected_shot_intelligence_court (int | Unset):
+        count_detected_shot_soccer (int | Unset):
+        count_dfl_corner_kick (int | Unset):
+        count_dfl_cross (int | Unset):
+        count_dfl_free_kick (int | Unset):
+        count_dfl_goal_kick (int | Unset):
+        count_dfl_kick_off (int | Unset):
+        count_dfl_pass (int | Unset):
+        count_dfl_penalty (int | Unset):
+        count_dfl_shot_at_goal (int | Unset):
+        count_dfl_sprint (int | Unset):
+        count_dfl_tackling (int | Unset):
+        count_dfl_throw_in (int | Unset):
+        count_diagnostics_sprint (int | Unset):
+        count_down_on_pads (int | Unset):
+        count_dribbling_soccer (int | Unset):
+        count_dynamic_defence (int | Unset):
+        count_exertion (int | Unset):
+        count_full_court_transition (int | Unset):
+        count_goal_kick (int | Unset):
+        count_goalkeeper_save_diving (int | Unset):
+        count_goalkeeper_save_down_to_knees (int | Unset):
+        count_goalkeeper_save_tilting (int | Unset):
+        count_group_counter_pressing (int | Unset):
+        count_group_empty_goal_handball (int | Unset):
+        count_heart_rate_recovery (int | Unset):
+        count_impact (int | Unset):
+        count_jump_beach_volleyball (int | Unset):
+        count_jump (int | Unset):
+        count_mid_court_transition (int | Unset):
+        count_noah_shot (int | Unset):
+        count_offence (int | Unset):
+        count_pass_fifa (int | Unset):
+        count_pick_and_pop (int | Unset):
+        count_pick_and_roll (int | Unset):
+        count_pivot_rotation (int | Unset):
+        count_play_by_player (int | Unset):
+        count_play_by_team (int | Unset):
+        count_player_counter_pressing (int | Unset):
+        count_rally_beach_volleyball (int | Unset):
+        count_rspct_shot (int | Unset):
+        count_shift (int | Unset):
+        count_skating_transition (int | Unset):
+        count_speed_zone_entry (int | Unset):
+        count_speed_zone_entry_relative (int | Unset):
+        count_sprint (int | Unset):
+        count_tag (int | Unset):
+        count_tempo_run (int | Unset):
+        count_throw_in (int | Unset):
+        count_turn_ice_hockey (int | Unset):
     """
 
-    count_acceleration: Union[Unset, int] = UNSET
-    count_ball_contact: Union[Unset, int] = UNSET
-    count_ball_possession: Union[Unset, int] = UNSET
-    count_ball_possession_lost: Union[Unset, int] = UNSET
-    count_ball_possession_recovery: Union[Unset, int] = UNSET
-    count_cv_shot: Union[Unset, int] = UNSET
-    count_change_of_direction: Union[Unset, int] = UNSET
-    count_change_of_orientation: Union[Unset, int] = UNSET
-    count_change_of_pace: Union[Unset, int] = UNSET
-    count_corner_kick: Union[Unset, int] = UNSET
-    count_counter_attack: Union[Unset, int] = UNSET
-    count_detected_cross: Union[Unset, int] = UNSET
-    count_cut: Union[Unset, int] = UNSET
-    count_deceleration: Union[Unset, int] = UNSET
-    count_defence: Union[Unset, int] = UNSET
-    count_detected_offside_soccer: Union[Unset, int] = UNSET
-    count_detected_pass: Union[Unset, int] = UNSET
-    count_detected_shot_basketball: Union[Unset, int] = UNSET
-    count_detected_shot_fifa: Union[Unset, int] = UNSET
-    count_detected_shot_handball: Union[Unset, int] = UNSET
-    count_detected_shot_ice_hockey: Union[Unset, int] = UNSET
-    count_detected_shot_intelligence_court: Union[Unset, int] = UNSET
-    count_detected_shot_soccer: Union[Unset, int] = UNSET
-    count_dfl_corner_kick: Union[Unset, int] = UNSET
-    count_dfl_cross: Union[Unset, int] = UNSET
-    count_dfl_free_kick: Union[Unset, int] = UNSET
-    count_dfl_goal_kick: Union[Unset, int] = UNSET
-    count_dfl_kick_off: Union[Unset, int] = UNSET
-    count_dfl_pass: Union[Unset, int] = UNSET
-    count_dfl_penalty: Union[Unset, int] = UNSET
-    count_dfl_shot_at_goal: Union[Unset, int] = UNSET
-    count_dfl_sprint: Union[Unset, int] = UNSET
-    count_dfl_tackling: Union[Unset, int] = UNSET
-    count_dfl_throw_in: Union[Unset, int] = UNSET
-    count_down_on_pads: Union[Unset, int] = UNSET
-    count_dribbling_soccer: Union[Unset, int] = UNSET
-    count_dynamic_defence: Union[Unset, int] = UNSET
-    count_exertion: Union[Unset, int] = UNSET
-    count_full_court_transition: Union[Unset, int] = UNSET
-    count_goal_kick: Union[Unset, int] = UNSET
-    count_goalkeeper_save_diving: Union[Unset, int] = UNSET
-    count_goalkeeper_save_down_to_knees: Union[Unset, int] = UNSET
-    count_goalkeeper_save_tilting: Union[Unset, int] = UNSET
-    count_group_counter_pressing: Union[Unset, int] = UNSET
-    count_group_empty_goal_handball: Union[Unset, int] = UNSET
-    count_heart_rate_recovery: Union[Unset, int] = UNSET
-    count_impact: Union[Unset, int] = UNSET
-    count_jump_beach_volleyball: Union[Unset, int] = UNSET
-    count_jump: Union[Unset, int] = UNSET
-    count_mid_court_transition: Union[Unset, int] = UNSET
-    count_noah_shot: Union[Unset, int] = UNSET
-    count_offence: Union[Unset, int] = UNSET
-    count_pass_fifa: Union[Unset, int] = UNSET
-    count_pick_and_pop: Union[Unset, int] = UNSET
-    count_pick_and_roll: Union[Unset, int] = UNSET
-    count_pivot_rotation: Union[Unset, int] = UNSET
-    count_play_by_player: Union[Unset, int] = UNSET
-    count_play_by_team: Union[Unset, int] = UNSET
-    count_player_counter_pressing: Union[Unset, int] = UNSET
-    count_rally_beach_volleyball: Union[Unset, int] = UNSET
-    count_rspct_shot: Union[Unset, int] = UNSET
-    count_shift: Union[Unset, int] = UNSET
-    count_skating_transition: Union[Unset, int] = UNSET
-    count_speed_zone_entry: Union[Unset, int] = UNSET
-    count_speed_zone_entry_relative: Union[Unset, int] = UNSET
-    count_sprint: Union[Unset, int] = UNSET
-    count_tag: Union[Unset, int] = UNSET
-    count_tempo_run: Union[Unset, int] = UNSET
-    count_throw_in: Union[Unset, int] = UNSET
-    count_turn_ice_hockey: Union[Unset, int] = UNSET
+    count_acceleration: int | Unset = UNSET
+    count_ball_contact: int | Unset = UNSET
+    count_ball_possession: int | Unset = UNSET
+    count_ball_possession_lost: int | Unset = UNSET
+    count_ball_possession_recovery: int | Unset = UNSET
+    count_cv_shot: int | Unset = UNSET
+    count_change_of_direction: int | Unset = UNSET
+    count_change_of_orientation: int | Unset = UNSET
+    count_change_of_pace: int | Unset = UNSET
+    count_corner_kick: int | Unset = UNSET
+    count_counter_attack: int | Unset = UNSET
+    count_detected_cross: int | Unset = UNSET
+    count_cut: int | Unset = UNSET
+    count_deceleration: int | Unset = UNSET
+    count_defence: int | Unset = UNSET
+    count_detected_offside_soccer: int | Unset = UNSET
+    count_detected_pass: int | Unset = UNSET
+    count_detected_shot_basketball: int | Unset = UNSET
+    count_detected_shot_fifa: int | Unset = UNSET
+    count_detected_shot_handball: int | Unset = UNSET
+    count_detected_shot_ice_hockey: int | Unset = UNSET
+    count_detected_shot_intelligence_court: int | Unset = UNSET
+    count_detected_shot_soccer: int | Unset = UNSET
+    count_dfl_corner_kick: int | Unset = UNSET
+    count_dfl_cross: int | Unset = UNSET
+    count_dfl_free_kick: int | Unset = UNSET
+    count_dfl_goal_kick: int | Unset = UNSET
+    count_dfl_kick_off: int | Unset = UNSET
+    count_dfl_pass: int | Unset = UNSET
+    count_dfl_penalty: int | Unset = UNSET
+    count_dfl_shot_at_goal: int | Unset = UNSET
+    count_dfl_sprint: int | Unset = UNSET
+    count_dfl_tackling: int | Unset = UNSET
+    count_dfl_throw_in: int | Unset = UNSET
+    count_diagnostics_sprint: int | Unset = UNSET
+    count_down_on_pads: int | Unset = UNSET
+    count_dribbling_soccer: int | Unset = UNSET
+    count_dynamic_defence: int | Unset = UNSET
+    count_exertion: int | Unset = UNSET
+    count_full_court_transition: int | Unset = UNSET
+    count_goal_kick: int | Unset = UNSET
+    count_goalkeeper_save_diving: int | Unset = UNSET
+    count_goalkeeper_save_down_to_knees: int | Unset = UNSET
+    count_goalkeeper_save_tilting: int | Unset = UNSET
+    count_group_counter_pressing: int | Unset = UNSET
+    count_group_empty_goal_handball: int | Unset = UNSET
+    count_heart_rate_recovery: int | Unset = UNSET
+    count_impact: int | Unset = UNSET
+    count_jump_beach_volleyball: int | Unset = UNSET
+    count_jump: int | Unset = UNSET
+    count_mid_court_transition: int | Unset = UNSET
+    count_noah_shot: int | Unset = UNSET
+    count_offence: int | Unset = UNSET
+    count_pass_fifa: int | Unset = UNSET
+    count_pick_and_pop: int | Unset = UNSET
+    count_pick_and_roll: int | Unset = UNSET
+    count_pivot_rotation: int | Unset = UNSET
+    count_play_by_player: int | Unset = UNSET
+    count_play_by_team: int | Unset = UNSET
+    count_player_counter_pressing: int | Unset = UNSET
+    count_rally_beach_volleyball: int | Unset = UNSET
+    count_rspct_shot: int | Unset = UNSET
+    count_shift: int | Unset = UNSET
+    count_skating_transition: int | Unset = UNSET
+    count_speed_zone_entry: int | Unset = UNSET
+    count_speed_zone_entry_relative: int | Unset = UNSET
+    count_sprint: int | Unset = UNSET
+    count_tag: int | Unset = UNSET
+    count_tempo_run: int | Unset = UNSET
+    count_throw_in: int | Unset = UNSET
+    count_turn_ice_hockey: int | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -225,6 +229,8 @@ class EventCount:
         count_dfl_tackling = self.count_dfl_tackling
 
         count_dfl_throw_in = self.count_dfl_throw_in
+
+        count_diagnostics_sprint = self.count_diagnostics_sprint
 
         count_down_on_pads = self.count_down_on_pads
 
@@ -369,6 +375,8 @@ class EventCount:
             field_dict["count_dfl_tackling"] = count_dfl_tackling
         if count_dfl_throw_in is not UNSET:
             field_dict["count_dfl_throw_in"] = count_dfl_throw_in
+        if count_diagnostics_sprint is not UNSET:
+            field_dict["count_diagnostics_sprint"] = count_diagnostics_sprint
         if count_down_on_pads is not UNSET:
             field_dict["count_down_on_pads"] = count_down_on_pads
         if count_dribbling_soccer is not UNSET:
@@ -515,6 +523,8 @@ class EventCount:
 
         count_dfl_throw_in = d.pop("count_dfl_throw_in", UNSET)
 
+        count_diagnostics_sprint = d.pop("count_diagnostics_sprint", UNSET)
+
         count_down_on_pads = d.pop("count_down_on_pads", UNSET)
 
         count_dribbling_soccer = d.pop("count_dribbling_soccer", UNSET)
@@ -622,6 +632,7 @@ class EventCount:
             count_dfl_sprint=count_dfl_sprint,
             count_dfl_tackling=count_dfl_tackling,
             count_dfl_throw_in=count_dfl_throw_in,
+            count_diagnostics_sprint=count_diagnostics_sprint,
             count_down_on_pads=count_down_on_pads,
             count_dribbling_soccer=count_dribbling_soccer,
             count_dynamic_defence=count_dynamic_defence,

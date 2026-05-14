@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_detected_cross_detected_cross_category import (
-    EventDetectedCrossDetectedCrossCategory,
-)
+from ..models.event_detected_cross_detected_cross_category import EventDetectedCrossDetectedCrossCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventDetectedCross")
@@ -16,32 +16,32 @@ T = TypeVar("T", bound="EventDetectedCross")
 class EventDetectedCross:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        distance (Union[Unset, float]):
-        speed_avg (Union[Unset, float]):
-        speed_max (Union[Unset, float]):
-        receiving_player_id (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        detected_cross_category (Union[Unset, EventDetectedCrossDetectedCrossCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        distance (float | Unset):
+        speed_avg (float | Unset):
+        speed_max (float | Unset):
+        receiving_player_id (float | Unset):
+        trajectory (str | Unset):
+        detected_cross_category (EventDetectedCrossDetectedCrossCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_avg: Union[Unset, float] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    receiving_player_id: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    detected_cross_category: Union[Unset, EventDetectedCrossDetectedCrossCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_avg: float | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    receiving_player_id: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    detected_cross_category: EventDetectedCrossDetectedCrossCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -67,7 +67,7 @@ class EventDetectedCross:
 
         trajectory = self.trajectory
 
-        detected_cross_category: Union[Unset, str] = UNSET
+        detected_cross_category: str | Unset = UNSET
         if not isinstance(self.detected_cross_category, Unset):
             detected_cross_category = self.detected_cross_category.value
 
@@ -127,7 +127,7 @@ class EventDetectedCross:
         trajectory = d.pop("trajectory", UNSET)
 
         _detected_cross_category = d.pop("detected_cross_category", UNSET)
-        detected_cross_category: Union[Unset, EventDetectedCrossDetectedCrossCategory]
+        detected_cross_category: EventDetectedCrossDetectedCrossCategory | Unset
         if isinstance(_detected_cross_category, Unset):
             detected_cross_category = UNSET
         else:

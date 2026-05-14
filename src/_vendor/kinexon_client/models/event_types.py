@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -28,9 +30,7 @@ if TYPE_CHECKING:
     from ..models.event_detected_shot_fifa import EventDetectedShotFifa
     from ..models.event_detected_shot_handball import EventDetectedShotHandball
     from ..models.event_detected_shot_ice_hockey import EventDetectedShotIceHockey
-    from ..models.event_detected_shot_intelligence_court import (
-        EventDetectedShotIntelligenceCourt,
-    )
+    from ..models.event_detected_shot_intelligence_court import EventDetectedShotIntelligenceCourt
     from ..models.event_detected_shot_soccer import EventDetectedShotSoccer
     from ..models.event_dfl_corner_kick import EventDflCornerKick
     from ..models.event_dfl_cross import EventDflCross
@@ -43,6 +43,7 @@ if TYPE_CHECKING:
     from ..models.event_dfl_sprint import EventDflSprint
     from ..models.event_dfl_tackling import EventDflTackling
     from ..models.event_dfl_throw_in import EventDflThrowIn
+    from ..models.event_diagnostics_sprint import EventDiagnosticsSprint
     from ..models.event_down_on_pads import EventDownOnPads
     from ..models.event_dribbling_soccer import EventDribblingSoccer
     from ..models.event_dynamic_defence import EventDynamicDefence
@@ -50,9 +51,7 @@ if TYPE_CHECKING:
     from ..models.event_full_court_transition import EventFullCourtTransition
     from ..models.event_goal_kick import EventGoalKick
     from ..models.event_goalkeeper_save_diving import EventGoalkeeperSaveDiving
-    from ..models.event_goalkeeper_save_down_to_knees import (
-        EventGoalkeeperSaveDownToKnees,
-    )
+    from ..models.event_goalkeeper_save_down_to_knees import EventGoalkeeperSaveDownToKnees
     from ..models.event_goalkeeper_save_tilting import EventGoalkeeperSaveTilting
     from ..models.event_group_counter_pressing import EventGroupCounterPressing
     from ..models.event_group_empty_goal_handball import EventGroupEmptyGoalHandball
@@ -90,428 +89,434 @@ T = TypeVar("T", bound="EventTypes")
 class EventTypes:
     """
     Attributes:
-        acceleration (Union[Unset, EventAcceleration]):
-        ball_contact (Union[Unset, EventBallContact]):
-        ball_possession (Union[Unset, EventBallPossession]):
-        ball_possession_lost (Union[Unset, EventBallPossessionLost]):
-        ball_possession_recovery (Union[Unset, EventBallPossessionRecovery]):
-        cv_shot (Union[Unset, EventCvShot]):
-        change_of_direction (Union[Unset, EventChangeOfDirection]):
-        change_of_orientation (Union[Unset, EventChangeOfOrientation]):
-        change_of_pace (Union[Unset, EventChangeOfPace]):
-        corner_kick (Union[Unset, EventCornerKick]):
-        counter_attack (Union[Unset, EventCounterAttack]):
-        detected_cross (Union[Unset, EventDetectedCross]):
-        cut (Union[Unset, EventCut]):
-        deceleration (Union[Unset, EventDeceleration]):
-        defence (Union[Unset, EventDefence]):
-        detected_offside_soccer (Union[Unset, EventDetectedOffsideSoccer]):
-        detected_pass (Union[Unset, EventDetectedPass]):
-        detected_shot_basketball (Union[Unset, EventDetectedShotBasketball]):
-        detected_shot_fifa (Union[Unset, EventDetectedShotFifa]):
-        detected_shot_handball (Union[Unset, EventDetectedShotHandball]):
-        detected_shot_ice_hockey (Union[Unset, EventDetectedShotIceHockey]):
-        detected_shot_intelligence_court (Union[Unset, EventDetectedShotIntelligenceCourt]):
-        detected_shot_soccer (Union[Unset, EventDetectedShotSoccer]):
-        dfl_corner_kick (Union[Unset, EventDflCornerKick]):
-        dfl_cross (Union[Unset, EventDflCross]):
-        dfl_free_kick (Union[Unset, EventDflFreeKick]):
-        dfl_goal_kick (Union[Unset, EventDflGoalKick]):
-        dfl_kick_off (Union[Unset, EventDflKickOff]):
-        dfl_pass (Union[Unset, EventDflPass]):
-        dfl_penalty (Union[Unset, EventDflPenalty]):
-        dfl_shot_at_goal (Union[Unset, EventDflShotAtGoal]):
-        dfl_sprint (Union[Unset, EventDflSprint]):
-        dfl_tackling (Union[Unset, EventDflTackling]):
-        dfl_throw_in (Union[Unset, EventDflThrowIn]):
-        down_on_pads (Union[Unset, EventDownOnPads]):
-        dribbling_soccer (Union[Unset, EventDribblingSoccer]):
-        dynamic_defence (Union[Unset, EventDynamicDefence]):
-        exertion (Union[Unset, EventExertion]):
-        full_court_transition (Union[Unset, EventFullCourtTransition]):
-        goal_kick (Union[Unset, EventGoalKick]):
-        goalkeeper_save_diving (Union[Unset, EventGoalkeeperSaveDiving]):
-        goalkeeper_save_down_to_knees (Union[Unset, EventGoalkeeperSaveDownToKnees]):
-        goalkeeper_save_tilting (Union[Unset, EventGoalkeeperSaveTilting]):
-        group_counter_pressing (Union[Unset, EventGroupCounterPressing]):
-        group_empty_goal_handball (Union[Unset, EventGroupEmptyGoalHandball]):
-        heart_rate_recovery (Union[Unset, EventHeartRateRecovery]):
-        impact (Union[Unset, EventImpact]):
-        jump_beach_volleyball (Union[Unset, EventJumpBeachVolleyball]):
-        jump (Union[Unset, EventJump]):
-        mid_court_transition (Union[Unset, EventMidCourtTransition]):
-        noah_shot (Union[Unset, EventNoahShot]):
-        offence (Union[Unset, EventOffence]):
-        pass_fifa (Union[Unset, EventPassFifa]):
-        pick_and_pop (Union[Unset, EventPickAndPop]):
-        pick_and_roll (Union[Unset, EventPickAndRoll]):
-        pivot_rotation (Union[Unset, EventPivotRotation]):
-        play_by_player (Union[Unset, EventPlayByPlayer]):
-        play_by_team (Union[Unset, EventPlayByTeam]):
-        player_counter_pressing (Union[Unset, EventPlayerCounterPressing]):
-        rally_beach_volleyball (Union[Unset, EventRallyBeachVolleyball]):
-        rspct_shot (Union[Unset, EventRspctShot]):
-        shift (Union[Unset, EventShift]):
-        skating_transition (Union[Unset, EventSkatingTransition]):
-        speed_zone_entry (Union[Unset, EventSpeedZoneEntry]):
-        speed_zone_entry_relative (Union[Unset, EventSpeedZoneEntryRelative]):
-        sprint (Union[Unset, EventSprint]):
-        tag (Union[Unset, EventTag]):
-        tempo_run (Union[Unset, EventTempoRun]):
-        throw_in (Union[Unset, EventThrowIn]):
-        turn_ice_hockey (Union[Unset, EventTurnIceHockey]):
+        acceleration (EventAcceleration | Unset):
+        ball_contact (EventBallContact | Unset):
+        ball_possession (EventBallPossession | Unset):
+        ball_possession_lost (EventBallPossessionLost | Unset):
+        ball_possession_recovery (EventBallPossessionRecovery | Unset):
+        cv_shot (EventCvShot | Unset):
+        change_of_direction (EventChangeOfDirection | Unset):
+        change_of_orientation (EventChangeOfOrientation | Unset):
+        change_of_pace (EventChangeOfPace | Unset):
+        corner_kick (EventCornerKick | Unset):
+        counter_attack (EventCounterAttack | Unset):
+        detected_cross (EventDetectedCross | Unset):
+        cut (EventCut | Unset):
+        deceleration (EventDeceleration | Unset):
+        defence (EventDefence | Unset):
+        detected_offside_soccer (EventDetectedOffsideSoccer | Unset):
+        detected_pass (EventDetectedPass | Unset):
+        detected_shot_basketball (EventDetectedShotBasketball | Unset):
+        detected_shot_fifa (EventDetectedShotFifa | Unset):
+        detected_shot_handball (EventDetectedShotHandball | Unset):
+        detected_shot_ice_hockey (EventDetectedShotIceHockey | Unset):
+        detected_shot_intelligence_court (EventDetectedShotIntelligenceCourt | Unset):
+        detected_shot_soccer (EventDetectedShotSoccer | Unset):
+        dfl_corner_kick (EventDflCornerKick | Unset):
+        dfl_cross (EventDflCross | Unset):
+        dfl_free_kick (EventDflFreeKick | Unset):
+        dfl_goal_kick (EventDflGoalKick | Unset):
+        dfl_kick_off (EventDflKickOff | Unset):
+        dfl_pass (EventDflPass | Unset):
+        dfl_penalty (EventDflPenalty | Unset):
+        dfl_shot_at_goal (EventDflShotAtGoal | Unset):
+        dfl_sprint (EventDflSprint | Unset):
+        dfl_tackling (EventDflTackling | Unset):
+        dfl_throw_in (EventDflThrowIn | Unset):
+        diagnostics_sprint (EventDiagnosticsSprint | Unset):
+        down_on_pads (EventDownOnPads | Unset):
+        dribbling_soccer (EventDribblingSoccer | Unset):
+        dynamic_defence (EventDynamicDefence | Unset):
+        exertion (EventExertion | Unset):
+        full_court_transition (EventFullCourtTransition | Unset):
+        goal_kick (EventGoalKick | Unset):
+        goalkeeper_save_diving (EventGoalkeeperSaveDiving | Unset):
+        goalkeeper_save_down_to_knees (EventGoalkeeperSaveDownToKnees | Unset):
+        goalkeeper_save_tilting (EventGoalkeeperSaveTilting | Unset):
+        group_counter_pressing (EventGroupCounterPressing | Unset):
+        group_empty_goal_handball (EventGroupEmptyGoalHandball | Unset):
+        heart_rate_recovery (EventHeartRateRecovery | Unset):
+        impact (EventImpact | Unset):
+        jump_beach_volleyball (EventJumpBeachVolleyball | Unset):
+        jump (EventJump | Unset):
+        mid_court_transition (EventMidCourtTransition | Unset):
+        noah_shot (EventNoahShot | Unset):
+        offence (EventOffence | Unset):
+        pass_fifa (EventPassFifa | Unset):
+        pick_and_pop (EventPickAndPop | Unset):
+        pick_and_roll (EventPickAndRoll | Unset):
+        pivot_rotation (EventPivotRotation | Unset):
+        play_by_player (EventPlayByPlayer | Unset):
+        play_by_team (EventPlayByTeam | Unset):
+        player_counter_pressing (EventPlayerCounterPressing | Unset):
+        rally_beach_volleyball (EventRallyBeachVolleyball | Unset):
+        rspct_shot (EventRspctShot | Unset):
+        shift (EventShift | Unset):
+        skating_transition (EventSkatingTransition | Unset):
+        speed_zone_entry (EventSpeedZoneEntry | Unset):
+        speed_zone_entry_relative (EventSpeedZoneEntryRelative | Unset):
+        sprint (EventSprint | Unset):
+        tag (EventTag | Unset):
+        tempo_run (EventTempoRun | Unset):
+        throw_in (EventThrowIn | Unset):
+        turn_ice_hockey (EventTurnIceHockey | Unset):
     """
 
-    acceleration: Union[Unset, "EventAcceleration"] = UNSET
-    ball_contact: Union[Unset, "EventBallContact"] = UNSET
-    ball_possession: Union[Unset, "EventBallPossession"] = UNSET
-    ball_possession_lost: Union[Unset, "EventBallPossessionLost"] = UNSET
-    ball_possession_recovery: Union[Unset, "EventBallPossessionRecovery"] = UNSET
-    cv_shot: Union[Unset, "EventCvShot"] = UNSET
-    change_of_direction: Union[Unset, "EventChangeOfDirection"] = UNSET
-    change_of_orientation: Union[Unset, "EventChangeOfOrientation"] = UNSET
-    change_of_pace: Union[Unset, "EventChangeOfPace"] = UNSET
-    corner_kick: Union[Unset, "EventCornerKick"] = UNSET
-    counter_attack: Union[Unset, "EventCounterAttack"] = UNSET
-    detected_cross: Union[Unset, "EventDetectedCross"] = UNSET
-    cut: Union[Unset, "EventCut"] = UNSET
-    deceleration: Union[Unset, "EventDeceleration"] = UNSET
-    defence: Union[Unset, "EventDefence"] = UNSET
-    detected_offside_soccer: Union[Unset, "EventDetectedOffsideSoccer"] = UNSET
-    detected_pass: Union[Unset, "EventDetectedPass"] = UNSET
-    detected_shot_basketball: Union[Unset, "EventDetectedShotBasketball"] = UNSET
-    detected_shot_fifa: Union[Unset, "EventDetectedShotFifa"] = UNSET
-    detected_shot_handball: Union[Unset, "EventDetectedShotHandball"] = UNSET
-    detected_shot_ice_hockey: Union[Unset, "EventDetectedShotIceHockey"] = UNSET
-    detected_shot_intelligence_court: Union[Unset, "EventDetectedShotIntelligenceCourt"] = UNSET
-    detected_shot_soccer: Union[Unset, "EventDetectedShotSoccer"] = UNSET
-    dfl_corner_kick: Union[Unset, "EventDflCornerKick"] = UNSET
-    dfl_cross: Union[Unset, "EventDflCross"] = UNSET
-    dfl_free_kick: Union[Unset, "EventDflFreeKick"] = UNSET
-    dfl_goal_kick: Union[Unset, "EventDflGoalKick"] = UNSET
-    dfl_kick_off: Union[Unset, "EventDflKickOff"] = UNSET
-    dfl_pass: Union[Unset, "EventDflPass"] = UNSET
-    dfl_penalty: Union[Unset, "EventDflPenalty"] = UNSET
-    dfl_shot_at_goal: Union[Unset, "EventDflShotAtGoal"] = UNSET
-    dfl_sprint: Union[Unset, "EventDflSprint"] = UNSET
-    dfl_tackling: Union[Unset, "EventDflTackling"] = UNSET
-    dfl_throw_in: Union[Unset, "EventDflThrowIn"] = UNSET
-    down_on_pads: Union[Unset, "EventDownOnPads"] = UNSET
-    dribbling_soccer: Union[Unset, "EventDribblingSoccer"] = UNSET
-    dynamic_defence: Union[Unset, "EventDynamicDefence"] = UNSET
-    exertion: Union[Unset, "EventExertion"] = UNSET
-    full_court_transition: Union[Unset, "EventFullCourtTransition"] = UNSET
-    goal_kick: Union[Unset, "EventGoalKick"] = UNSET
-    goalkeeper_save_diving: Union[Unset, "EventGoalkeeperSaveDiving"] = UNSET
-    goalkeeper_save_down_to_knees: Union[Unset, "EventGoalkeeperSaveDownToKnees"] = UNSET
-    goalkeeper_save_tilting: Union[Unset, "EventGoalkeeperSaveTilting"] = UNSET
-    group_counter_pressing: Union[Unset, "EventGroupCounterPressing"] = UNSET
-    group_empty_goal_handball: Union[Unset, "EventGroupEmptyGoalHandball"] = UNSET
-    heart_rate_recovery: Union[Unset, "EventHeartRateRecovery"] = UNSET
-    impact: Union[Unset, "EventImpact"] = UNSET
-    jump_beach_volleyball: Union[Unset, "EventJumpBeachVolleyball"] = UNSET
-    jump: Union[Unset, "EventJump"] = UNSET
-    mid_court_transition: Union[Unset, "EventMidCourtTransition"] = UNSET
-    noah_shot: Union[Unset, "EventNoahShot"] = UNSET
-    offence: Union[Unset, "EventOffence"] = UNSET
-    pass_fifa: Union[Unset, "EventPassFifa"] = UNSET
-    pick_and_pop: Union[Unset, "EventPickAndPop"] = UNSET
-    pick_and_roll: Union[Unset, "EventPickAndRoll"] = UNSET
-    pivot_rotation: Union[Unset, "EventPivotRotation"] = UNSET
-    play_by_player: Union[Unset, "EventPlayByPlayer"] = UNSET
-    play_by_team: Union[Unset, "EventPlayByTeam"] = UNSET
-    player_counter_pressing: Union[Unset, "EventPlayerCounterPressing"] = UNSET
-    rally_beach_volleyball: Union[Unset, "EventRallyBeachVolleyball"] = UNSET
-    rspct_shot: Union[Unset, "EventRspctShot"] = UNSET
-    shift: Union[Unset, "EventShift"] = UNSET
-    skating_transition: Union[Unset, "EventSkatingTransition"] = UNSET
-    speed_zone_entry: Union[Unset, "EventSpeedZoneEntry"] = UNSET
-    speed_zone_entry_relative: Union[Unset, "EventSpeedZoneEntryRelative"] = UNSET
-    sprint: Union[Unset, "EventSprint"] = UNSET
-    tag: Union[Unset, "EventTag"] = UNSET
-    tempo_run: Union[Unset, "EventTempoRun"] = UNSET
-    throw_in: Union[Unset, "EventThrowIn"] = UNSET
-    turn_ice_hockey: Union[Unset, "EventTurnIceHockey"] = UNSET
+    acceleration: EventAcceleration | Unset = UNSET
+    ball_contact: EventBallContact | Unset = UNSET
+    ball_possession: EventBallPossession | Unset = UNSET
+    ball_possession_lost: EventBallPossessionLost | Unset = UNSET
+    ball_possession_recovery: EventBallPossessionRecovery | Unset = UNSET
+    cv_shot: EventCvShot | Unset = UNSET
+    change_of_direction: EventChangeOfDirection | Unset = UNSET
+    change_of_orientation: EventChangeOfOrientation | Unset = UNSET
+    change_of_pace: EventChangeOfPace | Unset = UNSET
+    corner_kick: EventCornerKick | Unset = UNSET
+    counter_attack: EventCounterAttack | Unset = UNSET
+    detected_cross: EventDetectedCross | Unset = UNSET
+    cut: EventCut | Unset = UNSET
+    deceleration: EventDeceleration | Unset = UNSET
+    defence: EventDefence | Unset = UNSET
+    detected_offside_soccer: EventDetectedOffsideSoccer | Unset = UNSET
+    detected_pass: EventDetectedPass | Unset = UNSET
+    detected_shot_basketball: EventDetectedShotBasketball | Unset = UNSET
+    detected_shot_fifa: EventDetectedShotFifa | Unset = UNSET
+    detected_shot_handball: EventDetectedShotHandball | Unset = UNSET
+    detected_shot_ice_hockey: EventDetectedShotIceHockey | Unset = UNSET
+    detected_shot_intelligence_court: EventDetectedShotIntelligenceCourt | Unset = UNSET
+    detected_shot_soccer: EventDetectedShotSoccer | Unset = UNSET
+    dfl_corner_kick: EventDflCornerKick | Unset = UNSET
+    dfl_cross: EventDflCross | Unset = UNSET
+    dfl_free_kick: EventDflFreeKick | Unset = UNSET
+    dfl_goal_kick: EventDflGoalKick | Unset = UNSET
+    dfl_kick_off: EventDflKickOff | Unset = UNSET
+    dfl_pass: EventDflPass | Unset = UNSET
+    dfl_penalty: EventDflPenalty | Unset = UNSET
+    dfl_shot_at_goal: EventDflShotAtGoal | Unset = UNSET
+    dfl_sprint: EventDflSprint | Unset = UNSET
+    dfl_tackling: EventDflTackling | Unset = UNSET
+    dfl_throw_in: EventDflThrowIn | Unset = UNSET
+    diagnostics_sprint: EventDiagnosticsSprint | Unset = UNSET
+    down_on_pads: EventDownOnPads | Unset = UNSET
+    dribbling_soccer: EventDribblingSoccer | Unset = UNSET
+    dynamic_defence: EventDynamicDefence | Unset = UNSET
+    exertion: EventExertion | Unset = UNSET
+    full_court_transition: EventFullCourtTransition | Unset = UNSET
+    goal_kick: EventGoalKick | Unset = UNSET
+    goalkeeper_save_diving: EventGoalkeeperSaveDiving | Unset = UNSET
+    goalkeeper_save_down_to_knees: EventGoalkeeperSaveDownToKnees | Unset = UNSET
+    goalkeeper_save_tilting: EventGoalkeeperSaveTilting | Unset = UNSET
+    group_counter_pressing: EventGroupCounterPressing | Unset = UNSET
+    group_empty_goal_handball: EventGroupEmptyGoalHandball | Unset = UNSET
+    heart_rate_recovery: EventHeartRateRecovery | Unset = UNSET
+    impact: EventImpact | Unset = UNSET
+    jump_beach_volleyball: EventJumpBeachVolleyball | Unset = UNSET
+    jump: EventJump | Unset = UNSET
+    mid_court_transition: EventMidCourtTransition | Unset = UNSET
+    noah_shot: EventNoahShot | Unset = UNSET
+    offence: EventOffence | Unset = UNSET
+    pass_fifa: EventPassFifa | Unset = UNSET
+    pick_and_pop: EventPickAndPop | Unset = UNSET
+    pick_and_roll: EventPickAndRoll | Unset = UNSET
+    pivot_rotation: EventPivotRotation | Unset = UNSET
+    play_by_player: EventPlayByPlayer | Unset = UNSET
+    play_by_team: EventPlayByTeam | Unset = UNSET
+    player_counter_pressing: EventPlayerCounterPressing | Unset = UNSET
+    rally_beach_volleyball: EventRallyBeachVolleyball | Unset = UNSET
+    rspct_shot: EventRspctShot | Unset = UNSET
+    shift: EventShift | Unset = UNSET
+    skating_transition: EventSkatingTransition | Unset = UNSET
+    speed_zone_entry: EventSpeedZoneEntry | Unset = UNSET
+    speed_zone_entry_relative: EventSpeedZoneEntryRelative | Unset = UNSET
+    sprint: EventSprint | Unset = UNSET
+    tag: EventTag | Unset = UNSET
+    tempo_run: EventTempoRun | Unset = UNSET
+    throw_in: EventThrowIn | Unset = UNSET
+    turn_ice_hockey: EventTurnIceHockey | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
-        acceleration: Union[Unset, dict[str, Any]] = UNSET
+        acceleration: dict[str, Any] | Unset = UNSET
         if not isinstance(self.acceleration, Unset):
             acceleration = self.acceleration.to_dict()
 
-        ball_contact: Union[Unset, dict[str, Any]] = UNSET
+        ball_contact: dict[str, Any] | Unset = UNSET
         if not isinstance(self.ball_contact, Unset):
             ball_contact = self.ball_contact.to_dict()
 
-        ball_possession: Union[Unset, dict[str, Any]] = UNSET
+        ball_possession: dict[str, Any] | Unset = UNSET
         if not isinstance(self.ball_possession, Unset):
             ball_possession = self.ball_possession.to_dict()
 
-        ball_possession_lost: Union[Unset, dict[str, Any]] = UNSET
+        ball_possession_lost: dict[str, Any] | Unset = UNSET
         if not isinstance(self.ball_possession_lost, Unset):
             ball_possession_lost = self.ball_possession_lost.to_dict()
 
-        ball_possession_recovery: Union[Unset, dict[str, Any]] = UNSET
+        ball_possession_recovery: dict[str, Any] | Unset = UNSET
         if not isinstance(self.ball_possession_recovery, Unset):
             ball_possession_recovery = self.ball_possession_recovery.to_dict()
 
-        cv_shot: Union[Unset, dict[str, Any]] = UNSET
+        cv_shot: dict[str, Any] | Unset = UNSET
         if not isinstance(self.cv_shot, Unset):
             cv_shot = self.cv_shot.to_dict()
 
-        change_of_direction: Union[Unset, dict[str, Any]] = UNSET
+        change_of_direction: dict[str, Any] | Unset = UNSET
         if not isinstance(self.change_of_direction, Unset):
             change_of_direction = self.change_of_direction.to_dict()
 
-        change_of_orientation: Union[Unset, dict[str, Any]] = UNSET
+        change_of_orientation: dict[str, Any] | Unset = UNSET
         if not isinstance(self.change_of_orientation, Unset):
             change_of_orientation = self.change_of_orientation.to_dict()
 
-        change_of_pace: Union[Unset, dict[str, Any]] = UNSET
+        change_of_pace: dict[str, Any] | Unset = UNSET
         if not isinstance(self.change_of_pace, Unset):
             change_of_pace = self.change_of_pace.to_dict()
 
-        corner_kick: Union[Unset, dict[str, Any]] = UNSET
+        corner_kick: dict[str, Any] | Unset = UNSET
         if not isinstance(self.corner_kick, Unset):
             corner_kick = self.corner_kick.to_dict()
 
-        counter_attack: Union[Unset, dict[str, Any]] = UNSET
+        counter_attack: dict[str, Any] | Unset = UNSET
         if not isinstance(self.counter_attack, Unset):
             counter_attack = self.counter_attack.to_dict()
 
-        detected_cross: Union[Unset, dict[str, Any]] = UNSET
+        detected_cross: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_cross, Unset):
             detected_cross = self.detected_cross.to_dict()
 
-        cut: Union[Unset, dict[str, Any]] = UNSET
+        cut: dict[str, Any] | Unset = UNSET
         if not isinstance(self.cut, Unset):
             cut = self.cut.to_dict()
 
-        deceleration: Union[Unset, dict[str, Any]] = UNSET
+        deceleration: dict[str, Any] | Unset = UNSET
         if not isinstance(self.deceleration, Unset):
             deceleration = self.deceleration.to_dict()
 
-        defence: Union[Unset, dict[str, Any]] = UNSET
+        defence: dict[str, Any] | Unset = UNSET
         if not isinstance(self.defence, Unset):
             defence = self.defence.to_dict()
 
-        detected_offside_soccer: Union[Unset, dict[str, Any]] = UNSET
+        detected_offside_soccer: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_offside_soccer, Unset):
             detected_offside_soccer = self.detected_offside_soccer.to_dict()
 
-        detected_pass: Union[Unset, dict[str, Any]] = UNSET
+        detected_pass: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_pass, Unset):
             detected_pass = self.detected_pass.to_dict()
 
-        detected_shot_basketball: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_basketball: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_basketball, Unset):
             detected_shot_basketball = self.detected_shot_basketball.to_dict()
 
-        detected_shot_fifa: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_fifa: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_fifa, Unset):
             detected_shot_fifa = self.detected_shot_fifa.to_dict()
 
-        detected_shot_handball: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_handball: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_handball, Unset):
             detected_shot_handball = self.detected_shot_handball.to_dict()
 
-        detected_shot_ice_hockey: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_ice_hockey: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_ice_hockey, Unset):
             detected_shot_ice_hockey = self.detected_shot_ice_hockey.to_dict()
 
-        detected_shot_intelligence_court: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_intelligence_court: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_intelligence_court, Unset):
             detected_shot_intelligence_court = self.detected_shot_intelligence_court.to_dict()
 
-        detected_shot_soccer: Union[Unset, dict[str, Any]] = UNSET
+        detected_shot_soccer: dict[str, Any] | Unset = UNSET
         if not isinstance(self.detected_shot_soccer, Unset):
             detected_shot_soccer = self.detected_shot_soccer.to_dict()
 
-        dfl_corner_kick: Union[Unset, dict[str, Any]] = UNSET
+        dfl_corner_kick: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_corner_kick, Unset):
             dfl_corner_kick = self.dfl_corner_kick.to_dict()
 
-        dfl_cross: Union[Unset, dict[str, Any]] = UNSET
+        dfl_cross: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_cross, Unset):
             dfl_cross = self.dfl_cross.to_dict()
 
-        dfl_free_kick: Union[Unset, dict[str, Any]] = UNSET
+        dfl_free_kick: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_free_kick, Unset):
             dfl_free_kick = self.dfl_free_kick.to_dict()
 
-        dfl_goal_kick: Union[Unset, dict[str, Any]] = UNSET
+        dfl_goal_kick: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_goal_kick, Unset):
             dfl_goal_kick = self.dfl_goal_kick.to_dict()
 
-        dfl_kick_off: Union[Unset, dict[str, Any]] = UNSET
+        dfl_kick_off: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_kick_off, Unset):
             dfl_kick_off = self.dfl_kick_off.to_dict()
 
-        dfl_pass: Union[Unset, dict[str, Any]] = UNSET
+        dfl_pass: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_pass, Unset):
             dfl_pass = self.dfl_pass.to_dict()
 
-        dfl_penalty: Union[Unset, dict[str, Any]] = UNSET
+        dfl_penalty: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_penalty, Unset):
             dfl_penalty = self.dfl_penalty.to_dict()
 
-        dfl_shot_at_goal: Union[Unset, dict[str, Any]] = UNSET
+        dfl_shot_at_goal: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_shot_at_goal, Unset):
             dfl_shot_at_goal = self.dfl_shot_at_goal.to_dict()
 
-        dfl_sprint: Union[Unset, dict[str, Any]] = UNSET
+        dfl_sprint: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_sprint, Unset):
             dfl_sprint = self.dfl_sprint.to_dict()
 
-        dfl_tackling: Union[Unset, dict[str, Any]] = UNSET
+        dfl_tackling: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_tackling, Unset):
             dfl_tackling = self.dfl_tackling.to_dict()
 
-        dfl_throw_in: Union[Unset, dict[str, Any]] = UNSET
+        dfl_throw_in: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dfl_throw_in, Unset):
             dfl_throw_in = self.dfl_throw_in.to_dict()
 
-        down_on_pads: Union[Unset, dict[str, Any]] = UNSET
+        diagnostics_sprint: dict[str, Any] | Unset = UNSET
+        if not isinstance(self.diagnostics_sprint, Unset):
+            diagnostics_sprint = self.diagnostics_sprint.to_dict()
+
+        down_on_pads: dict[str, Any] | Unset = UNSET
         if not isinstance(self.down_on_pads, Unset):
             down_on_pads = self.down_on_pads.to_dict()
 
-        dribbling_soccer: Union[Unset, dict[str, Any]] = UNSET
+        dribbling_soccer: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dribbling_soccer, Unset):
             dribbling_soccer = self.dribbling_soccer.to_dict()
 
-        dynamic_defence: Union[Unset, dict[str, Any]] = UNSET
+        dynamic_defence: dict[str, Any] | Unset = UNSET
         if not isinstance(self.dynamic_defence, Unset):
             dynamic_defence = self.dynamic_defence.to_dict()
 
-        exertion: Union[Unset, dict[str, Any]] = UNSET
+        exertion: dict[str, Any] | Unset = UNSET
         if not isinstance(self.exertion, Unset):
             exertion = self.exertion.to_dict()
 
-        full_court_transition: Union[Unset, dict[str, Any]] = UNSET
+        full_court_transition: dict[str, Any] | Unset = UNSET
         if not isinstance(self.full_court_transition, Unset):
             full_court_transition = self.full_court_transition.to_dict()
 
-        goal_kick: Union[Unset, dict[str, Any]] = UNSET
+        goal_kick: dict[str, Any] | Unset = UNSET
         if not isinstance(self.goal_kick, Unset):
             goal_kick = self.goal_kick.to_dict()
 
-        goalkeeper_save_diving: Union[Unset, dict[str, Any]] = UNSET
+        goalkeeper_save_diving: dict[str, Any] | Unset = UNSET
         if not isinstance(self.goalkeeper_save_diving, Unset):
             goalkeeper_save_diving = self.goalkeeper_save_diving.to_dict()
 
-        goalkeeper_save_down_to_knees: Union[Unset, dict[str, Any]] = UNSET
+        goalkeeper_save_down_to_knees: dict[str, Any] | Unset = UNSET
         if not isinstance(self.goalkeeper_save_down_to_knees, Unset):
             goalkeeper_save_down_to_knees = self.goalkeeper_save_down_to_knees.to_dict()
 
-        goalkeeper_save_tilting: Union[Unset, dict[str, Any]] = UNSET
+        goalkeeper_save_tilting: dict[str, Any] | Unset = UNSET
         if not isinstance(self.goalkeeper_save_tilting, Unset):
             goalkeeper_save_tilting = self.goalkeeper_save_tilting.to_dict()
 
-        group_counter_pressing: Union[Unset, dict[str, Any]] = UNSET
+        group_counter_pressing: dict[str, Any] | Unset = UNSET
         if not isinstance(self.group_counter_pressing, Unset):
             group_counter_pressing = self.group_counter_pressing.to_dict()
 
-        group_empty_goal_handball: Union[Unset, dict[str, Any]] = UNSET
+        group_empty_goal_handball: dict[str, Any] | Unset = UNSET
         if not isinstance(self.group_empty_goal_handball, Unset):
             group_empty_goal_handball = self.group_empty_goal_handball.to_dict()
 
-        heart_rate_recovery: Union[Unset, dict[str, Any]] = UNSET
+        heart_rate_recovery: dict[str, Any] | Unset = UNSET
         if not isinstance(self.heart_rate_recovery, Unset):
             heart_rate_recovery = self.heart_rate_recovery.to_dict()
 
-        impact: Union[Unset, dict[str, Any]] = UNSET
+        impact: dict[str, Any] | Unset = UNSET
         if not isinstance(self.impact, Unset):
             impact = self.impact.to_dict()
 
-        jump_beach_volleyball: Union[Unset, dict[str, Any]] = UNSET
+        jump_beach_volleyball: dict[str, Any] | Unset = UNSET
         if not isinstance(self.jump_beach_volleyball, Unset):
             jump_beach_volleyball = self.jump_beach_volleyball.to_dict()
 
-        jump: Union[Unset, dict[str, Any]] = UNSET
+        jump: dict[str, Any] | Unset = UNSET
         if not isinstance(self.jump, Unset):
             jump = self.jump.to_dict()
 
-        mid_court_transition: Union[Unset, dict[str, Any]] = UNSET
+        mid_court_transition: dict[str, Any] | Unset = UNSET
         if not isinstance(self.mid_court_transition, Unset):
             mid_court_transition = self.mid_court_transition.to_dict()
 
-        noah_shot: Union[Unset, dict[str, Any]] = UNSET
+        noah_shot: dict[str, Any] | Unset = UNSET
         if not isinstance(self.noah_shot, Unset):
             noah_shot = self.noah_shot.to_dict()
 
-        offence: Union[Unset, dict[str, Any]] = UNSET
+        offence: dict[str, Any] | Unset = UNSET
         if not isinstance(self.offence, Unset):
             offence = self.offence.to_dict()
 
-        pass_fifa: Union[Unset, dict[str, Any]] = UNSET
+        pass_fifa: dict[str, Any] | Unset = UNSET
         if not isinstance(self.pass_fifa, Unset):
             pass_fifa = self.pass_fifa.to_dict()
 
-        pick_and_pop: Union[Unset, dict[str, Any]] = UNSET
+        pick_and_pop: dict[str, Any] | Unset = UNSET
         if not isinstance(self.pick_and_pop, Unset):
             pick_and_pop = self.pick_and_pop.to_dict()
 
-        pick_and_roll: Union[Unset, dict[str, Any]] = UNSET
+        pick_and_roll: dict[str, Any] | Unset = UNSET
         if not isinstance(self.pick_and_roll, Unset):
             pick_and_roll = self.pick_and_roll.to_dict()
 
-        pivot_rotation: Union[Unset, dict[str, Any]] = UNSET
+        pivot_rotation: dict[str, Any] | Unset = UNSET
         if not isinstance(self.pivot_rotation, Unset):
             pivot_rotation = self.pivot_rotation.to_dict()
 
-        play_by_player: Union[Unset, dict[str, Any]] = UNSET
+        play_by_player: dict[str, Any] | Unset = UNSET
         if not isinstance(self.play_by_player, Unset):
             play_by_player = self.play_by_player.to_dict()
 
-        play_by_team: Union[Unset, dict[str, Any]] = UNSET
+        play_by_team: dict[str, Any] | Unset = UNSET
         if not isinstance(self.play_by_team, Unset):
             play_by_team = self.play_by_team.to_dict()
 
-        player_counter_pressing: Union[Unset, dict[str, Any]] = UNSET
+        player_counter_pressing: dict[str, Any] | Unset = UNSET
         if not isinstance(self.player_counter_pressing, Unset):
             player_counter_pressing = self.player_counter_pressing.to_dict()
 
-        rally_beach_volleyball: Union[Unset, dict[str, Any]] = UNSET
+        rally_beach_volleyball: dict[str, Any] | Unset = UNSET
         if not isinstance(self.rally_beach_volleyball, Unset):
             rally_beach_volleyball = self.rally_beach_volleyball.to_dict()
 
-        rspct_shot: Union[Unset, dict[str, Any]] = UNSET
+        rspct_shot: dict[str, Any] | Unset = UNSET
         if not isinstance(self.rspct_shot, Unset):
             rspct_shot = self.rspct_shot.to_dict()
 
-        shift: Union[Unset, dict[str, Any]] = UNSET
+        shift: dict[str, Any] | Unset = UNSET
         if not isinstance(self.shift, Unset):
             shift = self.shift.to_dict()
 
-        skating_transition: Union[Unset, dict[str, Any]] = UNSET
+        skating_transition: dict[str, Any] | Unset = UNSET
         if not isinstance(self.skating_transition, Unset):
             skating_transition = self.skating_transition.to_dict()
 
-        speed_zone_entry: Union[Unset, dict[str, Any]] = UNSET
+        speed_zone_entry: dict[str, Any] | Unset = UNSET
         if not isinstance(self.speed_zone_entry, Unset):
             speed_zone_entry = self.speed_zone_entry.to_dict()
 
-        speed_zone_entry_relative: Union[Unset, dict[str, Any]] = UNSET
+        speed_zone_entry_relative: dict[str, Any] | Unset = UNSET
         if not isinstance(self.speed_zone_entry_relative, Unset):
             speed_zone_entry_relative = self.speed_zone_entry_relative.to_dict()
 
-        sprint: Union[Unset, dict[str, Any]] = UNSET
+        sprint: dict[str, Any] | Unset = UNSET
         if not isinstance(self.sprint, Unset):
             sprint = self.sprint.to_dict()
 
-        tag: Union[Unset, dict[str, Any]] = UNSET
+        tag: dict[str, Any] | Unset = UNSET
         if not isinstance(self.tag, Unset):
             tag = self.tag.to_dict()
 
-        tempo_run: Union[Unset, dict[str, Any]] = UNSET
+        tempo_run: dict[str, Any] | Unset = UNSET
         if not isinstance(self.tempo_run, Unset):
             tempo_run = self.tempo_run.to_dict()
 
-        throw_in: Union[Unset, dict[str, Any]] = UNSET
+        throw_in: dict[str, Any] | Unset = UNSET
         if not isinstance(self.throw_in, Unset):
             throw_in = self.throw_in.to_dict()
 
-        turn_ice_hockey: Union[Unset, dict[str, Any]] = UNSET
+        turn_ice_hockey: dict[str, Any] | Unset = UNSET
         if not isinstance(self.turn_ice_hockey, Unset):
             turn_ice_hockey = self.turn_ice_hockey.to_dict()
 
@@ -586,6 +591,8 @@ class EventTypes:
             field_dict["dfl_tackling"] = dfl_tackling
         if dfl_throw_in is not UNSET:
             field_dict["dfl_throw_in"] = dfl_throw_in
+        if diagnostics_sprint is not UNSET:
+            field_dict["diagnostics_sprint"] = diagnostics_sprint
         if down_on_pads is not UNSET:
             field_dict["down_on_pads"] = down_on_pads
         if dribbling_soccer is not UNSET:
@@ -684,9 +691,7 @@ class EventTypes:
         from ..models.event_detected_shot_fifa import EventDetectedShotFifa
         from ..models.event_detected_shot_handball import EventDetectedShotHandball
         from ..models.event_detected_shot_ice_hockey import EventDetectedShotIceHockey
-        from ..models.event_detected_shot_intelligence_court import (
-            EventDetectedShotIntelligenceCourt,
-        )
+        from ..models.event_detected_shot_intelligence_court import EventDetectedShotIntelligenceCourt
         from ..models.event_detected_shot_soccer import EventDetectedShotSoccer
         from ..models.event_dfl_corner_kick import EventDflCornerKick
         from ..models.event_dfl_cross import EventDflCross
@@ -699,6 +704,7 @@ class EventTypes:
         from ..models.event_dfl_sprint import EventDflSprint
         from ..models.event_dfl_tackling import EventDflTackling
         from ..models.event_dfl_throw_in import EventDflThrowIn
+        from ..models.event_diagnostics_sprint import EventDiagnosticsSprint
         from ..models.event_down_on_pads import EventDownOnPads
         from ..models.event_dribbling_soccer import EventDribblingSoccer
         from ..models.event_dynamic_defence import EventDynamicDefence
@@ -706,9 +712,7 @@ class EventTypes:
         from ..models.event_full_court_transition import EventFullCourtTransition
         from ..models.event_goal_kick import EventGoalKick
         from ..models.event_goalkeeper_save_diving import EventGoalkeeperSaveDiving
-        from ..models.event_goalkeeper_save_down_to_knees import (
-            EventGoalkeeperSaveDownToKnees,
-        )
+        from ..models.event_goalkeeper_save_down_to_knees import EventGoalkeeperSaveDownToKnees
         from ..models.event_goalkeeper_save_tilting import EventGoalkeeperSaveTilting
         from ..models.event_group_counter_pressing import EventGroupCounterPressing
         from ..models.event_group_empty_goal_handball import EventGroupEmptyGoalHandball
@@ -740,154 +744,154 @@ class EventTypes:
 
         d = dict(src_dict)
         _acceleration = d.pop("acceleration", UNSET)
-        acceleration: Union[Unset, EventAcceleration]
+        acceleration: EventAcceleration | Unset
         if isinstance(_acceleration, Unset):
             acceleration = UNSET
         else:
             acceleration = EventAcceleration.from_dict(_acceleration)
 
         _ball_contact = d.pop("ball_contact", UNSET)
-        ball_contact: Union[Unset, EventBallContact]
+        ball_contact: EventBallContact | Unset
         if isinstance(_ball_contact, Unset):
             ball_contact = UNSET
         else:
             ball_contact = EventBallContact.from_dict(_ball_contact)
 
         _ball_possession = d.pop("ball_possession", UNSET)
-        ball_possession: Union[Unset, EventBallPossession]
+        ball_possession: EventBallPossession | Unset
         if isinstance(_ball_possession, Unset):
             ball_possession = UNSET
         else:
             ball_possession = EventBallPossession.from_dict(_ball_possession)
 
         _ball_possession_lost = d.pop("ball_possession_lost", UNSET)
-        ball_possession_lost: Union[Unset, EventBallPossessionLost]
+        ball_possession_lost: EventBallPossessionLost | Unset
         if isinstance(_ball_possession_lost, Unset):
             ball_possession_lost = UNSET
         else:
             ball_possession_lost = EventBallPossessionLost.from_dict(_ball_possession_lost)
 
         _ball_possession_recovery = d.pop("ball_possession_recovery", UNSET)
-        ball_possession_recovery: Union[Unset, EventBallPossessionRecovery]
+        ball_possession_recovery: EventBallPossessionRecovery | Unset
         if isinstance(_ball_possession_recovery, Unset):
             ball_possession_recovery = UNSET
         else:
             ball_possession_recovery = EventBallPossessionRecovery.from_dict(_ball_possession_recovery)
 
         _cv_shot = d.pop("cv_shot", UNSET)
-        cv_shot: Union[Unset, EventCvShot]
+        cv_shot: EventCvShot | Unset
         if isinstance(_cv_shot, Unset):
             cv_shot = UNSET
         else:
             cv_shot = EventCvShot.from_dict(_cv_shot)
 
         _change_of_direction = d.pop("change_of_direction", UNSET)
-        change_of_direction: Union[Unset, EventChangeOfDirection]
+        change_of_direction: EventChangeOfDirection | Unset
         if isinstance(_change_of_direction, Unset):
             change_of_direction = UNSET
         else:
             change_of_direction = EventChangeOfDirection.from_dict(_change_of_direction)
 
         _change_of_orientation = d.pop("change_of_orientation", UNSET)
-        change_of_orientation: Union[Unset, EventChangeOfOrientation]
+        change_of_orientation: EventChangeOfOrientation | Unset
         if isinstance(_change_of_orientation, Unset):
             change_of_orientation = UNSET
         else:
             change_of_orientation = EventChangeOfOrientation.from_dict(_change_of_orientation)
 
         _change_of_pace = d.pop("change_of_pace", UNSET)
-        change_of_pace: Union[Unset, EventChangeOfPace]
+        change_of_pace: EventChangeOfPace | Unset
         if isinstance(_change_of_pace, Unset):
             change_of_pace = UNSET
         else:
             change_of_pace = EventChangeOfPace.from_dict(_change_of_pace)
 
         _corner_kick = d.pop("corner_kick", UNSET)
-        corner_kick: Union[Unset, EventCornerKick]
+        corner_kick: EventCornerKick | Unset
         if isinstance(_corner_kick, Unset):
             corner_kick = UNSET
         else:
             corner_kick = EventCornerKick.from_dict(_corner_kick)
 
         _counter_attack = d.pop("counter_attack", UNSET)
-        counter_attack: Union[Unset, EventCounterAttack]
+        counter_attack: EventCounterAttack | Unset
         if isinstance(_counter_attack, Unset):
             counter_attack = UNSET
         else:
             counter_attack = EventCounterAttack.from_dict(_counter_attack)
 
         _detected_cross = d.pop("detected_cross", UNSET)
-        detected_cross: Union[Unset, EventDetectedCross]
+        detected_cross: EventDetectedCross | Unset
         if isinstance(_detected_cross, Unset):
             detected_cross = UNSET
         else:
             detected_cross = EventDetectedCross.from_dict(_detected_cross)
 
         _cut = d.pop("cut", UNSET)
-        cut: Union[Unset, EventCut]
+        cut: EventCut | Unset
         if isinstance(_cut, Unset):
             cut = UNSET
         else:
             cut = EventCut.from_dict(_cut)
 
         _deceleration = d.pop("deceleration", UNSET)
-        deceleration: Union[Unset, EventDeceleration]
+        deceleration: EventDeceleration | Unset
         if isinstance(_deceleration, Unset):
             deceleration = UNSET
         else:
             deceleration = EventDeceleration.from_dict(_deceleration)
 
         _defence = d.pop("defence", UNSET)
-        defence: Union[Unset, EventDefence]
+        defence: EventDefence | Unset
         if isinstance(_defence, Unset):
             defence = UNSET
         else:
             defence = EventDefence.from_dict(_defence)
 
         _detected_offside_soccer = d.pop("detected_offside_soccer", UNSET)
-        detected_offside_soccer: Union[Unset, EventDetectedOffsideSoccer]
+        detected_offside_soccer: EventDetectedOffsideSoccer | Unset
         if isinstance(_detected_offside_soccer, Unset):
             detected_offside_soccer = UNSET
         else:
             detected_offside_soccer = EventDetectedOffsideSoccer.from_dict(_detected_offside_soccer)
 
         _detected_pass = d.pop("detected_pass", UNSET)
-        detected_pass: Union[Unset, EventDetectedPass]
+        detected_pass: EventDetectedPass | Unset
         if isinstance(_detected_pass, Unset):
             detected_pass = UNSET
         else:
             detected_pass = EventDetectedPass.from_dict(_detected_pass)
 
         _detected_shot_basketball = d.pop("detected_shot_basketball", UNSET)
-        detected_shot_basketball: Union[Unset, EventDetectedShotBasketball]
+        detected_shot_basketball: EventDetectedShotBasketball | Unset
         if isinstance(_detected_shot_basketball, Unset):
             detected_shot_basketball = UNSET
         else:
             detected_shot_basketball = EventDetectedShotBasketball.from_dict(_detected_shot_basketball)
 
         _detected_shot_fifa = d.pop("detected_shot_fifa", UNSET)
-        detected_shot_fifa: Union[Unset, EventDetectedShotFifa]
+        detected_shot_fifa: EventDetectedShotFifa | Unset
         if isinstance(_detected_shot_fifa, Unset):
             detected_shot_fifa = UNSET
         else:
             detected_shot_fifa = EventDetectedShotFifa.from_dict(_detected_shot_fifa)
 
         _detected_shot_handball = d.pop("detected_shot_handball", UNSET)
-        detected_shot_handball: Union[Unset, EventDetectedShotHandball]
+        detected_shot_handball: EventDetectedShotHandball | Unset
         if isinstance(_detected_shot_handball, Unset):
             detected_shot_handball = UNSET
         else:
             detected_shot_handball = EventDetectedShotHandball.from_dict(_detected_shot_handball)
 
         _detected_shot_ice_hockey = d.pop("detected_shot_ice_hockey", UNSET)
-        detected_shot_ice_hockey: Union[Unset, EventDetectedShotIceHockey]
+        detected_shot_ice_hockey: EventDetectedShotIceHockey | Unset
         if isinstance(_detected_shot_ice_hockey, Unset):
             detected_shot_ice_hockey = UNSET
         else:
             detected_shot_ice_hockey = EventDetectedShotIceHockey.from_dict(_detected_shot_ice_hockey)
 
         _detected_shot_intelligence_court = d.pop("detected_shot_intelligence_court", UNSET)
-        detected_shot_intelligence_court: Union[Unset, EventDetectedShotIntelligenceCourt]
+        detected_shot_intelligence_court: EventDetectedShotIntelligenceCourt | Unset
         if isinstance(_detected_shot_intelligence_court, Unset):
             detected_shot_intelligence_court = UNSET
         else:
@@ -896,336 +900,343 @@ class EventTypes:
             )
 
         _detected_shot_soccer = d.pop("detected_shot_soccer", UNSET)
-        detected_shot_soccer: Union[Unset, EventDetectedShotSoccer]
+        detected_shot_soccer: EventDetectedShotSoccer | Unset
         if isinstance(_detected_shot_soccer, Unset):
             detected_shot_soccer = UNSET
         else:
             detected_shot_soccer = EventDetectedShotSoccer.from_dict(_detected_shot_soccer)
 
         _dfl_corner_kick = d.pop("dfl_corner_kick", UNSET)
-        dfl_corner_kick: Union[Unset, EventDflCornerKick]
+        dfl_corner_kick: EventDflCornerKick | Unset
         if isinstance(_dfl_corner_kick, Unset):
             dfl_corner_kick = UNSET
         else:
             dfl_corner_kick = EventDflCornerKick.from_dict(_dfl_corner_kick)
 
         _dfl_cross = d.pop("dfl_cross", UNSET)
-        dfl_cross: Union[Unset, EventDflCross]
+        dfl_cross: EventDflCross | Unset
         if isinstance(_dfl_cross, Unset):
             dfl_cross = UNSET
         else:
             dfl_cross = EventDflCross.from_dict(_dfl_cross)
 
         _dfl_free_kick = d.pop("dfl_free_kick", UNSET)
-        dfl_free_kick: Union[Unset, EventDflFreeKick]
+        dfl_free_kick: EventDflFreeKick | Unset
         if isinstance(_dfl_free_kick, Unset):
             dfl_free_kick = UNSET
         else:
             dfl_free_kick = EventDflFreeKick.from_dict(_dfl_free_kick)
 
         _dfl_goal_kick = d.pop("dfl_goal_kick", UNSET)
-        dfl_goal_kick: Union[Unset, EventDflGoalKick]
+        dfl_goal_kick: EventDflGoalKick | Unset
         if isinstance(_dfl_goal_kick, Unset):
             dfl_goal_kick = UNSET
         else:
             dfl_goal_kick = EventDflGoalKick.from_dict(_dfl_goal_kick)
 
         _dfl_kick_off = d.pop("dfl_kick_off", UNSET)
-        dfl_kick_off: Union[Unset, EventDflKickOff]
+        dfl_kick_off: EventDflKickOff | Unset
         if isinstance(_dfl_kick_off, Unset):
             dfl_kick_off = UNSET
         else:
             dfl_kick_off = EventDflKickOff.from_dict(_dfl_kick_off)
 
         _dfl_pass = d.pop("dfl_pass", UNSET)
-        dfl_pass: Union[Unset, EventDflPass]
+        dfl_pass: EventDflPass | Unset
         if isinstance(_dfl_pass, Unset):
             dfl_pass = UNSET
         else:
             dfl_pass = EventDflPass.from_dict(_dfl_pass)
 
         _dfl_penalty = d.pop("dfl_penalty", UNSET)
-        dfl_penalty: Union[Unset, EventDflPenalty]
+        dfl_penalty: EventDflPenalty | Unset
         if isinstance(_dfl_penalty, Unset):
             dfl_penalty = UNSET
         else:
             dfl_penalty = EventDflPenalty.from_dict(_dfl_penalty)
 
         _dfl_shot_at_goal = d.pop("dfl_shot_at_goal", UNSET)
-        dfl_shot_at_goal: Union[Unset, EventDflShotAtGoal]
+        dfl_shot_at_goal: EventDflShotAtGoal | Unset
         if isinstance(_dfl_shot_at_goal, Unset):
             dfl_shot_at_goal = UNSET
         else:
             dfl_shot_at_goal = EventDflShotAtGoal.from_dict(_dfl_shot_at_goal)
 
         _dfl_sprint = d.pop("dfl_sprint", UNSET)
-        dfl_sprint: Union[Unset, EventDflSprint]
+        dfl_sprint: EventDflSprint | Unset
         if isinstance(_dfl_sprint, Unset):
             dfl_sprint = UNSET
         else:
             dfl_sprint = EventDflSprint.from_dict(_dfl_sprint)
 
         _dfl_tackling = d.pop("dfl_tackling", UNSET)
-        dfl_tackling: Union[Unset, EventDflTackling]
+        dfl_tackling: EventDflTackling | Unset
         if isinstance(_dfl_tackling, Unset):
             dfl_tackling = UNSET
         else:
             dfl_tackling = EventDflTackling.from_dict(_dfl_tackling)
 
         _dfl_throw_in = d.pop("dfl_throw_in", UNSET)
-        dfl_throw_in: Union[Unset, EventDflThrowIn]
+        dfl_throw_in: EventDflThrowIn | Unset
         if isinstance(_dfl_throw_in, Unset):
             dfl_throw_in = UNSET
         else:
             dfl_throw_in = EventDflThrowIn.from_dict(_dfl_throw_in)
 
+        _diagnostics_sprint = d.pop("diagnostics_sprint", UNSET)
+        diagnostics_sprint: EventDiagnosticsSprint | Unset
+        if isinstance(_diagnostics_sprint, Unset):
+            diagnostics_sprint = UNSET
+        else:
+            diagnostics_sprint = EventDiagnosticsSprint.from_dict(_diagnostics_sprint)
+
         _down_on_pads = d.pop("down_on_pads", UNSET)
-        down_on_pads: Union[Unset, EventDownOnPads]
+        down_on_pads: EventDownOnPads | Unset
         if isinstance(_down_on_pads, Unset):
             down_on_pads = UNSET
         else:
             down_on_pads = EventDownOnPads.from_dict(_down_on_pads)
 
         _dribbling_soccer = d.pop("dribbling_soccer", UNSET)
-        dribbling_soccer: Union[Unset, EventDribblingSoccer]
+        dribbling_soccer: EventDribblingSoccer | Unset
         if isinstance(_dribbling_soccer, Unset):
             dribbling_soccer = UNSET
         else:
             dribbling_soccer = EventDribblingSoccer.from_dict(_dribbling_soccer)
 
         _dynamic_defence = d.pop("dynamic_defence", UNSET)
-        dynamic_defence: Union[Unset, EventDynamicDefence]
+        dynamic_defence: EventDynamicDefence | Unset
         if isinstance(_dynamic_defence, Unset):
             dynamic_defence = UNSET
         else:
             dynamic_defence = EventDynamicDefence.from_dict(_dynamic_defence)
 
         _exertion = d.pop("exertion", UNSET)
-        exertion: Union[Unset, EventExertion]
+        exertion: EventExertion | Unset
         if isinstance(_exertion, Unset):
             exertion = UNSET
         else:
             exertion = EventExertion.from_dict(_exertion)
 
         _full_court_transition = d.pop("full_court_transition", UNSET)
-        full_court_transition: Union[Unset, EventFullCourtTransition]
+        full_court_transition: EventFullCourtTransition | Unset
         if isinstance(_full_court_transition, Unset):
             full_court_transition = UNSET
         else:
             full_court_transition = EventFullCourtTransition.from_dict(_full_court_transition)
 
         _goal_kick = d.pop("goal_kick", UNSET)
-        goal_kick: Union[Unset, EventGoalKick]
+        goal_kick: EventGoalKick | Unset
         if isinstance(_goal_kick, Unset):
             goal_kick = UNSET
         else:
             goal_kick = EventGoalKick.from_dict(_goal_kick)
 
         _goalkeeper_save_diving = d.pop("goalkeeper_save_diving", UNSET)
-        goalkeeper_save_diving: Union[Unset, EventGoalkeeperSaveDiving]
+        goalkeeper_save_diving: EventGoalkeeperSaveDiving | Unset
         if isinstance(_goalkeeper_save_diving, Unset):
             goalkeeper_save_diving = UNSET
         else:
             goalkeeper_save_diving = EventGoalkeeperSaveDiving.from_dict(_goalkeeper_save_diving)
 
         _goalkeeper_save_down_to_knees = d.pop("goalkeeper_save_down_to_knees", UNSET)
-        goalkeeper_save_down_to_knees: Union[Unset, EventGoalkeeperSaveDownToKnees]
+        goalkeeper_save_down_to_knees: EventGoalkeeperSaveDownToKnees | Unset
         if isinstance(_goalkeeper_save_down_to_knees, Unset):
             goalkeeper_save_down_to_knees = UNSET
         else:
             goalkeeper_save_down_to_knees = EventGoalkeeperSaveDownToKnees.from_dict(_goalkeeper_save_down_to_knees)
 
         _goalkeeper_save_tilting = d.pop("goalkeeper_save_tilting", UNSET)
-        goalkeeper_save_tilting: Union[Unset, EventGoalkeeperSaveTilting]
+        goalkeeper_save_tilting: EventGoalkeeperSaveTilting | Unset
         if isinstance(_goalkeeper_save_tilting, Unset):
             goalkeeper_save_tilting = UNSET
         else:
             goalkeeper_save_tilting = EventGoalkeeperSaveTilting.from_dict(_goalkeeper_save_tilting)
 
         _group_counter_pressing = d.pop("group_counter_pressing", UNSET)
-        group_counter_pressing: Union[Unset, EventGroupCounterPressing]
+        group_counter_pressing: EventGroupCounterPressing | Unset
         if isinstance(_group_counter_pressing, Unset):
             group_counter_pressing = UNSET
         else:
             group_counter_pressing = EventGroupCounterPressing.from_dict(_group_counter_pressing)
 
         _group_empty_goal_handball = d.pop("group_empty_goal_handball", UNSET)
-        group_empty_goal_handball: Union[Unset, EventGroupEmptyGoalHandball]
+        group_empty_goal_handball: EventGroupEmptyGoalHandball | Unset
         if isinstance(_group_empty_goal_handball, Unset):
             group_empty_goal_handball = UNSET
         else:
             group_empty_goal_handball = EventGroupEmptyGoalHandball.from_dict(_group_empty_goal_handball)
 
         _heart_rate_recovery = d.pop("heart_rate_recovery", UNSET)
-        heart_rate_recovery: Union[Unset, EventHeartRateRecovery]
+        heart_rate_recovery: EventHeartRateRecovery | Unset
         if isinstance(_heart_rate_recovery, Unset):
             heart_rate_recovery = UNSET
         else:
             heart_rate_recovery = EventHeartRateRecovery.from_dict(_heart_rate_recovery)
 
         _impact = d.pop("impact", UNSET)
-        impact: Union[Unset, EventImpact]
+        impact: EventImpact | Unset
         if isinstance(_impact, Unset):
             impact = UNSET
         else:
             impact = EventImpact.from_dict(_impact)
 
         _jump_beach_volleyball = d.pop("jump_beach_volleyball", UNSET)
-        jump_beach_volleyball: Union[Unset, EventJumpBeachVolleyball]
+        jump_beach_volleyball: EventJumpBeachVolleyball | Unset
         if isinstance(_jump_beach_volleyball, Unset):
             jump_beach_volleyball = UNSET
         else:
             jump_beach_volleyball = EventJumpBeachVolleyball.from_dict(_jump_beach_volleyball)
 
         _jump = d.pop("jump", UNSET)
-        jump: Union[Unset, EventJump]
+        jump: EventJump | Unset
         if isinstance(_jump, Unset):
             jump = UNSET
         else:
             jump = EventJump.from_dict(_jump)
 
         _mid_court_transition = d.pop("mid_court_transition", UNSET)
-        mid_court_transition: Union[Unset, EventMidCourtTransition]
+        mid_court_transition: EventMidCourtTransition | Unset
         if isinstance(_mid_court_transition, Unset):
             mid_court_transition = UNSET
         else:
             mid_court_transition = EventMidCourtTransition.from_dict(_mid_court_transition)
 
         _noah_shot = d.pop("noah_shot", UNSET)
-        noah_shot: Union[Unset, EventNoahShot]
+        noah_shot: EventNoahShot | Unset
         if isinstance(_noah_shot, Unset):
             noah_shot = UNSET
         else:
             noah_shot = EventNoahShot.from_dict(_noah_shot)
 
         _offence = d.pop("offence", UNSET)
-        offence: Union[Unset, EventOffence]
+        offence: EventOffence | Unset
         if isinstance(_offence, Unset):
             offence = UNSET
         else:
             offence = EventOffence.from_dict(_offence)
 
         _pass_fifa = d.pop("pass_fifa", UNSET)
-        pass_fifa: Union[Unset, EventPassFifa]
+        pass_fifa: EventPassFifa | Unset
         if isinstance(_pass_fifa, Unset):
             pass_fifa = UNSET
         else:
             pass_fifa = EventPassFifa.from_dict(_pass_fifa)
 
         _pick_and_pop = d.pop("pick_and_pop", UNSET)
-        pick_and_pop: Union[Unset, EventPickAndPop]
+        pick_and_pop: EventPickAndPop | Unset
         if isinstance(_pick_and_pop, Unset):
             pick_and_pop = UNSET
         else:
             pick_and_pop = EventPickAndPop.from_dict(_pick_and_pop)
 
         _pick_and_roll = d.pop("pick_and_roll", UNSET)
-        pick_and_roll: Union[Unset, EventPickAndRoll]
+        pick_and_roll: EventPickAndRoll | Unset
         if isinstance(_pick_and_roll, Unset):
             pick_and_roll = UNSET
         else:
             pick_and_roll = EventPickAndRoll.from_dict(_pick_and_roll)
 
         _pivot_rotation = d.pop("pivot_rotation", UNSET)
-        pivot_rotation: Union[Unset, EventPivotRotation]
+        pivot_rotation: EventPivotRotation | Unset
         if isinstance(_pivot_rotation, Unset):
             pivot_rotation = UNSET
         else:
             pivot_rotation = EventPivotRotation.from_dict(_pivot_rotation)
 
         _play_by_player = d.pop("play_by_player", UNSET)
-        play_by_player: Union[Unset, EventPlayByPlayer]
+        play_by_player: EventPlayByPlayer | Unset
         if isinstance(_play_by_player, Unset):
             play_by_player = UNSET
         else:
             play_by_player = EventPlayByPlayer.from_dict(_play_by_player)
 
         _play_by_team = d.pop("play_by_team", UNSET)
-        play_by_team: Union[Unset, EventPlayByTeam]
+        play_by_team: EventPlayByTeam | Unset
         if isinstance(_play_by_team, Unset):
             play_by_team = UNSET
         else:
             play_by_team = EventPlayByTeam.from_dict(_play_by_team)
 
         _player_counter_pressing = d.pop("player_counter_pressing", UNSET)
-        player_counter_pressing: Union[Unset, EventPlayerCounterPressing]
+        player_counter_pressing: EventPlayerCounterPressing | Unset
         if isinstance(_player_counter_pressing, Unset):
             player_counter_pressing = UNSET
         else:
             player_counter_pressing = EventPlayerCounterPressing.from_dict(_player_counter_pressing)
 
         _rally_beach_volleyball = d.pop("rally_beach_volleyball", UNSET)
-        rally_beach_volleyball: Union[Unset, EventRallyBeachVolleyball]
+        rally_beach_volleyball: EventRallyBeachVolleyball | Unset
         if isinstance(_rally_beach_volleyball, Unset):
             rally_beach_volleyball = UNSET
         else:
             rally_beach_volleyball = EventRallyBeachVolleyball.from_dict(_rally_beach_volleyball)
 
         _rspct_shot = d.pop("rspct_shot", UNSET)
-        rspct_shot: Union[Unset, EventRspctShot]
+        rspct_shot: EventRspctShot | Unset
         if isinstance(_rspct_shot, Unset):
             rspct_shot = UNSET
         else:
             rspct_shot = EventRspctShot.from_dict(_rspct_shot)
 
         _shift = d.pop("shift", UNSET)
-        shift: Union[Unset, EventShift]
+        shift: EventShift | Unset
         if isinstance(_shift, Unset):
             shift = UNSET
         else:
             shift = EventShift.from_dict(_shift)
 
         _skating_transition = d.pop("skating_transition", UNSET)
-        skating_transition: Union[Unset, EventSkatingTransition]
+        skating_transition: EventSkatingTransition | Unset
         if isinstance(_skating_transition, Unset):
             skating_transition = UNSET
         else:
             skating_transition = EventSkatingTransition.from_dict(_skating_transition)
 
         _speed_zone_entry = d.pop("speed_zone_entry", UNSET)
-        speed_zone_entry: Union[Unset, EventSpeedZoneEntry]
+        speed_zone_entry: EventSpeedZoneEntry | Unset
         if isinstance(_speed_zone_entry, Unset):
             speed_zone_entry = UNSET
         else:
             speed_zone_entry = EventSpeedZoneEntry.from_dict(_speed_zone_entry)
 
         _speed_zone_entry_relative = d.pop("speed_zone_entry_relative", UNSET)
-        speed_zone_entry_relative: Union[Unset, EventSpeedZoneEntryRelative]
+        speed_zone_entry_relative: EventSpeedZoneEntryRelative | Unset
         if isinstance(_speed_zone_entry_relative, Unset):
             speed_zone_entry_relative = UNSET
         else:
             speed_zone_entry_relative = EventSpeedZoneEntryRelative.from_dict(_speed_zone_entry_relative)
 
         _sprint = d.pop("sprint", UNSET)
-        sprint: Union[Unset, EventSprint]
+        sprint: EventSprint | Unset
         if isinstance(_sprint, Unset):
             sprint = UNSET
         else:
             sprint = EventSprint.from_dict(_sprint)
 
         _tag = d.pop("tag", UNSET)
-        tag: Union[Unset, EventTag]
+        tag: EventTag | Unset
         if isinstance(_tag, Unset):
             tag = UNSET
         else:
             tag = EventTag.from_dict(_tag)
 
         _tempo_run = d.pop("tempo_run", UNSET)
-        tempo_run: Union[Unset, EventTempoRun]
+        tempo_run: EventTempoRun | Unset
         if isinstance(_tempo_run, Unset):
             tempo_run = UNSET
         else:
             tempo_run = EventTempoRun.from_dict(_tempo_run)
 
         _throw_in = d.pop("throw_in", UNSET)
-        throw_in: Union[Unset, EventThrowIn]
+        throw_in: EventThrowIn | Unset
         if isinstance(_throw_in, Unset):
             throw_in = UNSET
         else:
             throw_in = EventThrowIn.from_dict(_throw_in)
 
         _turn_ice_hockey = d.pop("turn_ice_hockey", UNSET)
-        turn_ice_hockey: Union[Unset, EventTurnIceHockey]
+        turn_ice_hockey: EventTurnIceHockey | Unset
         if isinstance(_turn_ice_hockey, Unset):
             turn_ice_hockey = UNSET
         else:
@@ -1266,6 +1277,7 @@ class EventTypes:
             dfl_sprint=dfl_sprint,
             dfl_tackling=dfl_tackling,
             dfl_throw_in=dfl_throw_in,
+            diagnostics_sprint=diagnostics_sprint,
             down_on_pads=down_on_pads,
             dribbling_soccer=dribbling_soccer,
             dynamic_defence=dynamic_defence,

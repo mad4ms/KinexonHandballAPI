@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -14,30 +16,30 @@ T = TypeVar("T", bound="EventSkatingTransition")
 class EventSkatingTransition:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        body_rotation (Union[Unset, float]):
-        speed_previous (Union[Unset, float]):
-        speed_following (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        direction (Union[Unset, EventSkatingTransitionDirection]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        body_rotation (float | Unset):
+        speed_previous (float | Unset):
+        speed_following (float | Unset):
+        trajectory (str | Unset):
+        direction (EventSkatingTransitionDirection | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    body_rotation: Union[Unset, float] = UNSET
-    speed_previous: Union[Unset, float] = UNSET
-    speed_following: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    direction: Union[Unset, EventSkatingTransitionDirection] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    body_rotation: float | Unset = UNSET
+    speed_previous: float | Unset = UNSET
+    speed_following: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    direction: EventSkatingTransitionDirection | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -61,7 +63,7 @@ class EventSkatingTransition:
 
         trajectory = self.trajectory
 
-        direction: Union[Unset, str] = UNSET
+        direction: str | Unset = UNSET
         if not isinstance(self.direction, Unset):
             direction = self.direction.value
 
@@ -117,7 +119,7 @@ class EventSkatingTransition:
         trajectory = d.pop("trajectory", UNSET)
 
         _direction = d.pop("direction", UNSET)
-        direction: Union[Unset, EventSkatingTransitionDirection]
+        direction: EventSkatingTransitionDirection | Unset
         if isinstance(_direction, Unset):
             direction = UNSET
         else:

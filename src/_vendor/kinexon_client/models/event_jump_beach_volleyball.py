@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -16,36 +18,36 @@ T = TypeVar("T", bound="EventJumpBeachVolleyball")
 class EventJumpBeachVolleyball:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        airtime (Union[Unset, float]):
-        height (Union[Unset, float]):
-        x (Union[Unset, float]):
-        y (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        jump_max_ratio (Union[Unset, float]):
-        hit_height (Union[Unset, float]):
-        jump_beach_volleyball_category (Union[Unset, EventJumpBeachVolleyballJumpBeachVolleyballCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        airtime (float | Unset):
+        height (float | Unset):
+        x (float | Unset):
+        y (float | Unset):
+        distance (float | Unset):
+        jump_max_ratio (float | Unset):
+        hit_height (float | Unset):
+        jump_beach_volleyball_category (EventJumpBeachVolleyballJumpBeachVolleyballCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    airtime: Union[Unset, float] = UNSET
-    height: Union[Unset, float] = UNSET
-    x: Union[Unset, float] = UNSET
-    y: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    jump_max_ratio: Union[Unset, float] = UNSET
-    hit_height: Union[Unset, float] = UNSET
-    jump_beach_volleyball_category: Union[Unset, EventJumpBeachVolleyballJumpBeachVolleyballCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    airtime: float | Unset = UNSET
+    height: float | Unset = UNSET
+    x: float | Unset = UNSET
+    y: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    jump_max_ratio: float | Unset = UNSET
+    hit_height: float | Unset = UNSET
+    jump_beach_volleyball_category: EventJumpBeachVolleyballJumpBeachVolleyballCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -75,7 +77,7 @@ class EventJumpBeachVolleyball:
 
         hit_height = self.hit_height
 
-        jump_beach_volleyball_category: Union[Unset, str] = UNSET
+        jump_beach_volleyball_category: str | Unset = UNSET
         if not isinstance(self.jump_beach_volleyball_category, Unset):
             jump_beach_volleyball_category = self.jump_beach_volleyball_category.value
 
@@ -143,7 +145,7 @@ class EventJumpBeachVolleyball:
         hit_height = d.pop("hit_height", UNSET)
 
         _jump_beach_volleyball_category = d.pop("jump_beach_volleyball_category", UNSET)
-        jump_beach_volleyball_category: Union[Unset, EventJumpBeachVolleyballJumpBeachVolleyballCategory]
+        jump_beach_volleyball_category: EventJumpBeachVolleyballJumpBeachVolleyballCategory | Unset
         if isinstance(_jump_beach_volleyball_category, Unset):
             jump_beach_volleyball_category = UNSET
         else:

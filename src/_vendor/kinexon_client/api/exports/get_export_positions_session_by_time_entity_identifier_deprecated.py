@@ -1,5 +1,6 @@
 from http import HTTPStatus
-from typing import Any, Optional, Union
+from typing import Any
+from urllib.parse import quote
 
 import httpx
 
@@ -11,11 +12,12 @@ from ...types import UNSET, Response, Unset
 def _get_kwargs(
     time_entity_identifier: str,
     *,
-    update_rate: Union[Unset, int] = UNSET,
-    compress_output: Union[Unset, bool] = UNSET,
-    use_local_frame_imu: Union[Unset, bool] = UNSET,
-    players: Union[Unset, str] = UNSET,
+    update_rate: int | Unset = UNSET,
+    compress_output: bool | Unset = UNSET,
+    use_local_frame_imu: bool | Unset = UNSET,
+    players: str | Unset = UNSET,
 ) -> dict[str, Any]:
+
     params: dict[str, Any] = {}
 
     params["updateRate"] = update_rate
@@ -30,14 +32,16 @@ def _get_kwargs(
 
     _kwargs: dict[str, Any] = {
         "method": "get",
-        "url": f"/export/positions/session/{time_entity_identifier}",
+        "url": "/export/positions/session/{time_entity_identifier}".format(
+            time_entity_identifier=quote(str(time_entity_identifier), safe=""),
+        ),
         "params": params,
     }
 
     return _kwargs
 
 
-def _parse_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Optional[str]:
+def _parse_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> str | None:
     if response.status_code == 200:
         response_200 = response.text
         return response_200
@@ -48,7 +52,7 @@ def _parse_response(*, client: Union[AuthenticatedClient, Client], response: htt
         return None
 
 
-def _build_response(*, client: Union[AuthenticatedClient, Client], response: httpx.Response) -> Response[str]:
+def _build_response(*, client: AuthenticatedClient | Client, response: httpx.Response) -> Response[str]:
     return Response(
         status_code=HTTPStatus(response.status_code),
         content=response.content,
@@ -61,10 +65,10 @@ def sync_detailed(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    update_rate: Union[Unset, int] = UNSET,
-    compress_output: Union[Unset, bool] = UNSET,
-    use_local_frame_imu: Union[Unset, bool] = UNSET,
-    players: Union[Unset, str] = UNSET,
+    update_rate: int | Unset = UNSET,
+    compress_output: bool | Unset = UNSET,
+    use_local_frame_imu: bool | Unset = UNSET,
+    players: str | Unset = UNSET,
 ) -> Response[str]:
     """Get a export for positions of a given session
 
@@ -72,10 +76,10 @@ def sync_detailed(
 
     Args:
         time_entity_identifier (str):
-        update_rate (Union[Unset, int]):
-        compress_output (Union[Unset, bool]):
-        use_local_frame_imu (Union[Unset, bool]):
-        players (Union[Unset, str]):
+        update_rate (int | Unset):
+        compress_output (bool | Unset):
+        use_local_frame_imu (bool | Unset):
+        players (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -104,21 +108,21 @@ def sync(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    update_rate: Union[Unset, int] = UNSET,
-    compress_output: Union[Unset, bool] = UNSET,
-    use_local_frame_imu: Union[Unset, bool] = UNSET,
-    players: Union[Unset, str] = UNSET,
-) -> Optional[str]:
+    update_rate: int | Unset = UNSET,
+    compress_output: bool | Unset = UNSET,
+    use_local_frame_imu: bool | Unset = UNSET,
+    players: str | Unset = UNSET,
+) -> str | None:
     """Get a export for positions of a given session
 
      Retuns a CSV for the given Session and Parameters
 
     Args:
         time_entity_identifier (str):
-        update_rate (Union[Unset, int]):
-        compress_output (Union[Unset, bool]):
-        use_local_frame_imu (Union[Unset, bool]):
-        players (Union[Unset, str]):
+        update_rate (int | Unset):
+        compress_output (bool | Unset):
+        use_local_frame_imu (bool | Unset):
+        players (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -142,10 +146,10 @@ async def asyncio_detailed(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    update_rate: Union[Unset, int] = UNSET,
-    compress_output: Union[Unset, bool] = UNSET,
-    use_local_frame_imu: Union[Unset, bool] = UNSET,
-    players: Union[Unset, str] = UNSET,
+    update_rate: int | Unset = UNSET,
+    compress_output: bool | Unset = UNSET,
+    use_local_frame_imu: bool | Unset = UNSET,
+    players: str | Unset = UNSET,
 ) -> Response[str]:
     """Get a export for positions of a given session
 
@@ -153,10 +157,10 @@ async def asyncio_detailed(
 
     Args:
         time_entity_identifier (str):
-        update_rate (Union[Unset, int]):
-        compress_output (Union[Unset, bool]):
-        use_local_frame_imu (Union[Unset, bool]):
-        players (Union[Unset, str]):
+        update_rate (int | Unset):
+        compress_output (bool | Unset):
+        use_local_frame_imu (bool | Unset):
+        players (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.
@@ -183,21 +187,21 @@ async def asyncio(
     time_entity_identifier: str,
     *,
     client: AuthenticatedClient,
-    update_rate: Union[Unset, int] = UNSET,
-    compress_output: Union[Unset, bool] = UNSET,
-    use_local_frame_imu: Union[Unset, bool] = UNSET,
-    players: Union[Unset, str] = UNSET,
-) -> Optional[str]:
+    update_rate: int | Unset = UNSET,
+    compress_output: bool | Unset = UNSET,
+    use_local_frame_imu: bool | Unset = UNSET,
+    players: str | Unset = UNSET,
+) -> str | None:
     """Get a export for positions of a given session
 
      Retuns a CSV for the given Session and Parameters
 
     Args:
         time_entity_identifier (str):
-        update_rate (Union[Unset, int]):
-        compress_output (Union[Unset, bool]):
-        use_local_frame_imu (Union[Unset, bool]):
-        players (Union[Unset, str]):
+        update_rate (int | Unset):
+        compress_output (bool | Unset):
+        use_local_frame_imu (bool | Unset):
+        players (str | Unset):
 
     Raises:
         errors.UnexpectedStatus: If the server returns an undocumented status code and Client.raise_on_unexpected_status is True.

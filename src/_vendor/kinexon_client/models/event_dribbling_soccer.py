@@ -1,12 +1,12 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
 
-from ..models.event_dribbling_soccer_dribbling_soccer_category import (
-    EventDribblingSoccerDribblingSoccerCategory,
-)
+from ..models.event_dribbling_soccer_dribbling_soccer_category import EventDribblingSoccerDribblingSoccerCategory
 from ..types import UNSET, Unset
 
 T = TypeVar("T", bound="EventDribblingSoccer")
@@ -16,32 +16,32 @@ T = TypeVar("T", bound="EventDribblingSoccer")
 class EventDribblingSoccer:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        speed_max (Union[Unset, float]):
-        speed_avg (Union[Unset, float]):
-        distance (Union[Unset, float]):
-        duration (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        dribbling_soccer_category (Union[Unset, EventDribblingSoccerDribblingSoccerCategory]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        speed_max (float | Unset):
+        speed_avg (float | Unset):
+        distance (float | Unset):
+        duration (float | Unset):
+        trajectory (str | Unset):
+        dribbling_soccer_category (EventDribblingSoccerDribblingSoccerCategory | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    speed_max: Union[Unset, float] = UNSET
-    speed_avg: Union[Unset, float] = UNSET
-    distance: Union[Unset, float] = UNSET
-    duration: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    dribbling_soccer_category: Union[Unset, EventDribblingSoccerDribblingSoccerCategory] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    speed_max: float | Unset = UNSET
+    speed_avg: float | Unset = UNSET
+    distance: float | Unset = UNSET
+    duration: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    dribbling_soccer_category: EventDribblingSoccerDribblingSoccerCategory | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:
@@ -67,7 +67,7 @@ class EventDribblingSoccer:
 
         trajectory = self.trajectory
 
-        dribbling_soccer_category: Union[Unset, str] = UNSET
+        dribbling_soccer_category: str | Unset = UNSET
         if not isinstance(self.dribbling_soccer_category, Unset):
             dribbling_soccer_category = self.dribbling_soccer_category.value
 
@@ -127,7 +127,7 @@ class EventDribblingSoccer:
         trajectory = d.pop("trajectory", UNSET)
 
         _dribbling_soccer_category = d.pop("dribbling_soccer_category", UNSET)
-        dribbling_soccer_category: Union[Unset, EventDribblingSoccerDribblingSoccerCategory]
+        dribbling_soccer_category: EventDribblingSoccerDribblingSoccerCategory | Unset
         if isinstance(_dribbling_soccer_category, Unset):
             dribbling_soccer_category = UNSET
         else:

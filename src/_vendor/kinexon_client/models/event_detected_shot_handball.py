@@ -1,5 +1,7 @@
+from __future__ import annotations
+
 from collections.abc import Mapping
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from attrs import define as _attrs_define
 from attrs import field as _attrs_field
@@ -13,46 +15,46 @@ T = TypeVar("T", bound="EventDetectedShotHandball")
 class EventDetectedShotHandball:
     """
     Attributes:
-        timestamp (Union[Unset, int]):
-        timestamp_ms (Union[Unset, int]):
-        timezone_id (Union[Unset, int]):
-        game_clock (Union[Unset, str]):
-        period (Union[Unset, str]):
-        player_id (Union[Unset, int]):
-        distance (Union[Unset, float]):
-        speed_ball (Union[Unset, float]):
-        trajectory (Union[Unset, str]):
-        shot_position_x (Union[Unset, float]):
-        shot_position_y (Union[Unset, float]):
-        hit_position_y (Union[Unset, float]):
-        hit_position_z (Union[Unset, float]):
-        success (Union[Unset, float]):
-        shot_category (Union[Unset, str]):
-        goalkeeper_id (Union[Unset, float]):
-        shot_type (Union[Unset, float]):
-        assisting_player_id (Union[Unset, float]):
-        validated (Union[Unset, float]):
+        timestamp (int | Unset):
+        timestamp_ms (int | Unset):
+        timezone_id (int | Unset):
+        game_clock (str | Unset):
+        period (str | Unset):
+        player_id (int | Unset):
+        distance (float | Unset):
+        speed_ball (float | Unset):
+        trajectory (str | Unset):
+        shot_position_x (float | Unset):
+        shot_position_y (float | Unset):
+        hit_position_y (float | Unset):
+        hit_position_z (float | Unset):
+        success (float | Unset):
+        shot_category (str | Unset):
+        goalkeeper_id (float | Unset):
+        shot_type (float | Unset):
+        assisting_player_id (float | Unset):
+        validated (float | Unset):
     """
 
-    timestamp: Union[Unset, int] = UNSET
-    timestamp_ms: Union[Unset, int] = UNSET
-    timezone_id: Union[Unset, int] = UNSET
-    game_clock: Union[Unset, str] = UNSET
-    period: Union[Unset, str] = UNSET
-    player_id: Union[Unset, int] = UNSET
-    distance: Union[Unset, float] = UNSET
-    speed_ball: Union[Unset, float] = UNSET
-    trajectory: Union[Unset, str] = UNSET
-    shot_position_x: Union[Unset, float] = UNSET
-    shot_position_y: Union[Unset, float] = UNSET
-    hit_position_y: Union[Unset, float] = UNSET
-    hit_position_z: Union[Unset, float] = UNSET
-    success: Union[Unset, float] = UNSET
-    shot_category: Union[Unset, str] = UNSET
-    goalkeeper_id: Union[Unset, float] = UNSET
-    shot_type: Union[Unset, float] = UNSET
-    assisting_player_id: Union[Unset, float] = UNSET
-    validated: Union[Unset, float] = UNSET
+    timestamp: int | Unset = UNSET
+    timestamp_ms: int | Unset = UNSET
+    timezone_id: int | Unset = UNSET
+    game_clock: str | Unset = UNSET
+    period: str | Unset = UNSET
+    player_id: int | Unset = UNSET
+    distance: float | Unset = UNSET
+    speed_ball: float | Unset = UNSET
+    trajectory: str | Unset = UNSET
+    shot_position_x: float | Unset = UNSET
+    shot_position_y: float | Unset = UNSET
+    hit_position_y: float | Unset = UNSET
+    hit_position_z: float | Unset = UNSET
+    success: float | Unset = UNSET
+    shot_category: str | Unset = UNSET
+    goalkeeper_id: float | Unset = UNSET
+    shot_type: float | Unset = UNSET
+    assisting_player_id: float | Unset = UNSET
+    validated: float | Unset = UNSET
     additional_properties: dict[str, Any] = _attrs_field(init=False, factory=dict)
 
     def to_dict(self) -> dict[str, Any]:

@@ -1,0 +1,297 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Statistics-Center API",
+        "description": "<br> 1. Login to receive a JWT <br> 2. Add JWT to request header (Authorization: Bearer <JWT>) for all following requests.",
+        "version": "0.1"
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "servers": [
+                    {
+                        "url": "https://hbl.kinexon.com/statistics-center/interfaces-api/"
+                    }
+                ],
+                "tags": [
+                    "Login"
+                ],
+                "summary": "Login first to receive a Json Web Token (JWT).",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Login"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Login response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/LoginSuccess"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Login failure"
+                    }
+                }
+            }
+        },
+        "/games": {
+            "get": {
+                "servers": [
+                    {
+                        "url": "https://hbl.kinexon.com/statistics-center/outputs-rest/"
+                    }
+                ],
+                "tags": [
+                    "Games"
+                ],
+                "summary": "Get a list of available games. JWT has to be supplied in the request header (Authorization: Bearer <JWT>)",
+                "parameters": [
+                    {
+                        "name": "season",
+                        "in": "query",
+                        "description": "Return games for a specific season. If empty, the current season will be used.",
+                        "example": "2019_2020",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Games response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Games"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/stats/{matchId}": {
+            "get": {
+                "servers": [
+                    {
+                        "url": "https://hbl.kinexon.com/statistics-center/outputs-rest/"
+                    }
+                ],
+                "tags": [
+                    "Stats"
+                ],
+                "summary": "Retrieve stats for a specific match ID. JWT has to be supplied in the request header (Authorization: Bearer <JWT>)",
+                "parameters": [
+                    {
+                        "name": "matchId",
+                        "in": "path",
+                        "description": "Match ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Statistics",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Statistics"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/events/{matchId}": {
+            "get": {
+                "servers": [
+                    {
+                        "url": "https://hbl.kinexon.com/statistics-center/outputs-rest/"
+                    }
+                ],
+                "tags": [
+                    "Stats"
+                ],
+                "summary": "Retrieve events for a specific match ID. JWT has to be supplied in the request header (Authorization: Bearer <JWT>)",
+                "parameters": [
+                    {
+                        "name": "matchId",
+                        "in": "path",
+                        "description": "Match ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "event",
+                        "in": "query",
+                        "description": "Filter by event name (shot, pass, jump)",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Events",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Statistics"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "ws://<SERVER_NAME>:5002": {
+            "get": {
+                "tags": [
+                    "Websocket"
+                ],
+                "summary": "Connect to a Websocket with your preferred Service",
+                "description": "Authenticate\n==========\nTo connect to the Statistics Center websocket you will first have to get a JWT token from the login path described at [Login](#operations-Login-post_auth_login).\nYou can then use this token in the \"Authorization\" header to connect to the server.\n\nYou can then subscribe to certain topics to recieve the needed data:\n\n```\nwebsocket.send(JSON.stringify({\n    subscription: 1,\n    type: 'matches',\n    identifier: '2019_2020',\n}));\n```\n\nTypes that can be subscribed:\n- matches\n- stats\n- events\n- live_events\n\nYou will then recieve a message event from the websocket containing the data for your subscription.\n\n```javascript\nwebsocket.on('message', (data) => { // do anything with given data });\n```\n\nPlease see our full example of a node script of how this can be used.\n\nExamples\n==========\n\nNode\n-------------\n```javascript\n// using node version 10.16.0\n\nconst socketIO = require('socket.io-client');\nconst request = require('request');\n\n// fill out following fields:\nconst apiUrl = '<API_URL>'; // i.e. https://hbl.kinexon.com/statistics-center/interfaces-api\nconst username = '<USERNAME>';\nconst password = '<PASSWORD>';\n\nclass Connector {\n    async startWebsocketConnection() {\n        const jwt = await this.loginAndExtractJwt(apiUrl, username, password);\n\n        const websocket = socketIO.connect(\n            this.getWebsocketAddress(apiUrl),\n            {\n                transportOptions: {\n                    polling: {\n                        extraHeaders: {\n                            'Authorization': `Bearer ${jwt}`\n                        }\n                    }\n                }\n            }\n        );\n\n        websocket.on('message', this.handleWebSocketMessage);\n        websocket.on('error', this.handleWebSocketError);\n\n\n        // ============================================\n        // Subscribe to any of the following identifiers\n        // ============================================\n\n        // send this request to receive a list of all matches\n        websocket.send(JSON.stringify({\n            subscription: 1,\n            type: 'matches',\n            identifier: '2019_2020',\n        }));\n\n        // send this request to receive a list of all stats in a <MATCH_ID>\n        websocket.send(JSON.stringify({\n            subscription: 1,\n            type: 'stats',\n            identifier: '<MATCH_ID>'\n        }));\n\n        // send this request to receive a list of all events in a <MATCH_ID>. Use the filter to receive only a certain\n        // type\n        websocket.send(JSON.stringify({\n            subscription: 1,\n            type: 'events',\n            identifier: '<MATCH_ID>',\n            filter: {\n                event: 'shot'\n            }\n        }));\n\n        // subscribe to this topic to get notifications for any live events that are happening on the field\n        websocket.send(JSON.stringify({\n            subscription: 1,\n            type: 'live_events',\n            identifier: '<MATCH_ID>'\n        }));\n\n    }\n\n    handleWebSocketMessage(data) {\n        if (data === 'Connected') {\n            console.log('You are connected and authenticated.');\n\n            // todo: add any scripts you need on connection here\n\n            return;\n        }\n\n        data = JSON.parse(data);\n\n        switch (data.type) {\n            case 'stats':\n                console.log('stats', data);\n                // todo: handle any kind of data from type stats\n                break;\n\n            case 'events':\n                console.log('events', data);\n                // todo: handle any kind of data from type events\n                break;\n\n            case 'matches':\n                console.log('matches', data);\n                // todo: handle any kind of data from type matches\n                break;\n\n            case 'live_events':\n                console.log('live_events', data);\n                // todo: handle any kind of data from type live_events\n                break;\n\n            default:\n                console.log('other', data);\n                // todo: handle any other messages that come from the server\n                break;\n        }\n    }\n\n    handleWebSocketError(error) {\n        console.warn(error);\n        // todo: handle any error messages here\n    }\n\n    async loginAndExtractJwt(server, username, password) {\n        const responseBody = await new Promise((resolve, reject) => {\n            request({\n                uri: `${server}/auth/login`,\n                method: 'POST',\n                headers: {\n                    'Content-Type': 'application/json'\n                },\n                body: {\n                    name: username,\n                    password: password\n                },\n                json: true\n            }, (error, response, body) => {\n                if (error || response.statusCode === 401) {\n                    const message = error || body;\n\n                    console.warn('Error while logging in: \\n', message);\n                    reject(error);\n                } else {\n                    resolve(body);\n                }\n            })\n        });\n\n        return responseBody.jwt;\n    }\n\n    getWebsocketAddress(apiUrl) {\n        const regex = /(http|https):\\/\\/([^:\\/]+)/;\n        const matches = regex.exec(apiUrl);\n        const server = matches[2];\n\n        return `ws://${server}:5002`;\n    }\n}\n\nconst myConnector = new Connector();\nmyConnector.startWebsocketConnection();\n```\n\nC++\n-------------\nPlease see [SocketIo C++](https://socket.io/blog/socket-io-cpp/). Functionality works accordingly to node script.\n\nPython\n-------------\nPlease see [SocketIo Pyhton](https://python-socketio.readthedocs.io/en/latest/client.html). Functionality works accordingly to node script.\n\nJava\n-------------\nPlease see [SocketIo Java](https://github.com/socketio/socket.io-client-java). Functionality works accordingly to node script.\n"
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Login": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Login"
+                    },
+                    {
+                        "properties": {
+                            "name": {
+                                "type": "string",
+                                "example": "max@mustermann.de"
+                            },
+                            "password": {
+                                "type": "string",
+                                "example": "mypassword123"
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "LoginSuccess": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/LoginSuccess"
+                    },
+                    {
+                        "properties": {
+                            "message": {
+                                "type": "string",
+                                "example": "test"
+                            },
+                            "jwt": {
+                                "type": "string",
+                                "example": "eyJhbGciOaJIUzI1NiIsInR5cCI6IkpXVCJ...."
+                            }
+                        },
+                        "type": "object"
+                    }
+                ]
+            },
+            "Statistics": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Statistics",
+                        "type": "array"
+                    }
+                ]
+            },
+            "Games": {
+                "type": "object",
+                "allOf": [
+                    {
+                        "$ref": "#/components/schemas/Games"
+                    },
+                    {
+                        "properties": {
+                            "match_id": {
+                                "type": "string",
+                                "example": 1234813
+                            },
+                            "home_team": {
+                                "type": "string",
+                                "example": "Team A"
+                            },
+                            "away_team": {
+                                "type": "string",
+                                "example": "Team B"
+                            }
+                        },
+                        "type": "array"
+                    }
+                ]
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
