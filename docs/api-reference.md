@@ -147,6 +147,65 @@ data = api.download_positions_csv_via_custom(
 
 ---
 
+### `download_inertial_csv_via_custom(session_id, ...)`
+
+Downloads the inertial (IMU) export of a session via streaming. Returns `bytes`.
+Same parameters as the positions download, without `center_origin` and
+`group_by_timestamp`. Columns: `ts in ms`, `formatted local time`,
+`game time in s`, sensor and player ids, `x/y/z in m`, `heart rate in bpm`,
+`rr interval in ms`, `accelerometer x/y/z`, `gyroscope x/y/z` and the
+orientation quaternion (`quaternion 1/i/j/k`). With `use_local_frame_imu=True`
+the accelerometer is given in the sensor's own frame.
+
+```python
+sample = api.download_inertial_csv_via_custom("3478", max_bytes=200_000)
+```
+
+---
+
+### `download_export_to_file(kind, session_id, path, ...)`
+
+Streams a `"positions"` or `"inertial"` export straight to `path` and returns
+the number of bytes written. The file is written as `<path>.part` and renamed
+when complete, so a full game (~160 MB of positions) is never held in memory
+and an interrupted download leaves no partial file.
+
+```python
+api.download_export_to_file("inertial", "3478", "data/3478_inertial.csv", timeout=1800)
+```
+
+Kinexon builds an export on request: the first bytes arrive after ~20 s and a
+full game takes several minutes. Run one export at a time.
+
+---
+
+### `get_events(event_type, time_entity_id, *, time_entity_type="session", players="in-entity")`
+
+Events of one type for a session or a phase (e.g. one half), as plain dicts.
+Some types are available beyond `get_available_metrics_and_events()`, for
+example `change_of_orientation`.
+
+### `get_event_counts(time_entity_id, *, time_entity_type="session", players="in-entity")`
+
+Number of events per event type. Lists types the events endpoint may still
+reject (e.g. `ball_action_handball`, `detected_1on1`).
+
+### `get_sensor_assignment(session_id)`
+
+Which sensor every player wore in a session, with the player record (number,
+position, team, league id).
+
+### `get_player_statistics(player_id, time_entity_id, *, time_entity_type="session", fields=None)`
+
+All metrics (or the given `fields`) of one player for a session or a phase.
+A session's phases (halves) are listed in `get_sessions_for_team(...)[i]["phases"]`.
+
+### `get_session_categories(session_id)`
+
+Category thresholds of a session (speed, acceleration, jump, ...).
+
+---
+
 ### `make_custom_request(method, url, ...)` (inherited from `KinexonAPI`)
 
 Low-level access to the authenticated `httpx.Client`. Use this for any endpoint not covered by the helpers above.
