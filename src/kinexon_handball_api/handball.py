@@ -4,9 +4,9 @@ Provides convenience methods using generated kinexon_client functions.
 
 from __future__ import annotations
 
-import contextlib
 import logging
 from datetime import datetime
+from pathlib import Path
 from typing import Any, TypeVar, cast
 
 import httpx
@@ -22,18 +22,19 @@ from kinexon_client.api.sessions_and_phases import (
     get_public_v1_teams_by_team_id_sessions_and_phases,
 )
 from kinexon_client.types import UNSET
-from tqdm import tqdm
 
 from kinexon_handball_api.api import KinexonAPI
+from kinexon_handball_api.exports import (
+    ExportKind,
+    export_params,
+    stream_export,
+    stream_export_to_file,
+)
 from kinexon_handball_api.fetchers import TeamEntry, fetch_team_ids
 
 logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
-
-
-def _bool_str(value: bool) -> str:
-    return "true" if value else "false"
 
 
 class HandballAPI(KinexonAPI):
@@ -132,7 +133,7 @@ class HandballAPI(KinexonAPI):
         )
         return self._handle_response(resp, "positions_csv", "")
 
-    def download_positions_csv_via_custom(  # noqa: PLR0913, PLR0912
+    def download_positions_csv_via_custom(  # noqa: PLR0913
         self,
         session_id: str,
         *,
@@ -147,83 +148,180 @@ class HandballAPI(KinexonAPI):
         show_progress: bool = True,
         timeout: float | None = None,
     ) -> bytes:
-        """Download positions CSV via streaming custom request.
+        """Download the positions CSV of a session; ``max_bytes`` stops early."""
+        self._require_value("session_id", session_id)
+        params = export_params(
+            update_rate=update_rate,
+            compress_output=compress_output,
+            use_local_frame_imu=use_local_frame_imu,
+            players=players,
+            center_origin=center_origin,
+            group_by_timestamp=group_by_timestamp,
+        )
+        return self._download(
+            "positions", session_id, params, max_bytes=max_bytes,
+            chunk_size=chunk_size, show_progress=show_progress, timeout=timeout,
+        )  # fmt: skip
 
-        If max_bytes is set, the download stops after that many bytes.
+    def download_inertial_csv_via_custom(  # noqa: PLR0913
+        self,
+        session_id: str,
+        *,
+        update_rate: int = 20,
+        compress_output: bool = False,
+        use_local_frame_imu: bool = False,
+        players: str | None = None,
+        max_bytes: int | None = None,
+        chunk_size: int = 1024 * 1024,
+        show_progress: bool = True,
+        timeout: float | None = None,
+    ) -> bytes:
+        """Download the inertial (IMU) CSV of a session; ``max_bytes`` stops early.
+
+        Columns include game time, x/y/z, heart rate, RR intervals,
+        accelerometer, gyroscope and orientation quaternion per sensor.
         """
         self._require_value("session_id", session_id)
+        params = export_params(
+            update_rate=update_rate,
+            compress_output=compress_output,
+            use_local_frame_imu=use_local_frame_imu,
+            players=players,
+        )
+        return self._download(
+            "inertial", session_id, params, max_bytes=max_bytes,
+            chunk_size=chunk_size, show_progress=show_progress, timeout=timeout,
+        )  # fmt: skip
 
-        max_bytes_remaining = max_bytes if max_bytes and max_bytes > 0 else None
+    def download_export_to_file(  # noqa: PLR0913
+        self,
+        kind: ExportKind,
+        session_id: str,
+        path: str | Path,
+        *,
+        update_rate: int = 20,
+        use_local_frame_imu: bool = False,
+        players: str | None = None,
+        max_bytes: int | None = None,
+        show_progress: bool = False,
+        timeout: float | None = None,
+    ) -> int:
+        """Stream a ``positions`` or ``inertial`` export to ``path``; return bytes.
 
-        params: dict[str, Any] = {
-            "updateRate": update_rate,
-            "compressOutput": _bool_str(compress_output),
-            "useLocalFrameIMU": _bool_str(use_local_frame_imu),
-            "centerOrigin": _bool_str(center_origin),
-            "groupByTimestamp": _bool_str(group_by_timestamp),
-        }
-        if players:
-            params["players"] = players
+        The file is written as ``<path>.part`` and renamed when complete, so the
+        export is never held in memory.
+        """
+        self._require_value("session_id", session_id)
+        params = export_params(
+            update_rate=update_rate,
+            use_local_frame_imu=use_local_frame_imu,
+            players=players,
+        )
+        return stream_export_to_file(
+            self, kind, session_id, params, path,
+            max_bytes=max_bytes, show_progress=show_progress, timeout=timeout,
+        )  # fmt: skip
 
-        headers = {"Accept": "text/csv"}
-        if compress_output:
-            headers["Accept-Encoding"] = "gzip, zip"
+    def _download(  # noqa: PLR0913
+        self,
+        kind: ExportKind,
+        session_id: str,
+        params: dict[str, Any],
+        *,
+        max_bytes: int | None,
+        chunk_size: int,
+        show_progress: bool,
+        timeout: float | None,
+    ) -> bytes:
+        buf = bytearray()
+        stream_export(
+            self, kind, session_id, params, buf.extend,
+            max_bytes=max_bytes, chunk_size=chunk_size,
+            show_progress=show_progress, timeout=timeout,
+        )  # fmt: skip
+        logger.debug(
+            "Downloaded %d bytes of %s for session %s", len(buf), kind, session_id
+        )
+        return bytes(buf)
 
-        url = f"/public/v1/export/positions/session/{session_id}"
-        resp = self.make_custom_request(
-            "GET",
-            url,
-            params=params,
-            headers=headers,
-            stream=True,
-            timeout=timeout,
+    # -- JSON endpoints of a session, phase or player ------------------------
+
+    def _get_json(self, url: str, params: dict[str, Any] | None = None) -> Any:
+        try:
+            resp = self.make_custom_request(
+                "GET", url, params=params, headers={"Accept": "application/json"}
+            )
+        except httpx.HTTPStatusError as exc:
+            raise RuntimeError(
+                f"{url}: HTTP {exc.response.status_code}: {exc.response.text}"
+            ) from exc
+        return resp.json()
+
+    def get_events(
+        self,
+        event_type: str,
+        time_entity_id: str,
+        *,
+        time_entity_type: str = "session",
+        players: str = "in-entity",
+    ) -> list[dict[str, Any]]:
+        """Events of one type for a session or phase, as plain dicts.
+
+        Some types exist beyond ``get_available_metrics_and_events()``, e.g.
+        ``change_of_orientation``; ``get_event_counts`` shows what a session has.
+        """
+        self._require_value("time_entity_id", time_entity_id)
+        url = (
+            f"/public/v1/events/{event_type}/player/{players}"
+            f"/{time_entity_type}/{time_entity_id}"
+        )
+        return cast(list[dict[str, Any]], self._get_json(url))
+
+    def get_event_counts(
+        self,
+        time_entity_id: str,
+        *,
+        time_entity_type: str = "session",
+        players: str = "in-entity",
+    ) -> dict[str, int]:
+        """Number of events per event type in a session or phase."""
+        self._require_value("time_entity_id", time_entity_id)
+        url = (
+            f"/public/v1/events/count-per-event-type/player/{players}"
+            f"/{time_entity_type}/{time_entity_id}"
+        )
+        return cast(dict[str, int], self._get_json(url))
+
+    def get_sensor_assignment(self, session_id: str) -> list[dict[str, Any]]:
+        """Which sensor each player (with number, position, team) wore in a session."""
+        self._require_value("session_id", session_id)
+        return cast(
+            list[dict[str, Any]],
+            self._get_json(f"/public/v1/sensor-assignment/{session_id}"),
         )
 
-        try:
-            resp.raise_for_status()
-            total = int(resp.headers.get("Content-Length", "0")) or None
-            buf = bytearray()
+    def get_player_statistics(
+        self,
+        player_id: int,
+        time_entity_id: str,
+        *,
+        time_entity_type: str = "session",
+        fields: list[str] | None = None,
+    ) -> list[dict[str, Any]]:
+        """All metrics (or ``fields``) of one player for a session or a phase (half)."""
+        self._require_value("player_id", player_id)
+        self._require_value("time_entity_id", time_entity_id)
+        url = (
+            f"/public/v1/statistics/player/{player_id}"
+            f"/{time_entity_type}/{time_entity_id}"
+        )
+        params = {"fields": ",".join(fields)} if fields else None
+        return cast(list[dict[str, Any]], self._get_json(url, params))
 
-            if show_progress:
-                with tqdm(
-                    total=total,
-                    unit="B",
-                    unit_scale=True,
-                    unit_divisor=1024,
-                    desc=f"Downloading file for session {session_id}",
-                ) as bar:
-                    for chunk in resp.iter_bytes(chunk_size=chunk_size):
-                        if chunk:
-                            if max_bytes_remaining is None:
-                                buf.extend(chunk)
-                                bar.update(len(chunk))
-                            else:
-                                take = min(len(chunk), max_bytes_remaining)
-                                if take:
-                                    buf.extend(chunk[:take])
-                                    bar.update(take)
-                                    max_bytes_remaining -= take
-                                if max_bytes_remaining == 0:
-                                    break
-            else:
-                for chunk in resp.iter_bytes(chunk_size=chunk_size):
-                    if chunk:
-                        if max_bytes_remaining is None:
-                            buf.extend(chunk)
-                        else:
-                            take = min(len(chunk), max_bytes_remaining)
-                            if take:
-                                buf.extend(chunk[:take])
-                                max_bytes_remaining -= take
-                            if max_bytes_remaining == 0:
-                                break
-        except httpx.HTTPStatusError as exc:
-            text = ""
-            with contextlib.suppress(Exception):
-                text = resp.text
-            raise RuntimeError(f"HTTP {resp.status_code}: {text}") from exc
-        finally:
-            resp.close()
-
-        logger.debug("Downloaded %d bytes for session %s", len(buf), session_id)
-        return bytes(buf)
+    def get_session_categories(self, session_id: str) -> dict[str, Any]:
+        """Category thresholds (speed, acceleration, jump, ...) of a session."""
+        self._require_value("session_id", session_id)
+        return cast(
+            dict[str, Any],
+            self._get_json(f"/public/v1/statistics/{session_id}/categories"),
+        )

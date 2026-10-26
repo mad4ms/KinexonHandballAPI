@@ -1,6 +1,6 @@
 [project]
 name = "kinexon-handball-api"
-version = "0.2.1"
+version = "0.3.0"
 description = "A Python wrapper for accessing and processing Kinexon Handball data."
 authors = [
     { name = "Michael Adams", email = "m@ad4ms.de" }
@@ -96,7 +96,10 @@ extend-exclude = [
 
 [tool.ruff.lint]
 select = ["E","F","I","UP","B","SIM","PGH","PL","RUF"]
-ignore = ["E203"]  # formatter compatibility
+ignore = [
+    "E203",  # formatter compatibility
+    "PLR0917",  # positional constructor arguments are public API since 0.1
+]
 
 [tool.ruff.lint.isort]
 known-first-party = ["kinexon_handball_api"]
